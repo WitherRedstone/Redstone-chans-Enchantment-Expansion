@@ -1,0 +1,49 @@
+{
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_basiphobia"
+  },
+  "supported_items": "#redstone_enchants:armors_head",
+  "primary_items": "#redstone_enchants:armors_head",
+  "weight": 4,
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "anvil_cost": 6,
+  "slots": [
+    "head"
+  ],
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "to_apply": [
+            "minecraft:mining_fatigue",
+            "minecraft:darkness"
+          ],
+          "min_amplifier": 2,
+          "max_amplifier": 2,
+          "min_duration": 11,
+          "max_duration": 11
+        },
+        "requirements": {
+          "condition": "minecraft:location_check",
+          "predicate": {
+            "position": {
+              "y": {
+                "max": -36
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

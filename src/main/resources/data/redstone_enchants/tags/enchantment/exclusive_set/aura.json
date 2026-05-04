@@ -1,0 +1,17 @@
+{
+  "values": [
+    "redstone_enchants:aura_speed",
+    "redstone_enchants:aura_slowness",
+    "redstone_enchants:aura_haste",
+    "redstone_enchants:aura_strength",
+    "redstone_enchants:aura_jump_boost",
+    "redstone_enchants:aura_regeneration",
+    "redstone_enchants:aura_resistance",
+    "redstone_enchants:aura_weakness",
+    "redstone_enchants:aura_poison",
+    "redstone_enchants:aura_wither",
+    "redstone_enchants:aura_glowing",
+    "redstone_enchants:aura_burning",
+    "redstone_enchants:aura_infested"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "values": [
+    "minecraft:unbreaking",
+    "minecraft:mending",
+    "redstone_enchants:advanced_unbreaking",
+    "redstone_enchants:sacrifice"
+  ]
+}

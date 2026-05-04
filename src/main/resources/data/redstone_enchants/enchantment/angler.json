@@ -1,0 +1,22 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.angler"
+  },
+  "supported_items": "#redstone_enchants:all_fishing",
+  "primary_items": "#redstone_enchants:all_fishing",
+  "weight": 3,
+  "max_level": 5,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand"
+  ]
+}

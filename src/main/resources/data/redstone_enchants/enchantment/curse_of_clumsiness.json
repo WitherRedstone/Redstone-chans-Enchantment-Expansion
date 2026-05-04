@@ -1,0 +1,50 @@
+{
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_clumsiness"
+  },
+  "supported_items": "#c:enchantables",
+  "primary_items": "#c:enchantables",
+  "weight": 4,
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "anvil_cost": 6,
+  "slots": [
+    "any"
+  ],
+  "effects": {
+    "minecraft:hit_block": [
+      {
+        "effect": {
+          "type": "minecraft:run_function",
+          "function": "redstone_enchants:enchantment/curse/curse_of_clumsiness/drop_punch"
+        },
+        "requirements": {
+          "condition": "minecraft:random_chance",
+          "chance": 0.4
+        }
+      }
+    ],
+    "minecraft:post_attack": [
+      {
+        "enchanted": "attacker",
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:run_function",
+          "function": "redstone_enchants:enchantment/curse/curse_of_clumsiness/drop_attack"
+        },
+        "requirements": {
+          "condition": "minecraft:random_chance",
+          "chance": 0.4
+        }
+      }
+    ]
+  }
+}

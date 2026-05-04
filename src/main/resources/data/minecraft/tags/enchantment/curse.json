@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "redstone_enchants:curse_of_rust",
+    "redstone_enchants:curse_of_blast",
+    "redstone_enchants:curse_of_stillness",
+    "redstone_enchants:curse_of_hunger",
+    "redstone_enchants:curse_of_breaking",
+    "redstone_enchants:curse_of_blindness",
+    "redstone_enchants:curse_of_acrophobia",
+    "redstone_enchants:curse_of_basiphobia",
+    "redstone_enchants:curse_of_death",
+    "redstone_enchants:curse_of_gravity",
+    "redstone_enchants:curse_of_hiding",
+    "redstone_enchants:curse_of_unlucky",
+    "redstone_enchants:curse_of_reach",
+    "redstone_enchants:curse_of_clumsiness",
+    "redstone_enchants:curse_of_double_edge",
+    "redstone_enchants:curse_of_water_source",
+    "redstone_enchants:curse_of_vulnerability"
+  ]
+}

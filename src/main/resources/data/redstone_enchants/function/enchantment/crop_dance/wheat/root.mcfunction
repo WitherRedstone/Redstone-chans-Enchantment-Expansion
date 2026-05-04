@@ -1,0 +1,69 @@
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+execute if block ~ ~ ~ minecraft:wheat[age=6] run function redstone_enchants:enchantment/crop_dance/wheat/age_7
+
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+execute if block ~ ~ ~ minecraft:wheat[age=5] run function redstone_enchants:enchantment/crop_dance/wheat/age_6
+
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+execute if block ~ ~ ~ minecraft:wheat[age=4] run function redstone_enchants:enchantment/crop_dance/wheat/age_5
+
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+execute if block ~ ~ ~ minecraft:wheat[age=3] run function redstone_enchants:enchantment/crop_dance/wheat/age_4
+
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+execute if block ~ ~ ~ minecraft:wheat[age=2] run function redstone_enchants:enchantment/crop_dance/wheat/age_3
+
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+execute if block ~ ~ ~ minecraft:wheat[age=1] run function redstone_enchants:enchantment/crop_dance/wheat/age_2
+
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1
+execute if block ~ ~ ~ minecraft:wheat[age=0] run function redstone_enchants:enchantment/crop_dance/wheat/age_1

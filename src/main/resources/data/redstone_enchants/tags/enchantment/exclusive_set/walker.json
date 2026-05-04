@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#minecraft:exclusive_set/boots",
+    "redstone_enchants:walker_magma",
+    "redstone_enchants:walker_grass",
+    "redstone_enchants:walker_snowmelt"
+  ]
+}

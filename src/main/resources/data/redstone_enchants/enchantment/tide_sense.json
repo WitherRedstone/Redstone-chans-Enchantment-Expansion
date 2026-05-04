@@ -1,0 +1,36 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.tide_sense"
+  },
+  "supported_items": "#redstone_enchants:all_fishing",
+  "primary_items": "#redstone_enchants:all_fishing",
+  "weight": 3,
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand"
+  ],
+  "effects": {
+    "minecraft:fishing_time_reduction": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 10.0,
+            "per_level_above_first": 10.0
+          }
+        }
+      }
+    ]
+  }
+}

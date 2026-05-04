@@ -1,0 +1,48 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.boltbringer"
+  },
+  "supported_items": "#c:tools/mace",
+  "primary_items": "#c:tools/mace",
+  "weight": 3,
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/mace",
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "enchanted": "attacker",
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:summon_entity",
+          "entity": "minecraft:lightning_bolt"
+        },
+        "requirements": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "direct_attacker",
+            "predicate": {
+              "movement": {
+                "fall_distance": {
+                  "min": 8
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

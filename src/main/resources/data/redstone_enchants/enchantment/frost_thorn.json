@@ -1,0 +1,186 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.frost_thorn"
+  },
+  "supported_items": "#redstone_enchants:armors_chest",
+  "primary_items": "#redstone_enchants:armors_chest",
+  "weight": 3,
+  "max_level": 5,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "chest"
+  ],
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "enchanted": "victim",
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:all_of",
+          "effects": [
+            {
+              "type": "minecraft:damage_entity",
+              "damage_type": "minecraft:thorns",
+              "min_damage": 1,
+              "max_damage": 5
+            },
+            {
+              "type": "minecraft:play_sound",
+              "pitch": {
+                "type": "minecraft:uniform",
+                "max_exclusive": 0.8,
+                "min_inclusive": 0.6
+              },
+              "sound": "minecraft:entity.player.hurt_freeze",
+              "volume": 5.0
+            },
+            {
+              "type": "minecraft:spawn_particles",
+              "particle": {
+                "type": "minecraft:snowflake"
+              },
+              "speed": 1,
+              "horizontal_position": {
+                "type": "in_bounding_box"
+              },
+              "vertical_position": {
+                "type": "in_bounding_box",
+                "offset": 0.5
+              },
+              "horizontal_velocity": {},
+              "vertical_velocity": {}
+            },
+            {
+              "type": "minecraft:spawn_particles",
+              "particle": {
+                "type": "minecraft:snowflake"
+              },
+              "speed": 1,
+              "horizontal_position": {
+                "type": "in_bounding_box"
+              },
+              "vertical_position": {
+                "type": "in_bounding_box",
+                "offset": 0.5
+              },
+              "horizontal_velocity": {},
+              "vertical_velocity": {}
+            },
+            {
+              "type": "minecraft:spawn_particles",
+              "particle": {
+                "type": "minecraft:snowflake"
+              },
+              "speed": 1,
+              "horizontal_position": {
+                "type": "in_bounding_box"
+              },
+              "vertical_position": {
+                "type": "in_bounding_box",
+                "offset": 0.5
+              },
+              "horizontal_velocity": {},
+              "vertical_velocity": {}
+            }
+          ]
+        }
+      },
+      {
+        "enchanted": "victim",
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:all_of",
+          "effects": [
+            {
+              "type": "minecraft:change_item_damage",
+              "amount": {
+                "type": "minecraft:linear",
+                "base": 0.15,
+                "per_level_above_first": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "enchanted": "victim",
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "to_apply": "minecraft:slowness",
+          "min_duration": {
+            "type": "minecraft:linear",
+            "base": 1,
+            "per_level_above_first": 1
+          },
+          "max_duration": {
+            "type": "minecraft:linear",
+            "base": 5,
+            "per_level_above_first": 5
+          },
+          "min_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0,
+            "per_level_above_first": 0.25
+          },
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 1,
+            "per_level_above_first": 0.5
+          }
+        }
+      }
+    ],
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:spawn_particles",
+          "particle": {
+            "type": "minecraft:snowflake"
+          },
+          "horizontal_position": {
+            "type": "in_bounding_box",
+            "offset": 0,
+            "scale": 2
+          },
+          "vertical_position": {
+            "type": "in_bounding_box",
+            "offset": 1,
+            "scale": 2
+          },
+          "horizontal_velocity": {
+            "base": 0,
+            "movement_scale": 0
+          },
+          "vertical_velocity": {
+            "base": 0.5,
+            "movement_scale": 0
+          },
+          "speed": 0.25
+        },
+        "requirements": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "periodic_tick": 15
+            }
+          },
+          {
+            "condition": "minecraft:random_chance",
+            "chance": 0.75
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+give @s spectral_arrow

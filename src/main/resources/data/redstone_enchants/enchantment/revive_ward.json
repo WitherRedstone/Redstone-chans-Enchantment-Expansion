@@ -1,0 +1,22 @@
+{
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.revive_ward"
+  },
+  "supported_items": "#redstone_enchants:armors",
+  "primary_items": "#redstone_enchants:armors",
+  "weight": 2,
+  "max_level": 1,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "anvil_cost": 12,
+  "slots": [
+    "armor"
+  ]
+}

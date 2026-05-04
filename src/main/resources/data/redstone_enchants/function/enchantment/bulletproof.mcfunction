@@ -1,0 +1,1 @@
+execute at @s if predicate redstone_enchants:percentages/60 run kill @e[type=minecraft:shulker_bullet,limit=1,sort=random,distance=..3]

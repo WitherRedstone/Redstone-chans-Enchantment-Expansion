@@ -1,0 +1,151 @@
+{
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.fatal_arrow"
+  },
+  "supported_items": "#redstone_enchants:all_bow",
+  "primary_items": "#redstone_enchants:all_bow",
+  "weight": 1,
+  "max_level": 1,
+  "min_cost": {
+    "base": 80,
+    "per_level_above_first": 50
+  },
+  "max_cost": {
+    "base": 100,
+    "per_level_above_first": 50
+  },
+  "anvil_cost": 200,
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage_bow",
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "enchanted": "attacker",
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:run_function",
+          "function": "redstone_enchants:enchantment/fatal_arrow"
+        },
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "direct_attacker",
+              "predicate": {
+                "type": "#minecraft:arrows"
+              }
+            },
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "type": "#redstone_enchants:black_entity"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "enchanted": "attacker",
+        "affected": "damaging_entity",
+        "effect": {
+          "type": "minecraft:run_function",
+          "function": "redstone_enchants:libs/kill_arrow"
+        },
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "direct_attacker",
+              "predicate": {
+                "type": "#minecraft:arrows"
+              }
+            },
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "type": "#redstone_enchants:black_entity"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "enchanted": "attacker",
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:all_of",
+          "effects": [
+            {
+              "type": "minecraft:apply_mob_effect",
+              "to_apply": "minecraft:bad_omen",
+              "min_duration": 3,
+              "max_duration": 3,
+              "min_amplifier": 2,
+              "max_amplifier": 2
+            },
+            {
+              "type": "minecraft:apply_mob_effect",
+              "to_apply": "minecraft:weakness",
+              "min_duration": 120,
+              "max_duration": 120,
+              "min_amplifier": 2,
+              "max_amplifier": 2
+            },
+            {
+              "type": "minecraft:apply_mob_effect",
+              "to_apply": "minecraft:unluck",
+              "min_duration": 600,
+              "max_duration": 600,
+              "min_amplifier": 9,
+              "max_amplifier": 9
+            },
+            {
+              "type": "minecraft:apply_mob_effect",
+              "to_apply": "minecraft:blindness",
+              "min_duration": 60,
+              "max_duration": 60,
+              "min_amplifier": 1,
+              "max_amplifier": 1
+            }
+          ]
+        },
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "direct_attacker",
+              "predicate": {
+                "type": "#minecraft:arrows"
+              }
+            },
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "type": "#redstone_enchants:black_entity"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

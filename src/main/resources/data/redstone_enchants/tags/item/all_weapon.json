@@ -1,0 +1,11 @@
+{
+  "values": [
+    "#minecraft:swords",
+    "#minecraft:axes",
+    "#minecraft:spears",
+    "#minecraft:enchantable/trident",
+    "#c:tools/mace",
+    "#c:tools/bow",
+    "#c:tools/crossbow"
+  ]
+}

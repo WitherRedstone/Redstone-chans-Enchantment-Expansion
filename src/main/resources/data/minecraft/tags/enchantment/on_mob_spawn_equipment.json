@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "redstone_enchants:protection_day",
+    "redstone_enchants:protection_night",
+    "redstone_enchants:resilience_shield",
+    "redstone_enchants:water_bottle_projection",
+    "redstone_enchants:glass_breaker",
+    "redstone_enchants:chain_reaction",
+    "redstone_enchants:ricochet",
+    "redstone_enchants:sea_breeze",
+    "redstone_enchants:throwing_enhancement",
+    "redstone_enchants:protection_day",
+    "redstone_enchants:protection_night",
+    "redstone_enchants:protection_end",
+    "redstone_enchants:protection_nether",
+    "redstone_enchants:dangerous_edge",
+    "redstone_enchants:fury",
+    "redstone_enchants:exoskeleton",
+    "redstone_enchants:fire_protection",
+    "redstone_enchants:snowball",
+    "redstone_enchants:frost_thorn",
+    "redstone_enchants:minify",
+    "redstone_enchants:maximization",
+    "redstone_enchants:vitality",
+    "redstone_enchants:resilience_sentinel",
+    "redstone_enchants:gallop",
+    "redstone_enchants:revive_ward"
+  ]
+}

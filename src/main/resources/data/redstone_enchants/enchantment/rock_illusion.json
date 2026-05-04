@@ -1,0 +1,82 @@
+{
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.rock_illusion"
+  },
+  "supported_items": "#minecraft:pickaxes",
+  "primary_items": "#minecraft:pickaxes",
+  "weight": 1,
+  "max_level": 1,
+  "min_cost": {
+    "base": 80,
+    "per_level_above_first": 50
+  },
+  "max_cost": {
+    "base": 100,
+    "per_level_above_first": 50
+  },
+  "anvil_cost": 200,
+  "slots": [
+    "mainhand"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/bedrock",
+  "effects": {
+    "minecraft:hit_block": [
+      {
+        "effect": {
+          "type": "minecraft:change_item_damage",
+          "amount": 1000
+        },
+        "requirements": {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:bedrock",
+          "properties": {}
+        }
+      },
+      {
+        "effect": {
+          "type": "minecraft:replace_block",
+          "block_state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:reinforced_deepslate"
+            }
+          },
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:bedrock"
+          },
+          "trigger_game_event": "minecraft:block_destroy"
+        }
+      },
+      {
+        "effect": {
+          "type": "minecraft:spawn_particles",
+          "particle": {
+            "type": "minecraft:poof"
+          },
+          "horizontal_position": {
+            "type": "in_bounding_box",
+            "offset": 0
+          },
+          "vertical_position": {
+            "type": "in_bounding_box",
+            "offset": 0
+          },
+          "horizontal_velocity": {
+            "base": 0
+          },
+          "vertical_velocity": {
+            "base": 0
+          },
+          "speed": 0.5
+        },
+        "requirements": {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:bedrock",
+          "properties": {}
+        }
+      }
+    ]
+  }
+}

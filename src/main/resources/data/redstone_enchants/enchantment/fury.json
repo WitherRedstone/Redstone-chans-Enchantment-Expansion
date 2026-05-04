@@ -1,0 +1,59 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.fury"
+  },
+  "supported_items": "#redstone_enchants:armors",
+  "primary_items": "#redstone_enchants:armors",
+  "weight": 3,
+  "max_level": 4,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "armor"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/armors",
+  "effects": {
+    "minecraft:armor_effectiveness": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": -0.045,
+            "per_level_above_first": -0.035
+          }
+        }
+      }
+    ],
+    "minecraft:attributes": [
+      {
+        "id": "minecraft:enchantment.fury_1",
+        "attribute": "minecraft:attack_damage",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.2,
+          "per_level_above_first": 0.2
+        },
+        "operation": "add_multiplied_total"
+      },
+      {
+        "id": "minecraft:enchantment.fury_2",
+        "attribute": "minecraft:armor",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.1,
+          "per_level_above_first": -0.2
+        },
+        "operation": "add_multiplied_total"
+      }
+    ]
+  }
+}

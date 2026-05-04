@@ -1,0 +1,13 @@
+{
+  "values": [
+    "#minecraft:exclusive_set/damage",
+    "minecraft:power",
+    "redstone_enchants:shadow_assault",
+    "redstone_enchants:xp_blade",
+    "redstone_enchants:committed",
+    "redstone_enchants:swift_shadowcutter",
+    "redstone_enchants:under_pressure",
+    "redstone_enchants:unleash_potential",
+    "redstone_enchants:last_hope"
+  ]
+}

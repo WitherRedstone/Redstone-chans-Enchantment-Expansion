@@ -1,0 +1,22 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.echoes_battle"
+  },
+  "supported_items": "#c:tools/shield",
+  "primary_items": "#c:tools/shield",
+  "weight": 3,
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "offhand"
+  ]
+}

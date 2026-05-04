@@ -1,0 +1,72 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.xp_blade"
+  },
+  "supported_items": "#redstone_enchants:weapon",
+  "primary_items": "#redstone_enchants:weapon",
+  "weight": 3,
+  "max_level": 4,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage",
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "enchanted": "attacker",
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:run_function",
+          "function": "redstone_enchants:enchantment/xp_blade"
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "attacker",
+          "predicate": {
+            "type_specific": {
+              "type": "minecraft:player",
+              "level": {
+                "min": 10
+              }
+            }
+          }
+        }
+      }
+    ],
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "linear",
+            "base": 1,
+            "per_level_above_first": 1.25
+          }
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "attacker",
+          "predicate": {
+            "type_specific": {
+              "type": "minecraft:player",
+              "level": {
+                "min": 10
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

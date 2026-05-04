@@ -1,0 +1,7 @@
+{
+  "message_id": "water_block",
+  "exhaustion": 0,
+  "scaling": "always",
+  "effects": "hurt",
+  "death_message_type": "default"
+}

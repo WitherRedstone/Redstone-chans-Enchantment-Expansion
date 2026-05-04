@@ -1,0 +1,75 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.dive_bomb"
+  },
+  "supported_items": "#c:tools/mace",
+  "primary_items": "#c:tools/mace",
+  "weight": 3,
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/mace",
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:explode",
+          "damage_type": "minecraft:explosion",
+          "block_interaction": "mob",
+          "create_fire": true,
+          "large_particle": {
+            "type": "minecraft:explosion"
+          },
+          "radius": {
+            "type": "minecraft:linear",
+            "base": 2,
+            "per_level_above_first": 1
+          },
+          "small_particle": {
+            "type": "minecraft:explosion_emitter"
+          },
+          "sound": "minecraft:entity.generic.explode"
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "attacker",
+          "predicate": {
+            "flags": {
+              "is_flying": false
+            },
+            "movement": {
+              "fall_distance": {
+                "min": 4
+              }
+            }
+          }
+        }
+      }
+    ],
+    "minecraft:attributes": [
+      {
+        "id": "redstone_enchants:enchantment.jump_strength_1",
+        "attribute": "minecraft:jump_strength",
+        "operation": "add_value",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.2,
+          "per_level_above_first": 0.2
+        }
+      }
+    ]
+  }
+}

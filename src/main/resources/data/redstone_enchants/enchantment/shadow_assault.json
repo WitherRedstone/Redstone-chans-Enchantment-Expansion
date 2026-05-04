@@ -1,0 +1,60 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.shadow_assault"
+  },
+  "supported_items": "#redstone_enchants:weapon",
+  "primary_items": "#redstone_enchants:weapon",
+  "weight": 3,
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage",
+  "effects": {
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": 2
+        },
+        "requirements": {
+          "condition": "minecraft:random_chance",
+          "chance": 0.33
+        }
+      },
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": 2
+        },
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.33
+            },
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "direct_attacker",
+              "predicate": {
+                "type": "#redstone_enchants:projectiles"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

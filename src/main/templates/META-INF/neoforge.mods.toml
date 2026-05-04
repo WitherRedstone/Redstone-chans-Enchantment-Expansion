@@ -1,0 +1,53 @@
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+logoFile="logo.png"
+
+authors="ChinaEX123"
+
+description='''
+Adds a variety of enchantment books to the game.
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+# Here's another dependency
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+# 血量护甲显示上限
+[[dependencies.${mod_id}]]
+    modId="overflowing_bars"
+    type="optional"
+    versionRange="[26.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+# 附魔描述
+[[dependencies.${mod_id}]]
+    modId="enchantment_descriptions"
+    type="optional"
+    versionRange="[26.1.2,)"
+    ordering="NONE"
+    side="BOTH"
+# 属性修复
+[[dependencies.${mod_id}]]
+    modId="attributefix"
+    type="optional"
+    versionRange="[26.1.2,)"
+    ordering="NONE"
+    side="BOTH"

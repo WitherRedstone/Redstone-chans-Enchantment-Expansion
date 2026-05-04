@@ -1,0 +1,1 @@
+execute positioned ~ ~0.25 ~ run function redstone_enchants:libs/animation/freeze_pic/start

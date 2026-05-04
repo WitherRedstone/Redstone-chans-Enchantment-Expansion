@@ -1,0 +1,22 @@
+{
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.tactical_knee"
+  },
+  "supported_items": "#redstone_enchants:armors_leg",
+  "primary_items": "#redstone_enchants:armors_leg",
+  "weight": 3,
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "legs"
+  ]
+}

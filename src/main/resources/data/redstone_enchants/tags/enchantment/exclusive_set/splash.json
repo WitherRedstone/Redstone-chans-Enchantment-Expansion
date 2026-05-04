@@ -1,0 +1,24 @@
+{
+  "values": [
+    "minecraft:infinity",
+    "redstone_enchants:splash_speed",
+    "redstone_enchants:splash_slowness",
+    "redstone_enchants:splash_regeneration",
+    "redstone_enchants:splash_hunger",
+    "redstone_enchants:splash_blindness",
+    "redstone_enchants:splash_glowing",
+    "redstone_enchants:splash_poison",
+    "redstone_enchants:splash_wither",
+    "redstone_enchants:splash_slow_falling",
+    "redstone_enchants:splash_wind_charged",
+    "redstone_enchants:splash_infested",
+    "redstone_enchants:splash_oozing",
+    "redstone_enchants:splash_weaving",
+
+    "redstone_enchants:evokers_wrath",
+    "redstone_enchants:ice_arrows",
+    "redstone_enchants:fire_arrows",
+    
+    "redstone_enchants:eternal_frost"
+  ]
+}

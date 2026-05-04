@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#minecraft:exclusive_set/armor",
+    "redstone_enchants:protection_day",
+    "redstone_enchants:protection_night",
+    "redstone_enchants:protection_end",
+    "redstone_enchants:protection_nether",
+    "redstone_enchants:dangerous_edge",
+    "redstone_enchants:fury",
+    "redstone_enchants:weak_armor"
+  ]
+}
