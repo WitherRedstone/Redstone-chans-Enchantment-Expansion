@@ -181,6 +181,7 @@
     "redstone_enchants:revive_ward",
     "redstone_enchants:daynight_cycle",
     "redstone_enchants:gambler",
-    "redstone_enchants:master_gatherer"
+    "redstone_enchants:master_gatherer",
+    "redstone_enchants:indestructible"
   ]
 }

@@ -31,6 +31,8 @@ public class MasterGathererEventHandler {
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
 
+        if (player.level().isClientSide()) return;
+
         // 检查主手工具是否有精通采集附魔
         ItemStack tool = player.getMainHandItem();
         if (tool.isEmpty()) return;

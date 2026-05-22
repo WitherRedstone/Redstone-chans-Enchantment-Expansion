@@ -30,6 +30,8 @@ public class ExcavatorEventHandler {
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
 
+        if (player.level().isClientSide()) return;
+
         // 创造模式不执行
         if (player.isCreative()) return;
 

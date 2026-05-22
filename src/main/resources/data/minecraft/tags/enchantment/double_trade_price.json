@@ -85,6 +85,7 @@
     "redstone_enchants:against_all_odds",
     "redstone_enchants:adaptive",
     "redstone_enchants:revive_ward",
-    "redstone_enchants:gambler"
+    "redstone_enchants:gambler",
+    "redstone_enchants:indestructible"
   ]
 }

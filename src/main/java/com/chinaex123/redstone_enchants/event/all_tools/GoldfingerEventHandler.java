@@ -35,6 +35,8 @@ public class GoldfingerEventHandler {
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
 
+        if (player.level().isClientSide()) return;
+
         ItemStack tool = player.getMainHandItem();
         Holder.Reference<Enchantment> goldfingerEnchant = player.level()
                 .registryAccess()

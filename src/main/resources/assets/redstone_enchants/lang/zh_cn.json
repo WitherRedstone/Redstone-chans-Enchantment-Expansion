@@ -44,6 +44,8 @@
   "enchantment.redstone_enchants.sturdy.desc": "装备免疫爆炸、闪电和岩浆",
   "enchantment.redstone_enchants.preservation":"保全",
   "enchantment.redstone_enchants.preservation.desc": "装备不会因无耐久而损坏消失",
+  "enchantment.redstone_enchants.indestructible":"坚不可摧",
+  "enchantment.redstone_enchants.indestructible.desc": "物品不再消耗耐久",
 
   "_enchantment.weapon": "[武器]类型附魔(weapons)",
   "enchantment.redstone_enchants.first_impression": "第一印象",

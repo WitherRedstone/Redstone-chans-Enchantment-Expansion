@@ -44,6 +44,8 @@
   "enchantment.redstone_enchants.sturdy.desc": "Equipment is immune to explosions, lightning, and lava",
   "enchantment.redstone_enchants.preservation": "Preservation",
   "enchantment.redstone_enchants.preservation.desc": "Equipment will not break or disappear when durability reaches zero",
+  "enchantment.redstone_enchants.indestructible":"Indestructible",
+  "enchantment.redstone_enchants.indestructible.desc": "The item no longer consumes durability",
 
   "_enchantment.weapon": "[Weapon] Type Enchantments",
   "enchantment.redstone_enchants.first_impression": "First Impression",

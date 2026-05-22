@@ -4,6 +4,7 @@ import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -38,15 +39,15 @@ public class BackstabEventHandler {
         if (level <= 0) return;
 
         // 计算攻击者相对于目标的方向向量
-        double dx = attacker.getX() - target.getX();
-        double dz = attacker.getZ() - target.getZ();
+        double dx = target.getX() - attacker.getX();
+        double dz = target.getZ() - attacker.getZ();
 
         // 计算目标朝向的单位向量
         float targetYawRad = target.getYRot() * (float) Math.PI / 180.0f;
-        float targetLookX = -net.minecraft.util.Mth.sin(targetYawRad);
-        float targetLookZ = net.minecraft.util.Mth.cos(targetYawRad);
+        float targetLookX = -Mth.sin(targetYawRad);
+        float targetLookZ = Mth.cos(targetYawRad);
 
-        // 计算点积：>0 表示在背后，<0 表示在正面
+        // 计算点积：>0 表示攻击者在目标背后，<0 表示在正面
         double dotProduct = dx * targetLookX + dz * targetLookZ;
 
         float damageMultiplier = 1.0f;
