@@ -15,11 +15,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 /**
- * 踏浪者：可在水面行走，潜行时下潜到水下
+ * 踏焰者：可在岩浆表面行走，潜行时下潜到岩浆下
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MOD_ID)
-public class WaveWalkerEventHandler {
-    private static final Identifier WAVE_WALKER_ID = Identifier.fromNamespaceAndPath(RedstoneEnchants.MOD_ID, "wave_walker");
+public class FlameWalkerEventHandler {
+    private static final Identifier FLAME_WALKER_ID = Identifier.fromNamespaceAndPath(RedstoneEnchants.MOD_ID, "flame_walker");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -28,41 +28,41 @@ public class WaveWalkerEventHandler {
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         if (boots.isEmpty()) return;
 
-        Holder.Reference<Enchantment> waveWalkerEnchant = player.level()
+        Holder.Reference<Enchantment> flameWalkerEnchant = player.level()
                 .registryAccess()
                 .lookupOrThrow(Registries.ENCHANTMENT)
-                .get(WAVE_WALKER_ID)
+                .get(FLAME_WALKER_ID)
                 .orElse(null);
 
-        if (waveWalkerEnchant == null) return;
+        if (flameWalkerEnchant == null) return;
 
         @SuppressWarnings("deprecation")
-        int enchantLevel = boots.getEnchantments().getLevel(waveWalkerEnchant);
+        int enchantLevel = boots.getEnchantments().getLevel(flameWalkerEnchant);
         if (enchantLevel <= 0) return;
 
         // 如果玩家潜行，允许正常下潜
         if (player.isCrouching()) return;
 
-        // 检查玩家是否不在水中
-        if (player.isInWater()) return;
+        // 检查玩家是否不在岩浆中
+        if (player.isInLava()) return;
 
-        // 检测脚底下方0.4格的位置是否有水
+        // 检测脚底下方0.4格的位置是否有岩浆
         BlockPos entityPos = player.blockPosition();
-        BlockPos waterCheckPos = new BlockPos(
+        BlockPos lavaCheckPos = new BlockPos(
                 entityPos.getX(),
                 (int) Math.floor(player.getBoundingBox().minY - 0.4),
                 entityPos.getZ()
         );
 
-        boolean hasWaterBelow = player.level().getFluidState(waterCheckPos).is(Fluids.WATER);
+        boolean hasLavaBelow = player.level().getFluidState(lavaCheckPos).is(Fluids.LAVA);
 
-        if (hasWaterBelow) {
-            // 获取水面高度
-            double waterHeight = waterCheckPos.getY() + 1.0;
+        if (hasLavaBelow) {
+            // 获取岩浆表面高度
+            double lavaHeight = lavaCheckPos.getY() + 1.0;
 
-            // 如果玩家在水面上方，调整到水面高度
-            if (player.getY() > waterHeight) {
-                player.setPos(player.getX(), waterHeight, player.getZ());
+            // 如果玩家在岩浆面上方，调整到岩浆表面高度
+            if (player.getY() > lavaHeight) {
+                player.setPos(player.getX(), lavaHeight, player.getZ());
             }
 
             // 设置垂直速度为0

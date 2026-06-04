@@ -18,15 +18,5 @@
   "anvil_cost": 12,
   "slots": [
     "mainhand"
-  ],
-  "effects": {
-    "minecraft:tick": [
-      {
-        "effect": {
-          "type": "minecraft:run_function",
-          "function": "redstone_enchants:enchantment/haste"
-        }
-      }
-    ]
-  }
+  ]
 }

@@ -14,9 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 
-/**
- * 坚不可摧：物品不再消耗耐久
- */
+/** 坚不可摧：物品不再消耗耐久 **/
 @EventBusSubscriber(modid = RedstoneEnchants.MOD_ID)
 public class IndestructibleEventHandler {
     private static final Identifier INDESTRUCTIBLE_ID = Identifier.fromNamespaceAndPath(RedstoneEnchants.MOD_ID, "indestructible");

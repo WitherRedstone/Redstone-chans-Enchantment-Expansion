@@ -19,30 +19,5 @@
   "slots": [
     "mainhand"
   ],
-  "exclusive_set": "#redstone_enchants:exclusive_set/mace",
-  "effects": {
-    "minecraft:post_attack": [
-      {
-        "enchanted": "attacker",
-        "affected": "victim",
-        "effect": {
-          "type": "minecraft:summon_entity",
-          "entity": "minecraft:lightning_bolt"
-        },
-        "requirements": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "direct_attacker",
-            "predicate": {
-              "movement": {
-                "fall_distance": {
-                  "min": 8
-                }
-              }
-            }
-          }
-        ]
-      }
-    ]
-  }
+  "exclusive_set": "#redstone_enchants:exclusive_set/mace"
 }

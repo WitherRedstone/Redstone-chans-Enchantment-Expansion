@@ -1,7 +1,7 @@
 {
   "description": {
     "color": "#FF55FF",
-    "translate": "enchantment.redstone_enchants.pegasus"
+    "translate": "enchantment.redstone_enchants.flame_walker"
   },
   "supported_items": "#redstone_enchants:armors_foot",
   "primary_items": "#redstone_enchants:armors_foot",
@@ -18,5 +18,6 @@
   "anvil_cost": 8,
   "slots": [
     "feet"
-  ]
+  ],
+  "exclusive_set": "minecraft:depth_strider"
 }
