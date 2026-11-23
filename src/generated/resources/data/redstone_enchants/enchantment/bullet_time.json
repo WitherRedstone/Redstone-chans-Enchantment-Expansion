@@ -1,0 +1,45 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.bullet_time"
+  },
+  "effects": {
+    "minecraft:location_changed": [
+      {
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "max_duration": 1.3,
+          "min_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "min_duration": 1.3,
+          "to_apply": "minecraft:slow_falling"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:all_bow",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#redstone_enchants:all_bow",
+  "weight": 3
+}

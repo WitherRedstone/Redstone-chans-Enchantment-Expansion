@@ -1,0 +1,58 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.under_pressure"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "max_duration": 5.0,
+          "min_amplifier": 0.0,
+          "min_duration": 5.0,
+          "to_apply": [
+            "minecraft:strength",
+            "minecraft:haste",
+            "minecraft:speed"
+          ]
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "equipment": {
+              "mainhand": {
+                "items": "#minecraft:enchantable/weapon"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage",
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#redstone_enchants:swords",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#redstone_enchants:swords_and_axes",
+  "weight": 2
+}

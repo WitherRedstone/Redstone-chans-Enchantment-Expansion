@@ -1,0 +1,59 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.protection_nether"
+  },
+  "effects": {
+    "minecraft:damage_protection": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 2.0,
+            "per_level_above_first": 2.0
+          }
+        },
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:damage_source_properties",
+              "predicate": {
+                "tags": [
+                  {
+                    "expected": false,
+                    "id": "minecraft:bypasses_invulnerability"
+                  }
+                ]
+              }
+            },
+            {
+              "condition": "minecraft:location_check",
+              "predicate": {
+                "dimension": "minecraft:the_nether"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/armors",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors",
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#redstone_enchants:armors",
+  "weight": 3
+}

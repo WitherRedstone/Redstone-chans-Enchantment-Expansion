@@ -1,0 +1,84 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.exorcism"
+  },
+  "effects": {
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 2.5,
+            "per_level_above_first": 2.5
+          }
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "#redstone_enchants:exorcism"
+          }
+        }
+      }
+    ],
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": 1.0,
+          "max_duration": {
+            "type": "minecraft:linear",
+            "base": 3.0,
+            "per_level_above_first": 0.5
+          },
+          "min_amplifier": 1.0,
+          "min_duration": 1.5,
+          "to_apply": [
+            "minecraft:weakness",
+            "minecraft:slowness"
+          ]
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type": "#redstone_enchants:exorcism"
+              }
+            },
+            {
+              "condition": "minecraft:damage_source_properties",
+              "predicate": {
+                "is_direct": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage_bane",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:weapon",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#redstone_enchants:weapon",
+  "weight": 3
+}

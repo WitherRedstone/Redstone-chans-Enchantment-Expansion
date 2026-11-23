@@ -1,0 +1,43 @@
+{
+  "anvil_cost": 200,
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.last_hope"
+  },
+  "effects": {
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": 2.1474836E9
+        },
+        "requirements": {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "#redstone_enchants:black_entity"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage",
+  "max_cost": {
+    "base": 150,
+    "per_level_above_first": 120
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 120,
+    "per_level_above_first": 100
+  },
+  "primary_items": "#redstone_enchants:last_hope_weapons",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#redstone_enchants:last_hope_weapons",
+  "weight": 1
+}

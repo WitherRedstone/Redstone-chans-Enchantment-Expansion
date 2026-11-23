@@ -1,0 +1,46 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_stillness"
+  },
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:damage_entity",
+          "damage_type": "minecraft:dry_out",
+          "max_damage": 0.5,
+          "min_damage": 0.0
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "movement": {
+              "fall_distance": 0.0,
+              "horizontal_speed": 0.0,
+              "speed": 0.0,
+              "vertical_speed": 0.0
+            }
+          }
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors",
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#redstone_enchants:armors",
+  "weight": 4
+}

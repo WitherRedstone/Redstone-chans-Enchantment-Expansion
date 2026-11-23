@@ -1,0 +1,66 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.strength_shield"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "max_duration": {
+            "type": "minecraft:linear",
+            "base": 4.0,
+            "per_level_above_first": 3.0
+          },
+          "min_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "min_duration": {
+            "type": "minecraft:linear",
+            "base": 2.0,
+            "per_level_above_first": 1.0
+          },
+          "to_apply": "minecraft:strength"
+        },
+        "enchanted": "victim",
+        "requirements": {
+          "chance": {
+            "type": "minecraft:enchantment_level",
+            "amount": {
+              "type": "minecraft:linear",
+              "base": 0.1,
+              "per_level_above_first": 0.2
+            }
+          },
+          "condition": "minecraft:random_chance"
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/shield",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#c:tools/shield",
+  "slots": [
+    "offhand"
+  ],
+  "supported_items": "#c:tools/shield",
+  "weight": 3
+}

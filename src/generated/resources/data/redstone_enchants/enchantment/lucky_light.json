@@ -1,0 +1,45 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.lucky_light"
+  },
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "max_duration": 0.2,
+          "min_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "min_duration": 0.2,
+          "to_apply": "minecraft:luck"
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/head_lucky",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_head",
+  "slots": [
+    "head"
+  ],
+  "supported_items": "#redstone_enchants:armors_head",
+  "weight": 3
+}

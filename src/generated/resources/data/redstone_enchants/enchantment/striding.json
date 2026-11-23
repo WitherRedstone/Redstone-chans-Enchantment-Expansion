@@ -1,0 +1,46 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.striding"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.5,
+          "per_level_above_first": 0.25
+        },
+        "attribute": "minecraft:generic.step_height",
+        "id": "redstone_enchants:enchantment.striding_1",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.0,
+          "per_level_above_first": 0.05
+        },
+        "attribute": "minecraft:generic.movement_speed",
+        "id": "redstone_enchants:enchantment.striding_2",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_leg",
+  "slots": [
+    "legs"
+  ],
+  "supported_items": "#redstone_enchants:armors_leg",
+  "weight": 3
+}

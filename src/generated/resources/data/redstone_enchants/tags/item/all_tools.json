@@ -1,0 +1,17 @@
+{
+  "values": [
+    "#minecraft:swords",
+    "#minecraft:pickaxes",
+    "#minecraft:axes",
+    "#minecraft:shovels",
+    "#minecraft:hoes",
+    {
+      "id": "#minecraft:bow",
+      "required": false
+    },
+    "minecraft:trident",
+    "#c:tools/bow",
+    "#c:tools/mace",
+    "#redstone_enchants:all_special_tools"
+  ]
+}

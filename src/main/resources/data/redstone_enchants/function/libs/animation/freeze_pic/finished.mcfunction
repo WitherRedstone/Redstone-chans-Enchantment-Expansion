@@ -1,1 +1,0 @@
-kill @e[tag=redstone_enchants.block_display.animation.finished]

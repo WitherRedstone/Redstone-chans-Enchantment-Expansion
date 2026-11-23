@@ -1,1 +1,0 @@
-particle minecraft:sonic_boom ~ ~ ~ 1 1 1 0.5 50 normal

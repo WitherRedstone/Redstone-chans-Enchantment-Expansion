@@ -1,0 +1,37 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.gallop"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.2,
+          "per_level_above_first": 0.2
+        },
+        "attribute": "minecraft:generic.movement_speed",
+        "id": "redstone_enchants:enchantment.gallop_1",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/boots_gallop",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_foot",
+  "slots": [
+    "feet"
+  ],
+  "supported_items": "#redstone_enchants:armors_foot",
+  "weight": 3
+}

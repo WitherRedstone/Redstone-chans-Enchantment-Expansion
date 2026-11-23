@@ -1,0 +1,44 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.resilient_bastion"
+  },
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "max_duration": 0.2,
+          "min_amplifier": {
+            "type": "minecraft:linear",
+            "base": 0.0,
+            "per_level_above_first": 1.0
+          },
+          "min_duration": 0.2,
+          "to_apply": "minecraft:resistance"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#redstone_enchants:armors_chest",
+  "slots": [
+    "chest"
+  ],
+  "supported_items": "#redstone_enchants:armors_chest",
+  "weight": 2
+}

@@ -1,0 +1,36 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.moonwalk"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.03,
+          "per_level_above_first": -0.015
+        },
+        "attribute": "minecraft:generic.gravity",
+        "id": "redstone_enchants:enchantment.moonwalk_1",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:elytra",
+  "slots": [
+    "chest"
+  ],
+  "supported_items": "#redstone_enchants:elytra",
+  "weight": 3
+}

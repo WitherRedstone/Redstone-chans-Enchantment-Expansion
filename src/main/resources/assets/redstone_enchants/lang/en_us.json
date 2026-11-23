@@ -485,7 +485,6 @@
   "enchantment.redstone_enchants.carrion_eater": "Carrion Eater",
   "enchantment.redstone_enchants.carrion_eater.desc": "Wolves restore a percentage of their maximum health after killing a mob.",
 
-
-  "_enchantment.tooltip":"工具提示",
+  "_enchantment.tooltip":"Tooltip",
   "tooltip.redstone_enchants.preservation_broken": "§cBroken (Repair to use)"
 }

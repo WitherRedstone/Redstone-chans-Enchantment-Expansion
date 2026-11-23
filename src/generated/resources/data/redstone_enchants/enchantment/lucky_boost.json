@@ -1,0 +1,37 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.lucky_boost"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 2.0,
+          "per_level_above_first": 2.5
+        },
+        "attribute": "minecraft:generic.luck",
+        "id": "redstone_enchants:enchantencore.lucky_boost_1",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/head_lucky",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_head",
+  "slots": [
+    "head"
+  ],
+  "supported_items": "#redstone_enchants:armors_head",
+  "weight": 3
+}

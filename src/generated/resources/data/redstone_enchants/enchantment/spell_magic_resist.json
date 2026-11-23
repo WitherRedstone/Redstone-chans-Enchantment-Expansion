@@ -1,0 +1,122 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    }
+  ],
+  "anvil_cost": 16,
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.magic_resist"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:ice_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_1",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:blood_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_2",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:holy_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_3",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:nature_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_4",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:eldritch_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_5",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:lightning_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_6",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:evocation_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_7",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:ender_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_8",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "irons_spellbooks:fire_magic_resist",
+        "id": "redstone_enchants:enchantment.magic_resist_9",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 48,
+    "per_level_above_first": 18
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 18,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#minecraft:chest_armor",
+  "slots": [
+    "chest"
+  ],
+  "supported_items": "#minecraft:chest_armor",
+  "weight": 1
+}

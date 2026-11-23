@@ -1,0 +1,33 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.stable_shield"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": 1.0,
+        "attribute": "minecraft:generic.knockback_resistance",
+        "id": "redstone_enchants:enchantment.stalwart_1",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/shield",
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#c:tools/shield",
+  "slots": [
+    "offhand"
+  ],
+  "supported_items": "#c:tools/shield",
+  "weight": 2
+}

@@ -1,0 +1,36 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.safe_fall"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 2.0,
+          "per_level_above_first": 1.0
+        },
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "id": "redstone_enchants:enchantment.safe_fall_1",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_leg",
+  "slots": [
+    "legs"
+  ],
+  "supported_items": "#redstone_enchants:armors_leg",
+  "weight": 3
+}

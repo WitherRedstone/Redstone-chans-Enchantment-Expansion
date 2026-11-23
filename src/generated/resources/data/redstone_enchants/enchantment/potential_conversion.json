@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.potential_conversion"
+  },
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#c:tools/mace",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#c:tools/mace",
+  "weight": 3
+}

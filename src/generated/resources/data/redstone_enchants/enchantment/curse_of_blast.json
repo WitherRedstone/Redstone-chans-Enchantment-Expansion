@@ -1,0 +1,70 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_blast"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:all_of",
+          "effects": [
+            {
+              "type": "minecraft:explode",
+              "attribute_to_user": true,
+              "block_interaction": "tnt",
+              "create_fire": true,
+              "damage_type": "minecraft:explosion",
+              "knockback_multiplier": 1.0,
+              "large_particle": {
+                "type": "minecraft:explosion_emitter"
+              },
+              "offset": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "radius": 3.0,
+              "small_particle": {
+                "type": "minecraft:explosion_emitter"
+              },
+              "sound": "minecraft:entity.generic.explode"
+            },
+            {
+              "type": "minecraft:damage_entity",
+              "damage_type": "minecraft:explosion",
+              "max_damage": 4.0,
+              "min_damage": 4.0
+            },
+            {
+              "type": "minecraft:ignite",
+              "duration": 5.0
+            }
+          ]
+        },
+        "enchanted": "victim",
+        "requirements": {
+          "chance": 0.3,
+          "condition": "minecraft:random_chance"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors",
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#redstone_enchants:armors",
+  "weight": 4
+}

@@ -1,5 +1,13 @@
 pluginManagement {
     repositories {
+        maven {
+            name = 'HuaweiCloud'
+            url = 'https://repo.huaweicloud.com/repository/maven/'
+        }
+        maven {
+            name = 'HuaweiCloudMinecraft'
+            url = 'https://repo.huaweicloud.com/repository/minecraft/'
+        }
         gradlePluginPortal()
     }
 }

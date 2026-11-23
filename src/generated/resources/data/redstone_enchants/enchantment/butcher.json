@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#55FFFF",
+    "translate": "enchantment.redstone_enchants.butcher"
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:swords",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#redstone_enchants:swords_and_axes",
+  "weight": 4
+}

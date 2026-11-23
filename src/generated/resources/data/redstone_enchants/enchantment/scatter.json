@@ -1,0 +1,38 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.scatter"
+  },
+  "effects": {
+    "minecraft:projectile_spread": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 10.0,
+            "per_level_above_first": 10.0
+          }
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/bow_spread",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:all_bow",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#redstone_enchants:all_bow",
+  "weight": 3
+}

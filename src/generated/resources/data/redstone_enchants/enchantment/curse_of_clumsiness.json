@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_clumsiness"
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#c:enchantables",
+  "slots": [
+    "any"
+  ],
+  "supported_items": "#c:enchantables",
+  "weight": 4
+}

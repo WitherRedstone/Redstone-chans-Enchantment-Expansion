@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#55FFFF",
+    "translate": "enchantment.redstone_enchants.aura_burning"
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/aura",
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_foot",
+  "slots": [
+    "feet"
+  ],
+  "supported_items": "#redstone_enchants:armors_foot",
+  "weight": 4
+}

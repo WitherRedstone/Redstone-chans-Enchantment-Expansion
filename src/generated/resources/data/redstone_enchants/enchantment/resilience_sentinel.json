@@ -1,0 +1,72 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.resilience_sentinel"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": 2.0,
+          "max_duration": 12.0,
+          "min_amplifier": 0.0,
+          "min_duration": 6.0,
+          "to_apply": "minecraft:resistance"
+        },
+        "enchanted": "victim",
+        "requirements": {
+          "chance": {
+            "type": "minecraft:enchantment_level",
+            "amount": {
+              "type": "minecraft:linear",
+              "base": 0.1,
+              "per_level_above_first": 0.2
+            }
+          },
+          "condition": "minecraft:random_chance"
+        }
+      },
+      {
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": 0.0,
+          "max_duration": 3.0,
+          "min_amplifier": 0.0,
+          "min_duration": 3.0,
+          "to_apply": "minecraft:weakness"
+        },
+        "enchanted": "victim",
+        "requirements": {
+          "chance": {
+            "type": "minecraft:enchantment_level",
+            "amount": {
+              "type": "minecraft:linear",
+              "base": 0.1,
+              "per_level_above_first": 0.05
+            }
+          },
+          "condition": "minecraft:random_chance"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#redstone_enchants:armors_leg",
+  "slots": [
+    "legs"
+  ],
+  "supported_items": "#redstone_enchants:armors_leg",
+  "weight": 2
+}

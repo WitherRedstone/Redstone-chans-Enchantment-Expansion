@@ -1,0 +1,66 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.messenger"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.25,
+          "per_level_above_first": 0.125
+        },
+        "attribute": "minecraft:generic.movement_speed",
+        "id": "redstone_enchants:enchantment.messenger_1",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 1.0,
+          "per_level_above_first": 0.5
+        },
+        "attribute": "minecraft:generic.movement_efficiency",
+        "id": "redstone_enchants:enchantment.messenger_2",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.6,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "minecraft:generic.water_movement_efficiency",
+        "id": "redstone_enchants:enchantment.messenger_3",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.2,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "minecraft:generic.jump_strength",
+        "id": "redstone_enchants:enchantment.messenger_4",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:horse_animal_armor",
+  "slots": [
+    "body"
+  ],
+  "supported_items": "#redstone_enchants:horse_animal_armor",
+  "weight": 3
+}

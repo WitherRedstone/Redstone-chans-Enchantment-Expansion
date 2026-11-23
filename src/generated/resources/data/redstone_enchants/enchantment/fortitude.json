@@ -1,0 +1,36 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.fortitude"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.14,
+          "per_level_above_first": 0.12
+        },
+        "attribute": "minecraft:generic.armor",
+        "id": "redstone_enchants:enchantment.fortitude_1",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors",
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#redstone_enchants:armors",
+  "weight": 3
+}

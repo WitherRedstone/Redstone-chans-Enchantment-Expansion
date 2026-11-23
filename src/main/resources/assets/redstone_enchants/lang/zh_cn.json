@@ -485,7 +485,6 @@
   "enchantment.redstone_enchants.carrion_eater":"尸体回收",
   "enchantment.redstone_enchants.carrion_eater.desc": "狼击杀生物后回复最大生命值",
 
-
   "_enchantment.tooltip":"工具提示",
   "tooltip.redstone_enchants.preservation_broken": "§c已损坏（需修复）"
 }

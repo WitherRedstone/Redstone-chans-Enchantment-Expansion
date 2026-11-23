@@ -1,0 +1,10 @@
+// 1.21.1	2026-11-21T15:00:10.4876718	Redstone Enchants predicates
+cf33c2169b844ae23ec997563de65d6caf0a3fa2 data/redstone_enchants/predicate/last_hope_target.json
+613280b40a42e9b10954419bda67a09ce357af10 data/redstone_enchants/predicate/percentages/10.json
+231ea7e7ac9e01cc7ad1c0c3a7e1872556def5ef data/redstone_enchants/predicate/percentages/2-5.json
+676f9eaf9734f5da6fc65df155a0d3b168ecbba7 data/redstone_enchants/predicate/percentages/20.json
+f5b714220046d8108bb7b51953939c0bdb374f2c data/redstone_enchants/predicate/percentages/30.json
+e25c098567d6482eddad57fd78d0e64e26d83194 data/redstone_enchants/predicate/percentages/45.json
+5074a95bd5b7fc150a931efaf24dc261ecd8573c data/redstone_enchants/predicate/percentages/5.json
+e2f40b7c6b2d53854e2cf9eaf83d584292b87919 data/redstone_enchants/predicate/percentages/60.json
+cbd4c32cb7a5894800b18a9272b1f7af7cec0625 data/redstone_enchants/predicate/percentages/80.json

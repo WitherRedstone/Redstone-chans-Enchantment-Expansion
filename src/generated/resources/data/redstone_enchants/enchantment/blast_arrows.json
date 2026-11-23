@@ -1,0 +1,106 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "color": "#FFAA00",
+    "translate": "enchantment.redstone_enchants.blast_arrows"
+  },
+  "effects": {
+    "minecraft:hit_block": [
+      {
+        "effect": {
+          "type": "minecraft:explode",
+          "block_interaction": "none",
+          "damage_type": "minecraft:explosion",
+          "immune_blocks": "#minecraft:blocks_wind_charge_explosions",
+          "knockback_multiplier": {
+            "type": "minecraft:linear",
+            "base": 0.5,
+            "per_level_above_first": 0.25
+          },
+          "large_particle": {
+            "type": "minecraft:gust_emitter_large"
+          },
+          "offset": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "radius": {
+            "type": "minecraft:linear",
+            "base": 1.5,
+            "per_level_above_first": 0.75
+          },
+          "small_particle": {
+            "type": "minecraft:gust_emitter_small"
+          },
+          "sound": "minecraft:entity.wind_charge.wind_burst"
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "#minecraft:arrows"
+          }
+        }
+      }
+    ],
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:explode",
+          "block_interaction": "none",
+          "damage_type": "minecraft:explosion",
+          "immune_blocks": "#minecraft:blocks_wind_charge_explosions",
+          "knockback_multiplier": {
+            "type": "minecraft:linear",
+            "base": 0.5,
+            "per_level_above_first": 0.25
+          },
+          "large_particle": {
+            "type": "minecraft:gust_emitter_large"
+          },
+          "offset": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "radius": {
+            "type": "minecraft:linear",
+            "base": 1.5,
+            "per_level_above_first": 0.75
+          },
+          "small_particle": {
+            "type": "minecraft:gust_emitter_small"
+          },
+          "sound": "minecraft:entity.wind_charge.wind_burst"
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "direct_attacker",
+          "predicate": {
+            "type": "#minecraft:arrows"
+          }
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/damage_bow",
+  "max_cost": {
+    "base": 32,
+    "per_level_above_first": 16
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 16,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#redstone_enchants:all_bow",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#redstone_enchants:all_bow",
+  "weight": 2
+}

@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.preservation"
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#c:enchantables",
+  "slots": [
+    "any"
+  ],
+  "supported_items": "#c:enchantables",
+  "weight": 3
+}

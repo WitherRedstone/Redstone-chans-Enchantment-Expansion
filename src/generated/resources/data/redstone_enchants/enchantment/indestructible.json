@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 50,
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.indestructible"
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/indestructible",
+  "max_cost": {
+    "base": 0,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 0,
+    "per_level_above_first": 0
+  },
+  "primary_items": "#c:enchantables",
+  "slots": [
+    "any"
+  ],
+  "supported_items": "#c:enchantables",
+  "weight": 1
+}

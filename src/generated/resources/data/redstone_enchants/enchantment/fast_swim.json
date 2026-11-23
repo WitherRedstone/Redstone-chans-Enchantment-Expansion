@@ -1,0 +1,46 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.fast_swim"
+  },
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": 0.0,
+          "max_duration": 8.0,
+          "min_amplifier": 0.0,
+          "min_duration": 4.0,
+          "to_apply": "minecraft:dolphins_grace"
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "flags": {
+              "is_swimming": true
+            },
+            "periodic_tick": 80
+          }
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors_leg",
+  "slots": [
+    "legs"
+  ],
+  "supported_items": "#redstone_enchants:armors_leg",
+  "weight": 3
+}

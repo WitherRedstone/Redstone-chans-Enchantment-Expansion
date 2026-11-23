@@ -1,0 +1,52 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "apothic_attributes"
+    }
+  ],
+  "anvil_cost": 16,
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.dual_critical_boost"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.233,
+          "per_level_above_first": 0.126
+        },
+        "attribute": "apothic_attributes:crit_chance",
+        "id": "redstone_enchants:enchantment.dual_critical_boost_1",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.582,
+          "per_level_above_first": 0.286
+        },
+        "attribute": "apothic_attributes:crit_damage",
+        "id": "redstone_enchants:enchantment.dual_critical_boost_2",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 48,
+    "per_level_above_first": 18
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 18,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#redstone_enchants:armors_chest",
+  "slots": [
+    "chest"
+  ],
+  "supported_items": "#redstone_enchants:armors_chest",
+  "weight": 1
+}

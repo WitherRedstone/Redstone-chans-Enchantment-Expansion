@@ -1,0 +1,116 @@
+{
+  "anvil_cost": 16,
+  "description": {
+    "color": "#FF00BB",
+    "translate": "enchantment.redstone_enchants.minify"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:lookup",
+          "fallback": {
+            "type": "minecraft:linear",
+            "base": -0.15,
+            "per_level_above_first": -0.15
+          },
+          "values": [
+            -0.15,
+            -0.25,
+            -0.35,
+            -0.5
+          ]
+        },
+        "attribute": "minecraft:generic.scale",
+        "id": "redstone_enchants:enchantment.minify_1",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.25,
+          "per_level_above_first": -0.25
+        },
+        "attribute": "minecraft:generic.step_height",
+        "id": "redstone_enchants:enchantment.minify_2",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -1.0,
+          "per_level_above_first": -0.5
+        },
+        "attribute": "minecraft:generic.attack_damage",
+        "id": "redstone_enchants:enchantment.minify_3",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -2.5,
+          "per_level_above_first": -2.5
+        },
+        "attribute": "minecraft:generic.max_health",
+        "id": "redstone_enchants:enchantment.minify_4",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.15,
+          "per_level_above_first": -0.1
+        },
+        "attribute": "minecraft:player.entity_interaction_range",
+        "id": "redstone_enchants:enchantment.minify_5",
+        "operation": "add_multiplied_total"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.15,
+          "per_level_above_first": -0.1
+        },
+        "attribute": "minecraft:player.block_interaction_range",
+        "id": "redstone_enchants:enchantment.minify_6",
+        "operation": "add_multiplied_total"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.015,
+          "per_level_above_first": 0.01
+        },
+        "attribute": "minecraft:generic.movement_speed",
+        "id": "redstone_enchants:enchantment.minify_7",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.04,
+          "per_level_above_first": 0.02
+        },
+        "attribute": "minecraft:generic.jump_strength",
+        "id": "redstone_enchants:enchantment.minify_8",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/armors_head",
+  "max_cost": {
+    "base": 48,
+    "per_level_above_first": 18
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 18,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#redstone_enchants:armors_head",
+  "slots": [
+    "head"
+  ],
+  "supported_items": "#redstone_enchants:armors_head",
+  "weight": 1
+}

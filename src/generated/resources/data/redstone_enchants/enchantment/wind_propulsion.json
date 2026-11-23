@@ -1,0 +1,68 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.wind_propulsion"
+  },
+  "effects": {
+    "minecraft:hit_block": [
+      {
+        "effect": {
+          "type": "minecraft:explode",
+          "block_interaction": "trigger",
+          "immune_blocks": "#minecraft:blocks_wind_charge_explosions",
+          "knockback_multiplier": {
+            "type": "minecraft:lookup",
+            "fallback": {
+              "type": "minecraft:linear",
+              "base": 1.25,
+              "per_level_above_first": 0.35
+            },
+            "values": [
+              1.25,
+              1.65,
+              2.25
+            ]
+          },
+          "large_particle": {
+            "type": "minecraft:gust_emitter_large"
+          },
+          "offset": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "radius": 3.5,
+          "small_particle": {
+            "type": "minecraft:gust_emitter_small"
+          },
+          "sound": "minecraft:entity.wind_charge.wind_burst"
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "flags": {
+              "is_on_ground": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#c:tools/mace",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#c:tools/mace",
+  "weight": 3
+}

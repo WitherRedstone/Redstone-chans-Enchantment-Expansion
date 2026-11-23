@@ -1,0 +1,59 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_hiding"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": {
+            "type": "minecraft:linear",
+            "base": 1.0,
+            "per_level_above_first": 1.0
+          },
+          "max_duration": {
+            "type": "minecraft:linear",
+            "base": 5.0,
+            "per_level_above_first": 5.0
+          },
+          "min_amplifier": {
+            "type": "minecraft:linear",
+            "base": 1.0,
+            "per_level_above_first": 1.0
+          },
+          "min_duration": {
+            "type": "minecraft:linear",
+            "base": 2.0,
+            "per_level_above_first": 3.0
+          },
+          "to_apply": "minecraft:invisibility"
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "condition": "minecraft:damage_source_properties",
+          "predicate": {}
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:tools",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#redstone_enchants:tools",
+  "weight": 4
+}

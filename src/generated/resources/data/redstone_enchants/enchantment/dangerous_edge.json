@@ -1,0 +1,47 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.dangerous_edge"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -2.5,
+          "per_level_above_first": -1.5
+        },
+        "attribute": "minecraft:generic.armor",
+        "id": "redstone_enchants:enchantment.dangerous_edge_1",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 2.5,
+          "per_level_above_first": 1.5
+        },
+        "attribute": "minecraft:generic.attack_damage",
+        "id": "redstone_enchants:enchantment.dangerous_edge_2",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "exclusive_set": "#redstone_enchants:exclusive_set/armors",
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:armors",
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#redstone_enchants:armors",
+  "weight": 3
+}

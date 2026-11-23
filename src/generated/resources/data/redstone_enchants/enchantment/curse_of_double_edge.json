@@ -1,0 +1,41 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "color": "#FF5555",
+    "translate": "enchantment.redstone_enchants.curse_of_double_edge"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "attacker",
+        "effect": {
+          "type": "minecraft:damage_entity",
+          "damage_type": "minecraft:magic",
+          "max_damage": 4.0,
+          "min_damage": 2.0
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "chance": 0.4,
+          "condition": "minecraft:random_chance"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:tools",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#redstone_enchants:tools",
+  "weight": 4
+}

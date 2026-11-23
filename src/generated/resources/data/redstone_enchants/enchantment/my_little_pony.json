@@ -1,0 +1,66 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "color": "#FF55FF",
+    "translate": "enchantment.redstone_enchants.my_little_pony"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.8,
+          "per_level_above_first": -0.2
+        },
+        "attribute": "minecraft:generic.scale",
+        "id": "redstone_enchants:enchantment.my_little_pony_1",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 2.0,
+          "per_level_above_first": 1.0
+        },
+        "attribute": "minecraft:generic.jump_strength",
+        "id": "redstone_enchants:enchantment.my_little_pony_2",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 10.0,
+          "per_level_above_first": 10.0
+        },
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "id": "redstone_enchants:enchantment.my_little_pony_3",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.01,
+          "per_level_above_first": 0.01
+        },
+        "attribute": "minecraft:generic.fall_damage_multiplier",
+        "id": "redstone_enchants:enchantment.my_little_pony_4",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 12
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#redstone_enchants:horse_armor",
+  "slots": [
+    "body"
+  ],
+  "supported_items": "#redstone_enchants:horse_armor",
+  "weight": 3
+}

@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ItemStack.class)
 public class PreservationMixin {
     @Unique
-    private static final ResourceLocation PRESERVATION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MOD_ID, "preservation");
+    private static final ResourceLocation PRESERVATION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "preservation");
 
     @Inject(method = "hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V", at = @At("HEAD"), cancellable = true)
     public void preservation_preventBreak(int amount, LivingEntity entity, EquipmentSlot slot, CallbackInfo ci) {
