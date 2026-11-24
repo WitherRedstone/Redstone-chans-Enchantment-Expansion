@@ -17,8 +17,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 伏特：雷雨天射出的箭矢伤害增加
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class VoltEventHandler {
-    private static final ResourceLocation VOLT_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "volt");
+    private static final ResourceLocation VOLT_ID = RedstoneEnchants.id("volt");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -42,7 +43,6 @@ public class VoltEventHandler {
 
         if (voltEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = bow.getEnchantments().getLevel(voltEnchant);
         if (level <= 0) return;
 

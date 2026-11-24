@@ -12,15 +12,13 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
-import java.util.Random;
-
 /**
  * 赌徒：50%概率伤害+40%，50%概率伤害-20%
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class GamblerEventHandler {
-    private static final ResourceLocation GAMBLER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "gambler");
-    private static final Random RANDOM = new Random();
+    private static final ResourceLocation GAMBLER_ID = RedstoneEnchants.id("gambler");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -49,7 +47,6 @@ public class GamblerEventHandler {
 
             if (gamblerEnchant == null) continue;
 
-            @SuppressWarnings("deprecation")
             int enchantLevel = weapon.getEnchantments().getLevel(gamblerEnchant);
 
             if (enchantLevel > 0) {
@@ -64,7 +61,7 @@ public class GamblerEventHandler {
         float originalDamage = event.getOriginalDamage();
         float newDamage;
 
-        if (RANDOM.nextFloat() < 0.5f) {
+        if (RedstoneEnchants.RANDOM.nextFloat() < 0.5f) {
             // 50%概率：伤害+40%
             newDamage = originalDamage * 1.4f;
         } else {

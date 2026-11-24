@@ -19,15 +19,14 @@ import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * 渔夫：钓鱼后收获鱼的数量有概率翻倍
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class AnglerEventHandler {
-    private static final ResourceLocation ANGLER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "angler");
-    private static final Random RANDOM = new Random();
+    private static final ResourceLocation ANGLER_ID = RedstoneEnchants.id("angler");
 
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
@@ -44,7 +43,6 @@ public class AnglerEventHandler {
 
         if (anglerEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = rod.getEnchantments().getLevel(anglerEnchant);
         if (level <= 0) return;
 
@@ -58,7 +56,7 @@ public class AnglerEventHandler {
             TagKey<Item> tideFishTag = TagKey.create(Registries.ITEM, ResourceLocation.parse("tide:fish"));
 
             // 概率翻倍
-            if (RANDOM.nextFloat() < chance) {
+            if (RedstoneEnchants.RANDOM.nextFloat() < chance) {
                 for (ItemStack drop : originalDrops) {
                     // 只复制鱼类物品
                     if (drop.is(ItemTags.FISHES) || drop.is(tideFishTag)) {

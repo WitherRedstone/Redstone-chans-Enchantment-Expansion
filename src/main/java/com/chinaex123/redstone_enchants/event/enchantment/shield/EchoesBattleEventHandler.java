@@ -19,9 +19,10 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
  * 战斗回响：盾牌格挡后，提升下一次攻击的伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class EchoesBattleEventHandler {
-    private static final ResourceLocation ECHOES_BATTLE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "echoes_battle");
-    private static final ResourceLocation ECHOES_BATTLE_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "echoes_battle_bonus");
+    private static final ResourceLocation ECHOES_BATTLE_ID = RedstoneEnchants.id("echoes_battle");
+    private static final ResourceLocation ECHOES_BATTLE_MODIFIER_ID = RedstoneEnchants.id("echoes_battle_bonus");
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
@@ -38,7 +39,6 @@ public class EchoesBattleEventHandler {
                         .orElse(null);
 
                 if (echoesBattleEnchant != null) {
-                    @SuppressWarnings("deprecation")
                     int level = shield.getEnchantments().getLevel(echoesBattleEnchant);
                     if (level > 0) {
                         applyAttackDamageBonus(player, level);
@@ -58,10 +58,9 @@ public class EchoesBattleEventHandler {
         AttributeInstance attribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
         if (attribute == null) return;
 
-        // 移除旧 modifier
         attribute.removeModifier(ECHOES_BATTLE_MODIFIER_ID);
 
-        // 添加新 modifier（每级+20%）
+        // 每级+20%
         double bonus = level * 0.2;
         AttributeModifier modifier = new AttributeModifier(
                 ECHOES_BATTLE_MODIFIER_ID,

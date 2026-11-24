@@ -25,8 +25,9 @@ import java.util.UUID;
  * 导电鱼线：雷雨天时，勾住生物产生闪电
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ConductiveLineEventHandler {
-    private static final ResourceLocation CONDUCTIVE_LINE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "conductive_line");
+    private static final ResourceLocation CONDUCTIVE_LINE_ID = RedstoneEnchants.id("conductive_line");
     private static final Set<UUID> struckEntities = new HashSet<>();
 
     @SubscribeEvent
@@ -49,7 +50,6 @@ public class ConductiveLineEventHandler {
 
         if (conductiveLineEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = rod.getEnchantments().getLevel(conductiveLineEnchant);
         if (level <= 0) return;
 

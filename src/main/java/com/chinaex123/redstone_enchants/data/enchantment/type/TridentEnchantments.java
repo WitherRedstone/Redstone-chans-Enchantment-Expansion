@@ -5,6 +5,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
+import com.chinaex123.redstone_enchants.init.REEnchantmentTags;
+import com.chinaex123.redstone_enchants.init.REEntityTypeTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**
@@ -44,9 +46,9 @@ public final class TridentEnchantments {
     private static void baneWater(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:enchantable/trident", "#minecraft:enchantable/trident", 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/bane"));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf("#redstone_enchants:entity_water")));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf("#redstone_enchants:entity_water")), damageSource(damageSourcePredicate().isDirect(true))));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_WATER)));
+        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_WATER)), damageSource(damageSourcePredicate().isDirect(true))));
         e.register(builder, BANE_WATER, 0xFF55FF, "bane_water");
     }
 
@@ -54,7 +56,7 @@ public final class TridentEnchantments {
     private static void seaBreeze(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:enchantable/trident", "#minecraft:enchantable/trident", 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/no_sea_breeze"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_NO_SEA_BREEZE));
         e.register(builder, SEA_BREEZE, 0xFF55FF, "sea_breeze");
     }
 
@@ -78,7 +80,7 @@ public final class TridentEnchantments {
     private static void underwaterBlasting(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:enchantable/trident", "#minecraft:enchantable/trident", 3, 1,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/no_sea_breeze"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_NO_SEA_BREEZE));
         e.postAttack(builder, target("attacker"), target("victim"), summon(e.entityTypes("minecraft:tnt"), false), req(randomChance(constantNumber(0.5f)), entityProperties("this", entity().located(location().setBlock(locBlockBuilder("minecraft:water"))))));
         e.register(builder, UNDERWATER_BLASTING, 0xFF55FF, "underwater_blasting");
     }

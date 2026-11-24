@@ -9,7 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 死亡诅咒：每次攻击都有小概率直接死亡。
+ * 死亡诅咒：攻击时有几率立即死亡。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class CurseOfDeathEventHandler {

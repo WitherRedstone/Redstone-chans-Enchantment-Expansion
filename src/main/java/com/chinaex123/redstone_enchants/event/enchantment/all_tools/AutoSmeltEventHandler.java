@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -25,8 +26,9 @@ import java.util.List;
  * 自动熔炼：挖掘的方块自动熔炼成对应成品
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class AutoSmeltEventHandler {
-    private static final ResourceLocation AUTO_SMELT_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "auto_smelt");
+    private static final ResourceLocation AUTO_SMELT_ID = RedstoneEnchants.id("auto_smelt");
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -43,7 +45,6 @@ public class AutoSmeltEventHandler {
 
         if (autoSmeltEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = tool.getEnchantments().getLevel(autoSmeltEnchant);
         if (level <= 0) return;
 
@@ -55,8 +56,7 @@ public class AutoSmeltEventHandler {
         var pos = event.getPos();
 
         // 获取原方块的掉落物
-        List<ItemStack> drops = net.minecraft.world.level.block.Block.getDrops(
-                blockState, serverLevel, pos, serverLevel.getBlockEntity(pos), player, tool);
+        List<ItemStack> drops = Block.getDrops(blockState, serverLevel, pos, serverLevel.getBlockEntity(pos), player, tool);
 
         // 移除原方块
         serverLevel.destroyBlock(pos, false, player);
@@ -96,7 +96,6 @@ public class AutoSmeltEventHandler {
             }
         }
 
-        // 没有烧炼配方，返回原物品
         return input;
     }
 }

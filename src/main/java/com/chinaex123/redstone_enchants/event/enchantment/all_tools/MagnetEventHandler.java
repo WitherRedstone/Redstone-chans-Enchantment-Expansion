@@ -18,8 +18,9 @@ import java.util.List;
  * 磁力：吸引附近的掉落物到身边
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class MagnetEventHandler {
-    private static final ResourceLocation MAGNET_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "magnet");
+    private static final ResourceLocation MAGNET_ID = RedstoneEnchants.id("magnet");
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -40,11 +41,9 @@ public class MagnetEventHandler {
         int mainLevel = 0;
         int offLevel = 0;
 
-        @SuppressWarnings("deprecation")
         int ml = mainHand.getEnchantments().getLevel(magnetEnchant);
         mainLevel = ml;
 
-        @SuppressWarnings("deprecation")
         int ol = offHand.getEnchantments().getLevel(magnetEnchant);
         offLevel = ol;
 

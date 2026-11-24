@@ -176,6 +176,10 @@ public final class EnchantmentConstructorHelper {
         return tagOrId.startsWith("#") ? this.lookup(Registries.ITEM).getOrThrow(itemTag(tagOrId)) : HolderSet.direct(this.item(tagOrId));
     }
 
+    public HolderSet<Item> items(TagKey<Item> tag) {
+        return this.items("#" + tag.location());
+    }
+
     public Holder<Item> item(String id) {
         return this.lookup(Registries.ITEM).getOrThrow(ResourceKey.create(Registries.ITEM, ResourceLocation.parse(id)));
     }
@@ -189,6 +193,10 @@ public final class EnchantmentConstructorHelper {
             holders.add(this.lookup(Registries.ENCHANTMENT).getOrThrow(key(s)));
         }
         return HolderSet.direct(holders);
+    }
+
+    public HolderSet<Enchantment> enchantments(TagKey<Enchantment> tag) {
+        return this.enchantments("#" + tag.location());
     }
 
     public Holder<MobEffect> mobEffect(String id) {
@@ -237,11 +245,19 @@ public final class EnchantmentConstructorHelper {
         return HolderSet.direct(this.block(tagOrId));
     }
 
+    public HolderSet<Block> blocks(TagKey<Block> tag) {
+        return this.blocks("#" + tag.location());
+    }
+
     public HolderSet<Fluid> fluids(String tagOrId) {
         if (tagOrId.startsWith("#")) {
             return this.lookup(Registries.FLUID).getOrThrow(fluidTag(tagOrId));
         }
         return HolderSet.direct(this.lookup(Registries.FLUID).getOrThrow(ResourceKey.create(Registries.FLUID, ResourceLocation.parse(tagOrId))));
+    }
+
+    public HolderSet<Fluid> fluids(TagKey<Fluid> tag) {
+        return this.fluids("#" + tag.location());
     }
 
     public Holder<EntityType<?>> entityType(String id) {
@@ -253,6 +269,10 @@ public final class EnchantmentConstructorHelper {
             return this.lookup(Registries.ENTITY_TYPE).getOrThrow(entityTypeTag(tagOrId));
         }
         return HolderSet.direct(this.entityType(tagOrId));
+    }
+
+    public HolderSet<EntityType<?>> entityTypes(TagKey<EntityType<?>> tag) {
+        return this.entityTypes("#" + tag.location());
     }
 
     public static Enchantment.Cost constantCost(int value) {
@@ -280,13 +300,19 @@ public final class EnchantmentConstructorHelper {
     }
 
     public Enchantment.Builder builder(String supported, String primary, int weight, int maxLevel,
-            Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost, String... slots) {
+                                       Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost, String... slots) {
         EquipmentSlotGroup[] groups = new EquipmentSlotGroup[slots.length];
         for (int i = 0; i < slots.length; i++) {
             groups[i] = slot(slots[i]);
         }
         return Enchantment.enchantment(Enchantment.definition(this.items(supported), this.items(primary), weight, maxLevel,
                 minCost, maxCost, anvilCost, groups));
+    }
+
+    public Enchantment.Builder builder(TagKey<Item> supported, TagKey<Item> primary, int weight, int maxLevel,
+                                       Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost, String... slots) {
+        return this.builder("#" + supported.location(), "#" + primary.location(), weight, maxLevel,
+                minCost, maxCost, anvilCost, slots);
     }
 
     public void register(Enchantment.Builder builder, ResourceKey<Enchantment> key, int color) {
@@ -350,7 +376,7 @@ public final class EnchantmentConstructorHelper {
     }
 
     public static ApplyMobEffect mobEffect(HolderSet<MobEffect> effects, LevelBasedValue minDuration, LevelBasedValue maxDuration,
-            LevelBasedValue minAmplifier, LevelBasedValue maxAmplifier) {
+                                           LevelBasedValue minAmplifier, LevelBasedValue maxAmplifier) {
         return new ApplyMobEffect(effects, minDuration, maxDuration, minAmplifier, maxAmplifier);
     }
 
@@ -367,9 +393,9 @@ public final class EnchantmentConstructorHelper {
     }
 
     public static ExplodeEffect explode(boolean attributeToUser, Holder<net.minecraft.world.damagesource.DamageType> damageType,
-            LevelBasedValue knockbackMultiplier, HolderSet<Block> immuneBlocks, Vec3 offset, LevelBasedValue radius,
-            boolean createFire, Level.ExplosionInteraction interaction, ParticleOptions smallParticle, ParticleOptions largeParticle,
-            Holder<SoundEvent> sound) {
+                                        LevelBasedValue knockbackMultiplier, HolderSet<Block> immuneBlocks, Vec3 offset, LevelBasedValue radius,
+                                        boolean createFire, Level.ExplosionInteraction interaction, ParticleOptions smallParticle, ParticleOptions largeParticle,
+                                        Holder<SoundEvent> sound) {
         return new ExplodeEffect(attributeToUser, Optional.ofNullable(damageType), Optional.ofNullable(knockbackMultiplier),
                 Optional.ofNullable(immuneBlocks), offset, radius, createFire, interaction, smallParticle, largeParticle, sound);
     }
@@ -379,7 +405,7 @@ public final class EnchantmentConstructorHelper {
     }
 
     public static ReplaceDisk replaceDisk(LevelBasedValue radius, LevelBasedValue height, Vec3i offset, BlockPredicate predicate,
-            BlockStateProvider state, Holder<GameEvent> gameEvent) {
+                                          BlockStateProvider state, Holder<GameEvent> gameEvent) {
         return new ReplaceDisk(radius, height, offset, Optional.ofNullable(predicate), state, Optional.ofNullable(gameEvent));
     }
 
@@ -388,8 +414,8 @@ public final class EnchantmentConstructorHelper {
     }
 
     public static SpawnParticlesEffect particles(ParticleOptions particle, SpawnParticlesEffect.PositionSource horizontalPosition,
-            SpawnParticlesEffect.PositionSource verticalPosition, SpawnParticlesEffect.VelocitySource horizontalVelocity,
-            SpawnParticlesEffect.VelocitySource verticalVelocity, FloatProvider speed) {
+                                                 SpawnParticlesEffect.PositionSource verticalPosition, SpawnParticlesEffect.VelocitySource horizontalVelocity,
+                                                 SpawnParticlesEffect.VelocitySource verticalVelocity, FloatProvider speed) {
         return new SpawnParticlesEffect(particle, horizontalPosition, verticalPosition, horizontalVelocity, verticalVelocity, speed);
     }
 
@@ -466,7 +492,7 @@ public final class EnchantmentConstructorHelper {
     }
 
     public void postAttack(Enchantment.Builder builder, EnchantmentTarget enchanted, EnchantmentTarget affected,
-            EnchantmentEntityEffect effect, LootItemCondition.Builder requirements) {
+                           EnchantmentEntityEffect effect, LootItemCondition.Builder requirements) {
         if (requirements == null) {
             builder.withEffect(EnchantmentEffectComponents.POST_ATTACK, enchanted, affected, effect);
         } else {
@@ -475,7 +501,7 @@ public final class EnchantmentConstructorHelper {
     }
 
     public void value(Enchantment.Builder builder, DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>> component,
-            EnchantmentValueEffect effect, LootItemCondition.Builder requirements) {
+                      EnchantmentValueEffect effect, LootItemCondition.Builder requirements) {
         if (requirements == null) {
             builder.withEffect(component, effect);
         } else {
@@ -484,7 +510,7 @@ public final class EnchantmentConstructorHelper {
     }
 
     public void entity(Enchantment.Builder builder, DataComponentType<List<ConditionalEffect<EnchantmentEntityEffect>>> component,
-            EnchantmentEntityEffect effect, LootItemCondition.Builder requirements) {
+                       EnchantmentEntityEffect effect, LootItemCondition.Builder requirements) {
         if (requirements == null) {
             builder.withEffect(component, effect);
         } else {
@@ -493,8 +519,8 @@ public final class EnchantmentConstructorHelper {
     }
 
     public void location(Enchantment.Builder builder,
-            DataComponentType<List<ConditionalEffect<EnchantmentLocationBasedEffect>>> component,
-            EnchantmentLocationBasedEffect effect, LootItemCondition.Builder requirements) {
+                         DataComponentType<List<ConditionalEffect<EnchantmentLocationBasedEffect>>> component,
+                         EnchantmentLocationBasedEffect effect, LootItemCondition.Builder requirements) {
         if (requirements == null) {
             builder.withEffect(component, effect);
         } else {
@@ -518,7 +544,7 @@ public final class EnchantmentConstructorHelper {
     }
 
     public static EnchantmentAttributeEffect attributeEffect(String id, Holder<Attribute> attribute, AttributeModifier.Operation operation,
-            LevelBasedValue amount) {
+                                                             LevelBasedValue amount) {
         return new EnchantmentAttributeEffect(rl(id), attribute, amount, operation);
     }
 
@@ -666,6 +692,10 @@ public final class EnchantmentConstructorHelper {
                 net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(ResourceLocation.parse(tagOrId)));
     }
 
+    public BlockPredicate blockPredicate(TagKey<Block> tag, int x, int y, int z) {
+        return this.blockPredicate("#" + tag.location(), x, y, z);
+    }
+
     public BlockPredicate fluidPredicate(String tagOrId, int x, int y, int z) {
         Vec3i offset = new Vec3i(x, y, z);
         java.util.List<Fluid> list = new ArrayList<>();
@@ -696,9 +726,17 @@ public final class EnchantmentConstructorHelper {
                 Optional.empty(), Optional.empty());
     }
 
+    public net.minecraft.advancements.critereon.BlockPredicate locBlock(TagKey<Block> tag) {
+        return this.locBlock("#" + tag.location());
+    }
+
     public EntityPredicate.Builder entityOf(String tagOrId) {
         return tagOrId.startsWith("#") ? EntityPredicate.Builder.entity().of(entityTypeTag(tagOrId))
                 : EntityPredicate.Builder.entity().of(this.entityType(tagOrId).value());
+    }
+
+    public EntityPredicate.Builder entityOf(TagKey<EntityType<?>> tag) {
+        return this.entityOf("#" + tag.location());
     }
 
     public static MobEffectsPredicate.Builder effects() {
@@ -727,6 +765,10 @@ public final class EnchantmentConstructorHelper {
                   .of(blockTag(tagOrId))
                 : net.minecraft.advancements.critereon.BlockPredicate.Builder.block()
                   .of(BuiltInRegistries.BLOCK.get(ResourceLocation.parse(tagOrId)));
+    }
+
+    public static net.minecraft.advancements.critereon.BlockPredicate.Builder locBlockBuilder(TagKey<Block> tag) {
+        return locBlockBuilder("#" + tag.location());
     }
 
     public static MovementPredicate speed(MinMaxBounds.Doubles bounds) {
@@ -826,7 +868,7 @@ public final class EnchantmentConstructorHelper {
         return state;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static BlockState setValue(BlockState state, Property property, String value) {
         return state.setValue(property, (Comparable) property.getValue(value).orElseThrow());
     }

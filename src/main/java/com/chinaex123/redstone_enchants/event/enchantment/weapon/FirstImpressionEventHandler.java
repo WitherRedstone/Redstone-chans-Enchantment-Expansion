@@ -9,20 +9,19 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 第一印象：首次命中时给目标留下印记，之后对同一目标的伤害会获得加成。
+ * 第一印象：对未攻击过的目标(包括横扫击中)造成额外伤害。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class FirstImpressionEventHandler {
 
     private static final String ID = "first_impression";
-
     private static final String MARK_TAG = "redstone_enchants.first_impression";
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
         if (EnchantContext.level(attacker, ID) <= 0) return;
 
         EnchantContext context = new EnchantContext(level, victim, victim.position());

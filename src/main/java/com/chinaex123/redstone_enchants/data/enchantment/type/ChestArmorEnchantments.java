@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
+import com.chinaex123.redstone_enchants.init.REItemTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**
@@ -54,21 +55,21 @@ public final class ChestArmorEnchantments {
 
     /** 狂战士：根据损失的生命值百分比增加近战伤害 */
     private static void berserk(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 2, 5,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 2, 5,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "chest");
         e.register(builder, BERSERK, 0xFFAA00, "berserk");
     }
 
     /** 防弹：有概率免疫潜影子弹伤害 */
     private static void bulletproof(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 3, 3,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
         e.register(builder, BULLETPROOF, 0xFF55FF, "bulletproof");
     }
 
     /** 双重暴击：提升暴击率和暴击伤害 */
     private static void dualCriticalBoost(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 1, 5,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 1, 5,
                 Enchantment.dynamicCost(18, 8), Enchantment.dynamicCost(48, 18), 16, "chest");
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dual_critical_boost_1", e.attribute("apothic_attributes:crit_chance"), EnchantmentConstructorHelper.operation("add_value"), linear(0.233f, 0.126f)));
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dual_critical_boost_2", e.attribute("apothic_attributes:crit_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(0.582f, 0.286f)));
@@ -77,7 +78,7 @@ public final class ChestArmorEnchantments {
 
     /** 冰霜荆棘：被攻击时使攻击者获得缓慢/虚弱效果 */
     private static void frostThorn(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 3, 5,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
         e.postAttack(builder, target("victim"), target("attacker"), allEntities(damageEntity(constant(1f), constant(5f), e.damageType("minecraft:thorns")), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), null);
         e.postAttack(builder, target("victim"), target("victim"), damageItem(linear(0.15f, 0f)), null);
@@ -88,15 +89,15 @@ public final class ChestArmorEnchantments {
 
     /** 坚毅壁垒：提升抗性效果 */
     private static void resilientBastion(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 2, 3,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "chest");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:resistance"), constant(0.2f), constant(0.2f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:resistance"), constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, RESILIENT_BASTION, 0xFFAA00, "resilient_bastion");
     }
 
     /** 检索：将射向你的箭收入背包 */
     private static void retrieval(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 3, 4,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
         e.register(builder, RETRIEVAL, 0xFF55FF, "retrieval");
     }
@@ -135,7 +136,7 @@ public final class ChestArmorEnchantments {
 
     /** 活力：提升最大生命值 */
     private static void vitality(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:armors_chest", "#redstone_enchants:armors_chest", 2, 4,
+        Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 2, 4,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "chest");
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.vitality_1", e.attribute("minecraft:generic.max_health"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.25f, 0.25f)));
         e.register(builder, VITALITY, 0xFFAA00, "vitality");

@@ -12,7 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 致命箭：命中非免疫生物时直接抹除目标，且不产生掉落物。
+ * 绝命箭矢：一击必杀非Boss生物(无掉落战利品，使用后给予DeBuff)。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class FatalArrowEventHandler {
@@ -24,7 +24,7 @@ public class FatalArrowEventHandler {
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
         if (EnchantContext.level(level, ID, arrow.getWeaponItem()) <= 0) return;
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
         if (victim.getType().is(EnchantContext.BLACK_ENTITY)) return;
 
         EnchantContext context = new EnchantContext(level, victim, victim.position());

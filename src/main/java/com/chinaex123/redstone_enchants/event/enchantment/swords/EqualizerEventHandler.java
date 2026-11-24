@@ -16,8 +16,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 均衡器：伤害根据目标血量百分比变化；目标血量越高，伤害越高
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class EqualizerEventHandler {
-    private static final ResourceLocation EQUALIZER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "equalizer");
+    private static final ResourceLocation EQUALIZER_ID = RedstoneEnchants.id("equalizer");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -36,7 +37,6 @@ public class EqualizerEventHandler {
 
         if (equalizerEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(equalizerEnchant);
         if (level <= 0) return;
 
@@ -46,7 +46,6 @@ public class EqualizerEventHandler {
         float healthPercentage = currentHealth / maxHealth;
 
         // 根据血量百分比和附魔等级计算伤害加成
-        // 伤害加成 = 目标血量百分比 × 等级 × 40%
         float bonusMultiplier = healthPercentage * level * 0.2F;
 
         float originalDamage = event.getOriginalDamage();

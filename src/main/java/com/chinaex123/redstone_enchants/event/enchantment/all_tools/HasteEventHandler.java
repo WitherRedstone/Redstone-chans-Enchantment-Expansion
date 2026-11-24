@@ -17,9 +17,12 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * 急速：手持时获得急迫效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class HasteEventHandler {
-    private static final ResourceLocation HASTE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "haste");
-    private static final int HASTE_DURATION = 120; // 持续时间
+    private static final ResourceLocation HASTE_ID = RedstoneEnchants.id("haste");
+
+    /** 持续时间 */
+    private static final int HASTE_DURATION = 120;
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -34,7 +37,6 @@ public class HasteEventHandler {
 
         if (hasteEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = mainHand.getEnchantments().getLevel(hasteEnchant);
 
         if (level > 0) {

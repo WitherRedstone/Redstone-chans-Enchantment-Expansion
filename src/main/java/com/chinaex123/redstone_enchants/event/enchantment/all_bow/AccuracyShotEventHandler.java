@@ -12,13 +12,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 /**
- * 精准射击：射出的箭矢失去重力并悬停，周围没有玩家时自动清除。
+ * 精准射击：箭矢无视重力直飞目标，未命中会消失。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class AccuracyShotEventHandler {
 
     private static final String ID = "accuracy_shot";
-
     private static final String ACCURACY_TAG = "redstone_enchants.accuracy_shot";
 
     @SubscribeEvent

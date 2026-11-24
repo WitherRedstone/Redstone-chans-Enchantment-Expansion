@@ -23,11 +23,15 @@ import java.util.UUID;
  * 闪电使者：从高处(≥8格)攻击时召唤闪电
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class BoltbringerEventHandler {
-    private static final ResourceLocation BOLTBRINGER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "boltbringer");
+    private static final ResourceLocation BOLTBRINGER_ID = RedstoneEnchants.id("boltbringer");
     private static final Map<UUID, Long> lastStrikeTime = new HashMap<>();
-    private static final float MIN_FALL_DISTANCE = 8.0f; // 从高处攻击的下落距离
-    private static final long COOLDOWN_TICKS = 10; // 冷却时间
+
+    /** 从高处攻击的下落距离 */
+    private static final float MIN_FALL_DISTANCE = 8.0f;
+    /** 冷却时间 */
+    private static final long COOLDOWN_TICKS = 10;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -46,7 +50,6 @@ public class BoltbringerEventHandler {
 
         if (boltbringerEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(boltbringerEnchant);
         if (level <= 0) return;
 

@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 雪球反击：被攻击时有几率朝附近的生物扔出一个雪球。
+ * 雪球：佩戴时受伤会概率向攻击者扔雪球。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class SnowballEventHandler {
@@ -28,12 +28,11 @@ public class SnowballEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
         if (!(victim.level() instanceof ServerLevel level)) return;
 
         int enchantLevel = EnchantContext.level(victim, ID);
         if (enchantLevel <= 0) return;
-        // 每级 30% 的触发几率
         if (level.getRandom().nextFloat() >= enchantLevel * 0.3F) return;
 
         EnchantContext context = new EnchantContext(level, victim, victim.position());

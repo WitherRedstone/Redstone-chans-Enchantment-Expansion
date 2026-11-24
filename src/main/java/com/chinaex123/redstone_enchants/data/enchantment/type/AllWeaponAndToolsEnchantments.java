@@ -4,6 +4,7 @@ import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorH
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import com.chinaex123.redstone_enchants.init.REItemTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**
@@ -32,7 +33,7 @@ public final class AllWeaponAndToolsEnchantments {
 
     /** 延伸：增加攻击/交互距离 */
     private static void extend(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:all_tools", "#redstone_enchants:all_tools", 2, 3,
+        Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.extend_1", e.attribute("minecraft:player.block_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(1f, 1f)));
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.extend_2", e.attribute("minecraft:player.entity_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(1f, 1f)));
@@ -41,7 +42,7 @@ public final class AllWeaponAndToolsEnchantments {
 
     /** 轻便：手持时增加移动速度 */
     private static void lightweight(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:all_tools", "#redstone_enchants:all_tools", 3, 4,
+        Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         e.attributes(builder, attributeEffect("redstone_enchants:lightweight", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.05f, 0.05f)));
         e.register(builder, LIGHTWEIGHT, 0xFF55FF, "lightweight");

@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.event.enchantment.trident_and_bow;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
+import com.chinaex123.redstone_enchants.util.FreezePicAnimation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -14,7 +15,7 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 永冻：命中时在目标位置展开冰晶动画，并冻结周围的方块。
+ * 永恒冰霜：命中后冻结目标及周围水域并将水转为霜冰。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class EternalFrostEventHandler {

@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 笨拙诅咒：攻击时有几率把手里的武器脱手掉出去。
+ * 笨拙诅咒：使用时有几率掉落物品。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class CurseOfClumsinessEventHandler {

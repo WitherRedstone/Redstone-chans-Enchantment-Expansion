@@ -16,8 +16,9 @@ import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
  * 战术护膝：落地时潜行可抵消掉落伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class TacticalKneeEventHandler {
-    private static final ResourceLocation TACTICAL_KNEE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "tactical_knee");
+    private static final ResourceLocation TACTICAL_KNEE_ID = RedstoneEnchants.id("tactical_knee");
 
     @SubscribeEvent
     public static void onLivingFall(LivingFallEvent event) {
@@ -35,7 +36,6 @@ public class TacticalKneeEventHandler {
 
         if (tacticalKneeEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = leggings.getEnchantments().getLevel(tacticalKneeEnchant);
         if (enchantLevel <= 0) return;
 

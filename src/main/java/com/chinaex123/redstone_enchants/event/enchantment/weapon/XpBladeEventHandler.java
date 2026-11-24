@@ -9,13 +9,14 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 经验之刃：命中目标时消耗持有者的经验。
+ * 经验之刃：消耗15点经验值提升攻击伤害(需10级启动)。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class XpBladeEventHandler {
 
     private static final String ID = "xp_blade";
 
+    /** 小号的经验值 */
     private static final int XP_COST = -15;
 
     @SubscribeEvent

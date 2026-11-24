@@ -25,15 +25,24 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import java.util.List;
 
+/**
+ * 海风：命中时产生推进风弹。
+ */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class SeaBreezeEventHandler {
-    private static final ResourceLocation SEA_BREEZE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "sea_breeze");
+    private static final ResourceLocation SEA_BREEZE_ID = RedstoneEnchants.id("sea_breeze");
 
-    private static final float EXPLOSION_RADIUS = 2.0f; // 爆炸半径
-    private static final float BASE_DAMAGE = 4.0f; // 基础伤害
-    private static final float DAMAGE_PER_LEVEL = 2.0f; // 每级附魔增加的伤害
-    private static final float KNOCKBACK_HORIZONTAL = 1.2f; // 水平击退强度
-    private static final float KNOCKBACK_VERTICAL = 0.3f; // 垂直击退强度
+    /** 爆炸半径 */
+    private static final float EXPLOSION_RADIUS = 2.0f;
+    /** 基础伤害 */
+    private static final float BASE_DAMAGE = 4.0f;
+    /** 每级附魔增加的伤害 */
+    private static final float DAMAGE_PER_LEVEL = 2.0f;
+    /** 水平击退强度 */
+    private static final float KNOCKBACK_HORIZONTAL = 1.2f;
+    /** 垂直击退强度 */
+    private static final float KNOCKBACK_VERTICAL = 0.3f;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
@@ -54,7 +63,6 @@ public class SeaBreezeEventHandler {
 
         if (seaBreezeEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(seaBreezeEnchant);
         if (level <= 0) return;
 
@@ -132,7 +140,6 @@ public class SeaBreezeEventHandler {
 
         if (seaBreezeEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(seaBreezeEnchant);
         if (level <= 0) return;
 

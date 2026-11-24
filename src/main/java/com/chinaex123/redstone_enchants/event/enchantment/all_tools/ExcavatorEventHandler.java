@@ -8,9 +8,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,8 +25,9 @@ import java.util.List;
  * 挖掘机：可以挖掘3x3/5x5/7x7区域的方块
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ExcavatorEventHandler {
-    private static final ResourceLocation EXCAVATOR_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "excavator");
+    private static final ResourceLocation EXCAVATOR_ID = RedstoneEnchants.id("excavator");
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -44,7 +47,6 @@ public class ExcavatorEventHandler {
 
         if (excavatorEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = tool.getEnchantments().getLevel(excavatorEnchant);
         if (level <= 0) return;
 
@@ -74,15 +76,14 @@ public class ExcavatorEventHandler {
                 if (!tool.isCorrectToolForDrops(targetState)) continue;
 
                 // 获取掉落物
-                var drops = net.minecraft.world.level.block.Block.getDrops(
-                        targetState, serverLevel, pos, serverLevel.getBlockEntity(pos), player, tool);
+                var drops = Block.getDrops(targetState, serverLevel, pos, serverLevel.getBlockEntity(pos), player, tool);
 
                 // 移除方块
                 serverLevel.destroyBlock(pos, false, player);
 
                 // 生成掉落物
                 for (ItemStack drop : drops) {
-                    var itemEntity = new net.minecraft.world.entity.item.ItemEntity(
+                    var itemEntity = new ItemEntity(
                             serverLevel,
                             pos.getX() + 0.5,
                             pos.getY() + 0.5,

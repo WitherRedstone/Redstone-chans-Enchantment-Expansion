@@ -16,11 +16,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 牺牲：受到攻击时自动修复手持物品
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class SacrificeEventHandler {
-    private static final ResourceLocation SACRIFICE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "sacrifice");
+    private static final ResourceLocation SACRIFICE_ID = RedstoneEnchants.id("sacrifice");
 
     @SubscribeEvent
-    @SuppressWarnings("deprecation")
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         LivingEntity entity = event.getEntity();
 

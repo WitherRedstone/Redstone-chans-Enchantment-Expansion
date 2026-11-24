@@ -15,11 +15,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 /**
- * 踏焰者：可在岩浆表面行走，潜行时下潜到岩浆下
+ * 踏焰者：可在岩浆上行走，潜行时下潜到岩浆下
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class FlameWalkerEventHandler {
-    private static final ResourceLocation FLAME_WALKER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "flame_walker");
+    private static final ResourceLocation FLAME_WALKER_ID = RedstoneEnchants.id("flame_walker");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -36,7 +37,6 @@ public class FlameWalkerEventHandler {
 
         if (flameWalkerEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = boots.getEnchantments().getLevel(flameWalkerEnchant);
         if (enchantLevel <= 0) return;
 

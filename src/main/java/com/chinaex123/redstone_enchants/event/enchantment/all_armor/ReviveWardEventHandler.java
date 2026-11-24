@@ -27,9 +27,9 @@ import java.util.List;
  * 重生护盾：受到致命伤害时阻止死亡，并给予生命恢复/抗性提升和抗火，触发后该附魔消失1个等级
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ReviveWardEventHandler {
-    private static final ResourceLocation REVIVE_WARD_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "revive_ward");
+    private static final ResourceLocation REVIVE_WARD_ID = RedstoneEnchants.id("revive_ward");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -66,7 +66,6 @@ public class ReviveWardEventHandler {
 
             if (reviveWardEnchant == null) continue;
 
-            @SuppressWarnings("deprecation")
             int enchantLevel = armor.getEnchantments().getLevel(reviveWardEnchant);
 
             if (enchantLevel > 0) {
@@ -84,11 +83,9 @@ public class ReviveWardEventHandler {
         // 阻止死亡：将伤害设置为当前生命值-0.5（保留一点血）
         event.setNewDamage(entity.getHealth() - 0.5f);
 
-        // 播放不死图腾音效
         entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                 SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
 
-        // 生成粒子效果
         if (entity.level() instanceof ServerLevel serverLevel) {
             for (int i = 0; i < 30; ++i) {
                 double d0 = serverLevel.random.nextGaussian() * 0.02D;
@@ -123,12 +120,10 @@ public class ReviveWardEventHandler {
                     .orElse(null);
 
             if (reviveWardEnchant != null) {
-                @SuppressWarnings("deprecation")
                 int currentLevel = armor.getEnchantments().getLevel(reviveWardEnchant);
 
                 ItemEnchantments currentEnchants = armor.get(DataComponents.ENCHANTMENTS);
                 if (currentEnchants != null) {
-                    // 使用 Mutable 来修改附魔
                     ItemEnchantments.Mutable mutableEnchants = new ItemEnchantments.Mutable(currentEnchants);
 
                     if (currentLevel > 1) {

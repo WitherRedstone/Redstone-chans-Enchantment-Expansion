@@ -18,9 +18,12 @@ import java.util.List;
  * 狼群领袖：附近每多一只狼，增加你狼的伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class PackLeaderEventHandler {
-    private static final ResourceLocation PACK_LEADER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "pack_leader");
-    private static final double DAMAGE_BONUS_PER_WOLF_PER_LEVEL = 0.5; // 每级每只狼+5%
+    private static final ResourceLocation PACK_LEADER_ID = RedstoneEnchants.id("pack_leader");
+
+    /** 每级每只狼增加的伤害 */
+    private static final double DAMAGE_BONUS_PER_WOLF_PER_LEVEL = 0.5;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -44,7 +47,6 @@ public class PackLeaderEventHandler {
 
         if (packLeaderEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = armor.getEnchantments().getLevel(packLeaderEnchant);
         if (enchantLevel <= 0) return;
 

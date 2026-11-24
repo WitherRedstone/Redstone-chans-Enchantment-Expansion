@@ -17,22 +17,19 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 地质学：挖掘石头有概率掉落矿石
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class GeologyEventHandler {
-    private static final Random RANDOM = new Random();
-    private static final ResourceLocation GEOLOGY_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "geology");
-
-    // c:ores 标签
-    private static final TagKey<Block> ORES_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", "ores"));
+    private static final ResourceLocation GEOLOGY_ID = RedstoneEnchants.id("geology");
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -63,8 +60,8 @@ public class GeologyEventHandler {
         // 计算掉落概率：每级5%
         float dropChance = level * 0.05f;
 
-        if (RANDOM.nextFloat() < dropChance) {
-            ItemStack oreDrop = ores.get(RANDOM.nextInt(ores.size()));
+        if (RedstoneEnchants.RANDOM.nextFloat() < dropChance) {
+            ItemStack oreDrop = ores.get(RedstoneEnchants.RANDOM.nextInt(ores.size()));
 
             // 应用时运效果
             Holder.Reference<Enchantment> fortuneEnchant = player.level()
@@ -75,14 +72,13 @@ public class GeologyEventHandler {
 
             int fortuneLevel = 0;
             if (fortuneEnchant != null) {
-                @SuppressWarnings("deprecation")
                 int fortLvl = tool.getEnchantments().getLevel(fortuneEnchant);
                 fortuneLevel = fortLvl;
             }
 
             // 时运增加掉落数量
             if (fortuneLevel > 0) {
-                int bonus = RANDOM.nextInt(fortuneLevel + 2) - 1;
+                int bonus = RedstoneEnchants.RANDOM.nextInt(fortuneLevel + 2) - 1;
                 if (bonus < 1) bonus = 1;
                 oreDrop.setCount(oreDrop.getCount() * bonus);
             }
@@ -103,7 +99,7 @@ public class GeologyEventHandler {
         List<ItemStack> ores = new ArrayList<>();
 
         for (ResourceLocation blockId : BuiltInRegistries.BLOCK.keySet()) {
-            if (BuiltInRegistries.BLOCK.get(blockId).defaultBlockState().is(ORES_TAG)) {
+            if (BuiltInRegistries.BLOCK.get(blockId).defaultBlockState().is(Tags.Blocks.ORES)) {
                 ItemStack drop = new ItemStack(BuiltInRegistries.BLOCK.get(blockId));
                 if (!drop.isEmpty()) {
                     ores.add(drop);

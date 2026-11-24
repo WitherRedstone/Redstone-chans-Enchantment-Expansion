@@ -15,11 +15,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
- * 收获回响：剪刀右键使用时，获得生命恢复效果
+ * 收获回响：剪刀右键使用时，获得生命恢复
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class HarvestEchoEventHandler {
-    private static final ResourceLocation HARVEST_ECHO_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "harvest_echo");
+    private static final ResourceLocation HARVEST_ECHO_ID = RedstoneEnchants.id("harvest_echo");
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
@@ -37,11 +38,9 @@ public class HarvestEchoEventHandler {
 
         if (harvestEchoEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = stack.getEnchantments().getLevel(harvestEchoEnchant);
         if (enchantLevel <= 0) return;
 
-        // 给予1级生命恢复效果3秒
         player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 0, false, true));
     }
 }

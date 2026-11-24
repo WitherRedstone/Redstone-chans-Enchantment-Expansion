@@ -19,20 +19,22 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 庄稼舞：蹲下时走过农田会加速周围作物生长
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class CropDanceEventHandler {
-    private static final ResourceLocation CROP_DANCE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "crop_dance");
-    private static final Random RANDOM = new Random();
+    private static final ResourceLocation CROP_DANCE_ID = RedstoneEnchants.id("crop_dance");
 
-    private static final int GROWTH_RANGE = 3; // 生效范围
-    private static final double BASE_GROWTH_CHANCE = 0.1; // 基础生长概率 10%
-    private static final double GROWTH_INCREMENT = 0.1; // 每级增加
+    /** 生效范围 */
+    private static final int GROWTH_RANGE = 3;
+    /** 基础生长概率 */
+    private static final double BASE_GROWTH_CHANCE = 0.1;
+    /** 每级增加 */
+    private static final double GROWTH_INCREMENT = 0.1;
 
     // 记录每个玩家上一次的潜行状态
     private static final Map<Player, Boolean> lastSneakingMap = new ConcurrentHashMap<>();
@@ -53,14 +55,13 @@ public class CropDanceEventHandler {
 
         if (cropDanceEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = boots.getEnchantments().getLevel(cropDanceEnchant);
         if (level <= 0) return;
 
         boolean isSneaking = player.isShiftKeyDown();
         boolean lastSneaking = lastSneakingMap.getOrDefault(player, false);
 
-        // 检查是否刚刚开始潜行（从非潜行状态变为潜行状态）
+        // 检查是否刚刚开始潜行
         if (isSneaking && !lastSneaking) {
             // 执行一次催熟
             executeCropGrowth(player, serverLevel, level);
@@ -83,7 +84,7 @@ public class CropDanceEventHandler {
 
             if (state.getBlock() instanceof BonemealableBlock bonemealable) {
                 // 使用百分比判断
-                if (RANDOM.nextDouble() < growthChance) {
+                if (RedstoneEnchants.RANDOM.nextDouble() < growthChance) {
                     if (bonemealable.isValidBonemealTarget(serverLevel, pos, state)) {
                         bonemealable.performBonemeal(serverLevel, serverLevel.random, pos, state);
 

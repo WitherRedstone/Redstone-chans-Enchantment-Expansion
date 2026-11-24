@@ -7,6 +7,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -24,8 +25,11 @@ import java.util.*;
  * 连锁砍树：砍伐树木时，同时破坏其上方所有同种原木
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class TimberEventHandler {
-    private static final ResourceLocation TIMBER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "timber");
+    private static final ResourceLocation TIMBER_ID = RedstoneEnchants.id("timber");
+
+    /** 最大破坏方块数量 */
     private static final int MAX_BLOCKS = 512;
 
     @SubscribeEvent
@@ -43,7 +47,6 @@ public class TimberEventHandler {
 
         if (timberEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = tool.getEnchantments().getLevel(timberEnchant);
         if (level <= 0) return;
 
@@ -52,8 +55,7 @@ public class TimberEventHandler {
         BlockState startState = event.getState();
 
         // 只处理原木
-        if (!startState.getBlock().asItem().toString().contains("log") &&
-                !startState.getBlock().asItem().toString().contains("wood")) return;
+        if (!startState.is(BlockTags.LOGS)) return;
 
         // BFS查找相连的所有原木
         List<BlockPos> connectedLogs = findConnectedLogs(serverLevel, startPos, startState);

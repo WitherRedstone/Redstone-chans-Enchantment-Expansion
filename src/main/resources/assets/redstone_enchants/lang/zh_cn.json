@@ -449,7 +449,7 @@
   "enchantment.redstone_enchants.gallop_end": "末路疾行",
   "enchantment.redstone_enchants.gallop_end.desc": "末地维度获得速度加成",
   "enchantment.redstone_enchants.crop_dance": "庄稼舞",
-  "enchantment.redstone_enchants.crop_dance.desc": "蹲下时走过农田会加速周围作物生长",
+  "enchantment.redstone_enchants.crop_dance.desc": "连续潜行会加速周围树木或者农作物生长",
   "enchantment.redstone_enchants.jump_amplifier": "弹跳强化",
   "enchantment.redstone_enchants.jump_amplifier.desc": "增加跳跃高度",
   "enchantment.redstone_enchants.pegasus": "飞马座",

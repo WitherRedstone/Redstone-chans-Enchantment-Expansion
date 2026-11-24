@@ -23,16 +23,12 @@ public class AuraEventHandler {
 
     /** 光环半径。 */
     private static final double RADIUS = 4.0D;
-
     /** 燃烧光环半径。 */
     private static final double BURNING_RADIUS = 2.0D;
-
     /** 光环效果持续时间（tick）。 */
     private static final int DURATION = 100;
-
     /** 光环效果等级（0 = I 级）。 */
     private static final int AMPLIFIER = 0;
-
     /** 燃烧光环点燃时长（秒）。 */
     private static final int BURNING_SECONDS = 4;
 
@@ -57,7 +53,7 @@ public class AuraEventHandler {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         if (!(player.level() instanceof ServerLevel level)) return;
-        // 只在移动时触发，等价于 location_changed
+        // 只在移动时触发
         if (player.getDeltaMovement().horizontalDistanceSqr() < 1.0E-4D) return;
 
         EnchantContext context = new EnchantContext(level, player, player.position());

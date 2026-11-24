@@ -22,7 +22,7 @@ public class RetrievalEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
         if (!(victim.level() instanceof ServerLevel level)) return;
 
         int enchantLevel = EnchantContext.level(victim, ID);

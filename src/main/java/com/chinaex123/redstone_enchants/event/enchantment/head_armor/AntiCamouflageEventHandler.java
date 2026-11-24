@@ -21,9 +21,12 @@ import java.util.List;
  * 反伪装：潜行时显示周围的敌对生物
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class AntiCamouflageEventHandler {
-    private static final ResourceLocation ANTI_CAMOUFLAGE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "anti_camouflage");
-    private static final double DETECTION_RANGE = 16.0; // 检测范围 16 格
+    private static final ResourceLocation ANTI_CAMOUFLAGE_ID = RedstoneEnchants.id("anti_camouflage");
+
+    /** 检测范围 */
+    private static final double DETECTION_RANGE = 16.0;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -41,7 +44,6 @@ public class AntiCamouflageEventHandler {
 
         if (antiCamouflageEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = helmet.getEnchantments().getLevel(antiCamouflageEnchant);
         if (enchantLevel <= 0) return;
 
@@ -54,7 +56,7 @@ public class AntiCamouflageEventHandler {
         );
 
         // 给每个敌对生物施加发光效果
-        int duration = 40 + (enchantLevel * 10);
+        int duration = 20 + (enchantLevel * 10);
         for (Monster monster : nearbyMonsters) {
             monster.addEffect(new MobEffectInstance(MobEffects.GLOWING, duration, 0, false, false));
         }

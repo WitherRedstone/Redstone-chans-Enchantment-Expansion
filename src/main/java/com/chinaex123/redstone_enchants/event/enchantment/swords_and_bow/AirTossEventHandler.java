@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 挑飞：命中时把目标向上击飞。
+ * 空中抛掷：攻击时将被击中的生物抛向空中。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class AirTossEventHandler {
@@ -21,7 +21,7 @@ public class AirTossEventHandler {
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
 
         int enchantLevel = EnchantContext.level(attacker, ID);
         if (enchantLevel <= 0) return;

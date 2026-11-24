@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -16,12 +17,12 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import java.util.Random;
 
 /**
- * 斩首：增加有头颅生物的头颅掉落概率
+ * 斩首：增加生物头颅的掉落概率
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class DecapitationEventHandler {
     private static final Random RANDOM = new Random();
-    private static final ResourceLocation DECAPITATION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "decapitation");
+    private static final ResourceLocation DECAPITATION_ID = RedstoneEnchants.id("decapitation");
 
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
@@ -43,15 +44,15 @@ public class DecapitationEventHandler {
         LivingEntity entity = event.getEntity();
         String entityType = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).getPath();
 
-        // 查找对应的头颅物品（支持所有模组）
+        // 查找对应的头颅物品
         ItemStack skullStack = findSkullForEntity(entityType);
         if (skullStack.isEmpty()) return;
 
-        // 计算掉落概率：5级100%，线性增长（1级=20%, 2级=40%, 3级=60%, 4级=80%, 5级=100%）
+        // 计算掉落概率
         float dropChance = level * 0.2f;
 
         if (RANDOM.nextFloat() < dropChance) {
-            event.getDrops().add(new net.minecraft.world.entity.item.ItemEntity(
+            event.getDrops().add(new ItemEntity(
                     entity.level(),
                     entity.getX(),
                     entity.getY(),

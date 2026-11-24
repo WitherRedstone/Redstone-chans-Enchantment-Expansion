@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 吞噬：击杀目标时恢复饥饿值与生命，饱食状态下额外获得生命恢复。
+ * 吞噬：攻击生物时恢复饥饿值，满饥饿时转为生命恢复。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class DevouringEventHandler {

@@ -1,8 +1,6 @@
 {
   "values": [
-    "#minecraft:swords",
-    "#minecraft:axes",
-    "#c:tools/bow",
-    "#c:tools/crossbow"
+    "#redstone_enchants:swords_and_axes",
+    "#redstone_enchants:all_bow"
   ]
 }

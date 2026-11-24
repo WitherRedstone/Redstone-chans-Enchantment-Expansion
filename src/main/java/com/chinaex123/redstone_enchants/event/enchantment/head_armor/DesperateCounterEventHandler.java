@@ -19,9 +19,10 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 绝境逆袭：自身拥有失明或黑暗时增加攻击伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class DesperateCounterEventHandler {
-    private static final ResourceLocation DESPERATE_COUNTER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "desperate_counter");
-    private static final ResourceLocation DESPERATE_COUNTER_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "desperate_counter_damage");
+    private static final ResourceLocation DESPERATE_COUNTER_ID = RedstoneEnchants.id("desperate_counter");
+    private static final ResourceLocation DESPERATE_COUNTER_MODIFIER_ID = RedstoneEnchants.id("desperate_counter_damage");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -39,7 +40,6 @@ public class DesperateCounterEventHandler {
 
         if (desperateCounterEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = helmet.getEnchantments().getLevel(desperateCounterEnchant);
         if (enchantLevel <= 0) return;
 

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
@@ -24,9 +25,9 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 坚固：装备免疫爆炸、闪电和岩浆
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class SturdyEventHandler {
-    private static final ResourceLocation STURDY_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "sturdy");
-    private static final String STURDY_TAG = "redstone_enchants:sturdy";
+    private static final ResourceLocation STURDY_ID = RedstoneEnchants.id("sturdy");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -45,7 +46,6 @@ public class SturdyEventHandler {
 
             if (sturdyEnchant == null) continue;
 
-            @SuppressWarnings("deprecation")
             int level = stack.getEnchantments().getLevel(sturdyEnchant);
             if (level <= 0) continue;
 
@@ -78,7 +78,6 @@ public class SturdyEventHandler {
 
         ItemStack stack = itemEntity.getItem();
 
-        // 检查是否有坚固附魔
         Holder.Reference<Enchantment> sturdyEnchant = event.getEntity().level()
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
@@ -87,7 +86,6 @@ public class SturdyEventHandler {
 
         boolean hasSturdy = false;
         if (sturdyEnchant != null) {
-            @SuppressWarnings("deprecation")
             int level = stack.getEnchantments().getLevel(sturdyEnchant);
             hasSturdy = level > 0;
         }
@@ -107,7 +105,6 @@ public class SturdyEventHandler {
 
     @SubscribeEvent
     public static void onExplosion(ExplosionEvent.Detonate event) {
-        // 从受影响的实体列表中移除带坚固附魔的物品
         event.getAffectedEntities().removeIf(entity -> {
             if (entity instanceof ItemEntity itemEntity) {
                 return hasSturdyEnchant(itemEntity.getItem(), itemEntity.level());
@@ -118,7 +115,6 @@ public class SturdyEventHandler {
 
     @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
-        // 如果被击中的实体是带坚固附魔的物品，则取消事件
         if (event.getEntity() instanceof ItemEntity itemEntity) {
             if (hasSturdyEnchant(itemEntity.getItem(), itemEntity.level())) {
                 event.setCanceled(true);
@@ -126,7 +122,7 @@ public class SturdyEventHandler {
         }
     }
 
-    private static boolean hasSturdyEnchant(ItemStack stack, net.minecraft.world.level.Level level) {
+    private static boolean hasSturdyEnchant(ItemStack stack, Level level) {
         if (stack.isEmpty()) return false;
 
         Holder.Reference<Enchantment> sturdyEnchant = level
@@ -137,7 +133,6 @@ public class SturdyEventHandler {
 
         if (sturdyEnchant == null) return false;
 
-        @SuppressWarnings("deprecation")
         int level_val = stack.getEnchantments().getLevel(sturdyEnchant);
         return level_val > 0;
     }

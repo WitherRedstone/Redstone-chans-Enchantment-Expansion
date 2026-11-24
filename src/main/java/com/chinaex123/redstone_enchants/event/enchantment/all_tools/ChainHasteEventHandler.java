@@ -25,9 +25,10 @@ import java.util.UUID;
  * 连锁急迫：连续挖掘同类型方块时，速度逐渐加快
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ChainHasteEventHandler {
-    private static final ResourceLocation CHAIN_HASTE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "chain_haste");
-    private static final ResourceLocation CHAIN_HASTE_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "chain_haste_bonus");
+    private static final ResourceLocation CHAIN_HASTE_ID = RedstoneEnchants.id("chain_haste");
+    private static final ResourceLocation CHAIN_HASTE_MODIFIER_ID = RedstoneEnchants.id("chain_haste_bonus");
     private static final Map<UUID, MiningStreak> MINING_STREAKS = new HashMap<>();
 
     private static class MiningStreak {
@@ -57,7 +58,6 @@ public class ChainHasteEventHandler {
 
         if (chainHasteEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = tool.getEnchantments().getLevel(chainHasteEnchant);
         if (level <= 0) return;
 
@@ -104,11 +104,7 @@ public class ChainHasteEventHandler {
     private static void applyMiningSpeed(Player player, double bonus) {
         AttributeInstance attribute = player.getAttribute(Attributes.BLOCK_BREAK_SPEED);
         if (attribute == null) return;
-
-        // 移除旧的修饰符
         attribute.removeModifier(CHAIN_HASTE_MODIFIER_ID);
-
-        // 添加新的修饰符
         AttributeModifier modifier = new AttributeModifier(
                 CHAIN_HASTE_MODIFIER_ID,
                 bonus,

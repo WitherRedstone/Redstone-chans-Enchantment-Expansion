@@ -22,10 +22,13 @@ import java.util.List;
  * 以寡敌众：根据周围敌人数目，每多一个敌人伤害/护甲+2%
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class AgainstAllOddsEventHandler {
-    private static final ResourceLocation AGAINST_ALL_ODDS_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "against_all_odds");
-    private static final ResourceLocation DAMAGE_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "against_all_odds_damage");
-    private static final ResourceLocation ARMOR_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "against_all_odds_armor");
+    private static final ResourceLocation AGAINST_ALL_ODDS_ID = RedstoneEnchants.id("against_all_odds");
+    private static final ResourceLocation DAMAGE_MODIFIER_ID = RedstoneEnchants.id("against_all_odds_damage");
+    private static final ResourceLocation ARMOR_MODIFIER_ID = RedstoneEnchants.id("against_all_odds_armor");
+
+    /** 探测半径 */
     private static final double DETECTION_RANGE = 8.0;
 
     @SubscribeEvent
@@ -44,7 +47,6 @@ public class AgainstAllOddsEventHandler {
 
         if (againstAllOddsEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = helmet.getEnchantments().getLevel(againstAllOddsEnchant);
         if (enchantLevel <= 0) return;
 

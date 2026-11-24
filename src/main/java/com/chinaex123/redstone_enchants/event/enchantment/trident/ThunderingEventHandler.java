@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 
 /**
- * 雷击：三叉戟在雨天命中避雷针时召唤雷暴天气。
+ * 雷鸣：雨天命中避雷针时引发雷暴。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class ThunderingEventHandler {

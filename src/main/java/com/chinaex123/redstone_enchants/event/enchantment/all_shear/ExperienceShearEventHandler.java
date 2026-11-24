@@ -29,10 +29,13 @@ import java.util.List;
  * 经验修剪：剪下的羊毛改为掉落随机的经验球
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ExperienceShearEventHandler {
-    private static final ResourceLocation EXPERIENCE_SHEAR_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "experience_shear");
+    private static final ResourceLocation EXPERIENCE_SHEAR_ID = RedstoneEnchants.id("experience_shear");
+    private static final ResourceLocation HARVEST_ECHO = RedstoneEnchants.id("harvest_echo");
 
     @SubscribeEvent
+    @SuppressWarnings("deprecation")
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Player player = event.getEntity();
         Level level = player.level();
@@ -52,7 +55,6 @@ public class ExperienceShearEventHandler {
 
         if (experienceShearEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = stack.getEnchantments().getLevel(experienceShearEnchant);
         if (enchantLevel <= 0) return;
 
@@ -67,8 +69,7 @@ public class ExperienceShearEventHandler {
 
         // 根据附魔等级生成经验球，每级增加经验数量
         for (ItemStack drop : drops) {
-            // 不掉落羊毛，改为掉落经验球
-            int expAmount = random.nextInt(3 * enchantLevel) + 1; // 1到3*等级的随机经验
+            int expAmount = random.nextInt(3 * enchantLevel) + 1;
             ExperienceOrb.award((ServerLevel) level, sheep.position(), expAmount);
         }
 
@@ -78,11 +79,10 @@ public class ExperienceShearEventHandler {
         Holder.Reference<Enchantment> harvestEchoEnchant = level
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "harvest_echo"))
+                .getHolder(HARVEST_ECHO)
                 .orElse(null);
 
         if (harvestEchoEnchant != null) {
-            @SuppressWarnings("deprecation")
             int harvestLevel = stack.getEnchantments().getLevel(harvestEchoEnchant);
             if (harvestLevel > 0) {
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 0, false, true));

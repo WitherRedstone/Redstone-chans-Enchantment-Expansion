@@ -15,7 +15,7 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 火箭：箭矢命中处点燃周围的空气。
+ * 火焰箭：命中区域产生火焰效果。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class FireArrowsEventHandler {

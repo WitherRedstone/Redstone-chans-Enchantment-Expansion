@@ -18,8 +18,9 @@ import net.neoforged.neoforge.event.level.BlockEvent;
  * 湿润：犁过的地会湿润一会
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class MoistEventHandler {
-    private static final ResourceLocation MOISTURE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "moist");
+    private static final ResourceLocation MOISTURE_ID = RedstoneEnchants.id("moist");
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
@@ -34,7 +35,6 @@ public class MoistEventHandler {
 
         if (moistEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = tool.getEnchantments().getLevel(moistEnchant);
         if (level <= 0) return;
 

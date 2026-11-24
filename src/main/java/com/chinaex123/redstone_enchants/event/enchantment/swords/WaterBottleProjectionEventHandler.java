@@ -9,7 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 水瓶投掷：近战命中时在目标身上砸出若干瓶装水。
+ * 水瓶投掷：攻击时向目标投掷水瓶。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class WaterBottleProjectionEventHandler {

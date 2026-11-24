@@ -15,18 +15,18 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
-import java.util.Random;
-
 /**
  * 防弹：有概率免疫潜影子弹伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class BulletproofEventHandler {
-    private static final ResourceLocation BULLETPROOF_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "bulletproof");
-    private static final Random RANDOM = new Random();
+    private static final ResourceLocation BULLETPROOF_ID = RedstoneEnchants.id("bulletproof");
 
-    private static final float BASE_IMMUNITY_CHANCE = 0.25f; // 基础免疫概率
-    private static final float CHANCE_PER_LEVEL = 0.25f; // 每级附魔增加的免疫概率
+    /** 基础免疫概率 */
+    private static final float BASE_IMMUNITY_CHANCE = 0.25f;
+    /** 每级附魔增加的免疫概率 */
+    private static final float CHANCE_PER_LEVEL = 0.25f;
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
@@ -45,7 +45,6 @@ public class BulletproofEventHandler {
 
         if (bulletproofEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = chestplate.getEnchantments().getLevel(bulletproofEnchant);
         if (level <= 0) return;
 
@@ -55,7 +54,7 @@ public class BulletproofEventHandler {
 
         float immunityChance = BASE_IMMUNITY_CHANCE + (level - 1) * CHANCE_PER_LEVEL;
 
-        if (RANDOM.nextFloat() < immunityChance) {
+        if (RedstoneEnchants.RANDOM.nextFloat() < immunityChance) {
             event.setCanceled(true);
         }
     }

@@ -22,18 +22,16 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 冰箭：箭矢命中处的水会结成冰，命中生物时额外冻缓目标的动作。
+ * 冰霜箭：命中区域产生冻结效果，有水则冻结成冰。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class IceArrowsEventHandler {
 
     private static final String ID = "ice_arrows";
+    private static final ResourceLocation FREEZE_ID = RedstoneEnchants.id("ice_arrows");
 
     /** 冻缓持续时间（tick）。 */
     private static final int FREEZE_TICKS = 100;
-
-    private static final ResourceLocation FREEZE_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "ice_arrows");
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
@@ -54,7 +52,7 @@ public class IceArrowsEventHandler {
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
         if (EnchantContext.level(level, ID, arrow.getWeaponItem()) <= 0) return;
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
 
         freezeWater(level, victim.position());
         applyFreeze(level, victim);

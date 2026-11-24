@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 跳弹：箭矢命中生物后转向附近另一只生物。
+ * 跳弹：击中一个生物会让箭从生物身上反弹并击中附近的另一个生物。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class RicochetEventHandler {

@@ -15,8 +15,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
  * 尸体回收：狼击杀生物后回复最大生命值
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class CarrionEaterEventHandler {
-    private static final ResourceLocation CARRION_EATER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "carrion_eater");
+    private static final ResourceLocation CARRION_EATER_ID = RedstoneEnchants.id("carrion_eater");
 
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
@@ -37,7 +38,6 @@ public class CarrionEaterEventHandler {
 
         if (carrionEaterEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = armor.getEnchantments().getLevel(carrionEaterEnchant);
         if (enchantLevel <= 0) return;
 

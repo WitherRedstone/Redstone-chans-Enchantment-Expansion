@@ -17,8 +17,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 狂战士：根据损失的生命值百分比增加近战伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class BerserkEventHandler {
-    private static final ResourceLocation BERSERK_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "berserk");
+    private static final ResourceLocation BERSERK_ID = RedstoneEnchants.id("berserk");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -37,7 +38,6 @@ public class BerserkEventHandler {
 
         if (berserkEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = chestplate.getEnchantments().getLevel(berserkEnchant);
         if (enchantLevel <= 0) return;
 

@@ -16,6 +16,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.Random;
@@ -24,12 +25,10 @@ import java.util.Random;
  * 点石成金：挖掘石头类方块有概率掉落金粒
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class GoldfingerEventHandler {
     private static final Random RANDOM = new Random();
-    private static final ResourceLocation GOLDFINGER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "goldfinger");
-
-    // c:stones 标签
-    private static final TagKey<Block> STONE_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", "stones"));
+    private static final ResourceLocation GOLDFINGER_ID = RedstoneEnchants.id("goldfinger");
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -51,7 +50,7 @@ public class GoldfingerEventHandler {
 
         // 检查是否是石头类方块
         Block block = event.getState().getBlock();
-        if (!block.defaultBlockState().is(STONE_TAG)) return;
+        if (!block.defaultBlockState().is(Tags.Blocks.STONES)) return;
 
         // 计算掉落概率：每级2.5%
         float dropChance = level * 0.025f;
@@ -69,7 +68,6 @@ public class GoldfingerEventHandler {
 
             int fortuneLevel = 0;
             if (fortuneEnchant != null) {
-                @SuppressWarnings("deprecation")
                 int fortLvl = tool.getEnchantments().getLevel(fortuneEnchant);
                 fortuneLevel = fortLvl;
             }

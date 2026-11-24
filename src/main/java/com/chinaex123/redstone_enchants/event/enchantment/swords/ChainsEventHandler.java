@@ -17,7 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 锁链：近战命中后有一定几率把锁链传递到附近的其它生物身上。
+ * 锁链：击中生物会导致自身和附近的多个生物在短时间内被眩晕。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class ChainsEventHandler {
@@ -26,13 +26,10 @@ public class ChainsEventHandler {
 
     /** 主目标身上的锁链持续秒数。 */
     private static final float MAIN_SECONDS = 6.0F;
-
     /** 传递目标身上的锁链持续秒数。 */
     private static final float CHAIN_SECONDS = 3.0F;
-
     /** 锁链传递的额外目标数量。 */
     private static final int CHAIN_TARGETS = 3;
-
     /** 锁链传递半径。 */
     private static final double CHAIN_RADIUS = 8.0D;
 
@@ -40,7 +37,7 @@ public class ChainsEventHandler {
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
 
         int enchantLevel = EnchantContext.level(attacker, ID);
         if (enchantLevel <= 0) return;

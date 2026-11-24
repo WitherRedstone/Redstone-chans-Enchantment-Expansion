@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 传送：命中时与目标交换位置。
+ * 传送：命中后与目标交换位置。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class TeleportEventHandler {
@@ -24,7 +24,7 @@ public class TeleportEventHandler {
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
-        if (!(event.getEntity() instanceof LivingEntity victim)) return;
+        LivingEntity victim = event.getEntity();
         if (EnchantContext.level(attacker, ID) <= 0) return;
 
         EnchantContext context = new EnchantContext(level, attacker, attacker.position());

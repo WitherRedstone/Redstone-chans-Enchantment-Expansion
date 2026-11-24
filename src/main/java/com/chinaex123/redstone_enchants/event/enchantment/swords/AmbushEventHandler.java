@@ -21,8 +21,9 @@ import java.util.UUID;
  * 伏击：潜行时首次攻击增加伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class AmbushEventHandler {
-    private static final ResourceLocation AMBUSH_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "ambush");
+    private static final ResourceLocation AMBUSH_ID = RedstoneEnchants.id("ambush");
     private static final Map<UUID, Boolean> hasAttackedMap = new HashMap<>();
 
     @SubscribeEvent
@@ -42,7 +43,6 @@ public class AmbushEventHandler {
 
         if (ambushEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(ambushEnchant);
         if (level <= 0) return;
 

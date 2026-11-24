@@ -1,5 +1,6 @@
 package com.chinaex123.redstone_enchants.data.enchantment.type;
 
+import com.chinaex123.redstone_enchants.init.REItemTags;
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -27,7 +28,7 @@ public final class AllFlintAndSteelEnchantments {
 
     /** 灼烧：右键目标时使其燃烧 */
     private static void searing(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:all_flint_and_steel", "#redstone_enchants:all_flint_and_steel", 5, 3,
+        Enchantment.Builder builder = e.builder(REItemTags.ALL_FLINT_AND_STEEL, REItemTags.ALL_FLINT_AND_STEEL, 5, 3,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "mainhand");
         e.register(builder, SEARING, 0x55FFFF, "searing");
     }

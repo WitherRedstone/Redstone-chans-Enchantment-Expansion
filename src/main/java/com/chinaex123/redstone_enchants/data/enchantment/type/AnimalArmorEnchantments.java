@@ -4,6 +4,7 @@ import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorH
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import com.chinaex123.redstone_enchants.init.REItemTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**
@@ -32,7 +33,7 @@ public final class AnimalArmorEnchantments {
 
     /** 强化铠甲：提升防御力但降低跳跃高度 */
     private static void enhancedArmor(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:horse_animal_armor", "#redstone_enchants:horse_animal_armor", 3, 4,
+        Enchantment.Builder builder = e.builder(REItemTags.HORSE_ANIMAL_ARMOR, REItemTags.HORSE_ANIMAL_ARMOR, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "body");
         e.attributes(builder, attributeEffect("redstone_enchants:enhanced_armor_bonus", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_value"), linear(2f, 2f)));
         e.attributes(builder, attributeEffect("redstone_enchants:enhanced_armor_penalty", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.05f, -0.05f)));
@@ -41,7 +42,7 @@ public final class AnimalArmorEnchantments {
 
     /** 信使：提升坐骑移动灵活性 */
     private static void messenger(EnchantmentConstructorHelper e) {
-        Enchantment.Builder builder = e.builder("#redstone_enchants:horse_animal_armor", "#redstone_enchants:horse_animal_armor", 3, 4,
+        Enchantment.Builder builder = e.builder(REItemTags.HORSE_ANIMAL_ARMOR, REItemTags.HORSE_ANIMAL_ARMOR, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "body");
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.messenger_1", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.25f, 0.125f)));
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.messenger_2", e.attribute("minecraft:generic.movement_efficiency"), EnchantmentConstructorHelper.operation("add_value"), linear(1f, 0.5f)));

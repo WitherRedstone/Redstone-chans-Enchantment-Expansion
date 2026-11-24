@@ -17,7 +17,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class LifeStealEventHandler {
-    private static final ResourceLocation LEECHING_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "leeching");
+    private static final ResourceLocation LIFE_STEAL_ID = RedstoneEnchants.id("life_steal");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
@@ -25,15 +25,15 @@ public class LifeStealEventHandler {
         if (attacker == null) return;
 
         ItemStack weapon = attacker.getMainHandItem();
-        Holder.Reference<Enchantment> leechingEnchant = attacker.level()
+        Holder.Reference<Enchantment> lifeStealEnchant = attacker.level()
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(LEECHING_ID)
+                .getHolder(LIFE_STEAL_ID)
                 .orElse(null);
 
-        if (leechingEnchant == null) return;
+        if (lifeStealEnchant == null) return;
 
-        int level = EnchantmentHelper.getEnchantmentLevel(leechingEnchant, attacker);
+        int level = EnchantmentHelper.getEnchantmentLevel(lifeStealEnchant, attacker);
         if (level > 0) {
             float damageDealt = event.getOriginalDamage();
             float healAmount = damageDealt * 0.10f;

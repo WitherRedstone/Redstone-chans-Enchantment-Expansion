@@ -21,8 +21,9 @@ import java.util.Random;
  * 消解：攻击时有概率移除目标身上的一个正面效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class NullifyEventHandler {
-    private static final ResourceLocation NULLIFY_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "nullify");
+    private static final ResourceLocation NULLIFY_ID = RedstoneEnchants.id("nullify");
     private static final Random RANDOM = new Random();
 
     @SubscribeEvent
@@ -42,7 +43,6 @@ public class NullifyEventHandler {
 
         if (nullifyEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(nullifyEnchant);
         if (level <= 0) return;
 

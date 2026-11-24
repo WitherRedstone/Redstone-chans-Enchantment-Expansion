@@ -19,9 +19,10 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 精神：马在夜晚时增加速度
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class SpiritEventHandler {
-    private static final ResourceLocation SPIRIT_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "spirit");
-    private static final ResourceLocation SPIRIT_SPEED_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "spirit_speed");
+    private static final ResourceLocation SPIRIT_ID = RedstoneEnchants.id("spirit");
+    private static final ResourceLocation SPIRIT_SPEED_ID = RedstoneEnchants.id("spirit_speed");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -42,7 +43,6 @@ public class SpiritEventHandler {
 
         if (spiritEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = armor.getEnchantments().getLevel(spiritEnchant);
         if (enchantLevel <= 0) return;
 
@@ -59,7 +59,7 @@ public class SpiritEventHandler {
 
         // 如果是夜晚，添加速度加成
         if (isNight) {
-            double speedBonus = 0.25 * enchantLevel;
+            double speedBonus = 0.15 * enchantLevel;
             AttributeModifier modifier = new AttributeModifier(
                     SPIRIT_SPEED_ID,
                     speedBonus,

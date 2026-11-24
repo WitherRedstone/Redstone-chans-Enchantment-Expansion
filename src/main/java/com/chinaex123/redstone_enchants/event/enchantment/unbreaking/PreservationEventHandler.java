@@ -22,11 +22,13 @@ import java.util.Map;
 
 /**
  * 保全：装备不会因无耐久而损坏消失
+ * <p>
  * 主功能在PreservationMixin
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class PreservationEventHandler {
-    private static final ResourceLocation PRESERVATION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "preservation");
+    private static final ResourceLocation PRESERVATION_ID = RedstoneEnchants.id("preservation");
     private static final Map<String, Integer> lastDamageMap = new HashMap<>();
 
     @SubscribeEvent
@@ -45,14 +47,13 @@ public class PreservationEventHandler {
         for (ItemStack stack : player.getInventory().items) {
             if (stack.isEmpty()) continue;
 
-            @SuppressWarnings("deprecation")
             int level = stack.getEnchantments().getLevel(preservationEnchant);
             if (level <= 0) continue;
 
             int currentDamage = stack.getDamageValue();
             int maxDamage = stack.getMaxDamage();
 
-            String stackKey = player.getUUID().toString() + "_" + System.identityHashCode(stack);
+            String stackKey = player.getUUID() + "_" + System.identityHashCode(stack);
 
             // 检测是否刚达到最大耐久
             if (currentDamage >= maxDamage) {
@@ -92,7 +93,6 @@ public class PreservationEventHandler {
 
         if (preservationEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = stack.getEnchantments().getLevel(preservationEnchant);
         if (level <= 0) return;
 
@@ -106,7 +106,6 @@ public class PreservationEventHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
 
-        // getEntity() 可能为 null（如 JEI 搜索时）
         if (event.getEntity() == null) return;
 
         Holder.Reference<Enchantment> preservationEnchant = event.getEntity().level()
@@ -117,7 +116,6 @@ public class PreservationEventHandler {
 
         if (preservationEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = stack.getEnchantments().getLevel(preservationEnchant);
         if (level <= 0) return;
 

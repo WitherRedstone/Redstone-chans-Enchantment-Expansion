@@ -1,13 +1,13 @@
-// 1.21.1	2026-11-21T15:00:10.5107518	Tags for minecraft:enchantment mod id redstone_enchants
+// 1.21.1	2026-11-23T18:49:34.2043563	Tags for minecraft:enchantment mod id redstone_enchants
 7f21b8cd3698ebd73fd83a0ba704d9f955307f26 data/minecraft/tags/enchantment/curse.json
-fd7482d3b2c9f82a8cd3ff912a01562e9b975189 data/minecraft/tags/enchantment/double_trade_price.json
+f4f396f51a182e94f5a115bceca113802c46ae03 data/minecraft/tags/enchantment/double_trade_price.json
 db105cbb75e273c5b1dda8a31af7e822bbd708af data/minecraft/tags/enchantment/in_enchanting_table.json
 ed9753cd4513744f8a9d664bc04e52b91e7ae967 data/minecraft/tags/enchantment/non_treasure.json
 2b39b7f813920044f39d19c792b925b2b910358b data/minecraft/tags/enchantment/on_mob_spawn_equipment.json
 e3c0dbe299a3e719255284b426e5df4322eb8a71 data/minecraft/tags/enchantment/on_random_loot.json
 d4defcb745057735ecdee62237835b7a5b1227e6 data/minecraft/tags/enchantment/on_traded_equipment.json
-a71e028aacd3de1547e784024320c60259d815c6 data/minecraft/tags/enchantment/tradeable.json
-aff84df5157ab06703770a71e313b56b3b2599e9 data/minecraft/tags/enchantment/treasure.json
+c4a4ddb4666d6415dba042267407416b9a91424d data/minecraft/tags/enchantment/tradeable.json
+fe4720b11824318d9cd89f26d4677983a2fe6b80 data/minecraft/tags/enchantment/treasure.json
 c4ad5a88a63872d6b86e4be1ce914c1ada476a50 data/redstone_enchants/tags/enchantment/exclusive_set/all_enchants.json
 b29c995ba9daf699e1c5f26e64c6b4894c80b27c data/redstone_enchants/tags/enchantment/exclusive_set/armors.json
 d3423f9e3129a68e0ace02e1747dd90d0d38faa0 data/redstone_enchants/tags/enchantment/exclusive_set/armors_head.json

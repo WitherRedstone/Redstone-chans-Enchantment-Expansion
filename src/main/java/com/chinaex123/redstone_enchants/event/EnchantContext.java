@@ -3,6 +3,7 @@ package com.chinaex123.redstone_enchants.event;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
@@ -13,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.TickTask;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import com.chinaex123.redstone_enchants.init.REEntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -34,12 +36,9 @@ import net.minecraft.world.phys.Vec3;
 public final class EnchantContext {
 
     /** 非生物实体标签。 */
-    public static final TagKey<EntityType<?>> NON_LIVING = TagKey.create(Registries.ENTITY_TYPE,
-            ResourceLocation.fromNamespaceAndPath("redstone_enchants", "non_living"));
-
-    /** 免疫即死类附魔的实体标签（凋灵、末影龙等）。 */
-    public static final TagKey<EntityType<?>> BLACK_ENTITY = TagKey.create(Registries.ENTITY_TYPE,
-            ResourceLocation.fromNamespaceAndPath("redstone_enchants", "black_entity"));
+    public static final TagKey<EntityType<?>> NON_LIVING = REEntityTypeTags.NON_LIVING;
+    /** 免疫即死类附魔的实体标签。 */
+    public static final TagKey<EntityType<?>> BLACK_ENTITY = REEntityTypeTags.BLACK_ENTITY;
 
     private final ServerLevel level;
     private final Entity entity;
@@ -73,10 +72,6 @@ public final class EnchantContext {
         return this.enchantLevel;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* 附魔等级查询                                                        */
-    /* ------------------------------------------------------------------ */
-
     public static Holder.Reference<Enchantment> holder(Level level, String path) {
         return level.registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
@@ -84,17 +79,11 @@ public final class EnchantContext {
                 .orElse(null);
     }
 
-    /**
-     * 取实体身上装备（含手持）该附魔的最高等级。
-     */
     public static int level(LivingEntity entity, String path) {
         Holder.Reference<Enchantment> enchantment = holder(entity.level(), path);
         return enchantment == null ? 0 : EnchantmentHelper.getEnchantmentLevel(enchantment, entity);
     }
 
-    /**
-     * 取物品上该附魔的等级（需要显式传入维度以查询注册表）。
-     */
     public static int level(Level level, String path, ItemStack stack) {
         if (stack == null || stack.isEmpty()) {
             return 0;
@@ -102,10 +91,6 @@ public final class EnchantContext {
         Holder.Reference<Enchantment> enchantment = holder(level, path);
         return enchantment == null ? 0 : EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack);
     }
-
-    /* ------------------------------------------------------------------ */
-    /* 粒子与声音                                                          */
-    /* ------------------------------------------------------------------ */
 
     public void particle(ParticleOptions particle, int count, double dx, double dy, double dz, double speed) {
         this.level.sendParticles(particle, this.pos.x, this.pos.y, this.pos.z, count, dx, dy, dz, speed);
@@ -135,10 +120,6 @@ public final class EnchantContext {
         this.level.playSound(null, this.pos.x, this.pos.y, this.pos.z, sound, SoundSource.MASTER, volume, pitch);
     }
 
-    /* ------------------------------------------------------------------ */
-    /* 状态效果                                                            */
-    /* ------------------------------------------------------------------ */
-
     public void effect(Holder<MobEffect> effect, float seconds, int amplifier) {
         this.applyEffect(this.entity, effect, (int) (seconds * 20.0F), amplifier);
     }
@@ -152,10 +133,6 @@ public final class EnchantContext {
             living.addEffect(new MobEffectInstance(effect, durationTicks, amplifier, true, false, true));
         }
     }
-
-    /* ------------------------------------------------------------------ */
-    /* 实体召唤 / NBT 合并                                                  */
-    /* ------------------------------------------------------------------ */
 
     public Entity summon(String snbt, double dx, double dy, double dz) {
         CompoundTag tag = parse(snbt);
@@ -195,10 +172,6 @@ public final class EnchantContext {
             throw new IllegalStateException("无法解析 SNBT: " + snbt, exception);
         }
     }
-
-    /* ------------------------------------------------------------------ */
-    /* 常用实体操作                                                        */
-    /* ------------------------------------------------------------------ */
 
     public void tagAdd(Entity target, String tag) {
         if (target != null) {
@@ -259,10 +232,6 @@ public final class EnchantContext {
         found.sort((left, right) -> Double.compare(left.position().distanceToSqr(this.pos), right.position().distanceToSqr(this.pos)));
         return found.size() > limit ? found.subList(0, limit) : found;
     }
-
-    /* ------------------------------------------------------------------ */
-    /* 位置、玩家状态与延迟调度                                            */
-    /* ------------------------------------------------------------------ */
 
     public EnchantContext at(double dx, double dy, double dz) {
         return new EnchantContext(this.level, this.entity, this.pos.add(dx, dy, dz), this.enchantLevel);

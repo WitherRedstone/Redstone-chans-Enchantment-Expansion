@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
+import com.chinaex123.redstone_enchants.init.REEnchantmentTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**
@@ -47,7 +48,7 @@ public final class MaceEnchantments {
     private static void boltbringer(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:tools/mace", "#c:tools/mace", 3, 1,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/mace"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_MACE));
         e.register(builder, BOLTBRINGER, 0xFF55FF, "boltbringer");
     }
 
@@ -55,7 +56,7 @@ public final class MaceEnchantments {
     private static void diveBomb(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:tools/mace", "#c:tools/mace", 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/mace"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_MACE));
         e.postAttack(builder, target("attacker"), target("victim"), explode(false, e.damageType("minecraft:explosion"), null, null, vec(0.0, 0.0, 0.0), linear(2f, 1f), true, interaction("mob"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion"), e.sound("minecraft:entity.generic.explode")), entityProperties("attacker", entity().flags(flags().setIsFlying(false)).moving(allMovements(fallDistance(atLeast(4f))))));
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.jump_strength_1", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_value"), linear(0.2f, 0.2f)));
         e.register(builder, DIVE_BOMB, 0xFF55FF, "dive_bomb");

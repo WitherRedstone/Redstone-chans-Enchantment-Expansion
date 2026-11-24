@@ -20,10 +20,12 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 飞马座：骑乘时获得缓降效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class PegasusEventHandler {
-    private static final ResourceLocation PEGASUS_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "pegasus");
+    private static final ResourceLocation PEGASUS_ID = RedstoneEnchants.id("pegasus");
 
-    private static final int EFFECT_DURATION = 80; // 持续时间
+    /** 持续时间 */
+    private static final int EFFECT_DURATION = 80;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -40,7 +42,6 @@ public class PegasusEventHandler {
 
         if (pegasusEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = boots.getEnchantments().getLevel(pegasusEnchant);
 
         if (level > 0 && player.getVehicle() != null) {

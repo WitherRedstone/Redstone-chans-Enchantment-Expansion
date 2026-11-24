@@ -18,13 +18,11 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 昼夜流转：白天增加伤害，夜晚增加移动速度
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class DaynightCycleEventHandler {
-    private static final ResourceLocation DAYNIGHT_CYCLE_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "daynight_cycle");
-    private static final ResourceLocation DAMAGE_MODIFIER_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "daynight_cycle_damage");
-    private static final ResourceLocation SPEED_MODIFIER_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "daynight_cycle_speed");
+    private static final ResourceLocation DAYNIGHT_CYCLE_ID = RedstoneEnchants.id("daynight_cycle");
+    private static final ResourceLocation DAMAGE_MODIFIER_ID = RedstoneEnchants.id("daynight_cycle_damage");
+    private static final ResourceLocation SPEED_MODIFIER_ID = RedstoneEnchants.id("daynight_cycle_speed");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -52,7 +50,6 @@ public class DaynightCycleEventHandler {
 
             if (daynightCycleEnchant == null) continue;
 
-            @SuppressWarnings("deprecation")
             int enchantLevel = armor.getEnchantments().getLevel(daynightCycleEnchant);
             totalLevel += enchantLevel;
         }
@@ -72,7 +69,6 @@ public class DaynightCycleEventHandler {
         var speedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
 
         if (attackDamageAttribute != null && speedAttribute != null) {
-            // 移除旧的修饰符
             removeModifiers(player);
 
             // 每级提供5%加成

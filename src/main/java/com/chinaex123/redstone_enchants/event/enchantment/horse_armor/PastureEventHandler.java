@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -17,8 +18,9 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 牧场：马在草方块上时会自然恢复生命
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class PastureEventHandler {
-    private static final ResourceLocation PASTURE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "pasture");
+    private static final ResourceLocation PASTURE_ID = RedstoneEnchants.id("pasture");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -28,7 +30,7 @@ public class PastureEventHandler {
         if (!horse.isSaddled()) return;
 
         // 检查马铠是否有牧场附魔
-        ItemStack armor = horse.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.BODY);
+        ItemStack armor = horse.getItemBySlot(EquipmentSlot.BODY);
         if (armor.isEmpty()) return;
 
         Holder.Reference<Enchantment> pastureEnchant = horse.level()
@@ -39,7 +41,6 @@ public class PastureEventHandler {
 
         if (pastureEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = armor.getEnchantments().getLevel(pastureEnchant);
         if (enchantLevel <= 0) return;
 
@@ -48,7 +49,6 @@ public class PastureEventHandler {
         BlockPos belowPos = pos.below();
 
         if (horse.level().getBlockState(belowPos).is(Blocks.GRASS_BLOCK)) {
-            // 每20tick（1秒）恢复一次生命值
             if (horse.tickCount % 20 == 0) {
                 // 每级恢复0.5点生命值
                 horse.heal(enchantLevel * 0.5f);

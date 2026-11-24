@@ -20,8 +20,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
  * 灼烧：右键目标时使其燃烧
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class SearingEventHandler {
-    private static final ResourceLocation SEARING_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "searing");
+    private static final ResourceLocation SEARING_ID = RedstoneEnchants.id("searing");
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
@@ -40,7 +41,6 @@ public class SearingEventHandler {
 
         if (searingEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = tool.getEnchantments().getLevel(searingEnchant);
         if (level <= 0) return;
 

@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
- * 释放潜能：饥饿值越低，获得的力量、迅捷与急迫等级越高。
+ * 释放潜能：饥饿值低于3鸡腿时获得急迫、速度、力量(随饥饿值降低而增强)。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class UnleashPotentialEventHandler {

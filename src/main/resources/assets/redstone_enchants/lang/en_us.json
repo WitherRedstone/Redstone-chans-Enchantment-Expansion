@@ -449,7 +449,7 @@
   "enchantment.redstone_enchants.gallop_end": "End Sprint",
   "enchantment.redstone_enchants.gallop_end.desc": "Grants Speed in the End",
   "enchantment.redstone_enchants.crop_dance": "Crop Dance",
-  "enchantment.redstone_enchants.crop_dance.desc": "Accelerates crop growth when sneaking through farmland",
+  "enchantment.redstone_enchants.crop_dance.desc": "Sneaking continuously accelerates the growth of nearby trees and crops.",
   "enchantment.redstone_enchants.jump_amplifier": "Jump Boost",
   "enchantment.redstone_enchants.jump_amplifier.desc": "Increases jump height",
   "enchantment.redstone_enchants.pegasus": "Pegasus",

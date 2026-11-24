@@ -198,7 +198,7 @@
       "required": false
     },
     {
-      "id": "redstone_enchants:magic_resist",
+      "id": "redstone_enchants:spell_magic_resist",
       "required": false
     },
     {

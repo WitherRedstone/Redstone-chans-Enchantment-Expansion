@@ -18,9 +18,9 @@ import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
  * 坚不可摧：物品不再消耗耐久
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class IndestructibleEventHandler {
-    private static final ResourceLocation INDESTRUCTIBLE_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "indestructible");
+    private static final ResourceLocation INDESTRUCTIBLE_ID = RedstoneEnchants.id("indestructible");
 
     @SubscribeEvent
     public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
@@ -48,7 +48,6 @@ public class IndestructibleEventHandler {
 
             if (indestructibleEnchant == null) continue;
 
-            @SuppressWarnings("deprecation")
             int enchantLevel = stack.getEnchantments().getLevel(indestructibleEnchant);
 
             if (enchantLevel > 0) {

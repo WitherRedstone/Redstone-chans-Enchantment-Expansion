@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 
 /**
- * 爆炸箭系列：命中方块后让箭矢消失（爆炸本身由附魔数据里的 explode 效果负责）。
+ * 爆炸箭系列：命中方块后让箭矢消失。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class ArrowDiscardEventHandler {

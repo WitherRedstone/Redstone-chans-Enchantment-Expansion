@@ -20,12 +20,12 @@ import java.util.UUID;
  * 腐蚀诅咒：在水中或雨中时每秒减少耐久
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class CurseOfRustEventHandler {
+    private static final ResourceLocation CURSE_OF_RUST_ID = RedstoneEnchants.id("curse_of_rust");
     private static final Map<UUID, Long> LAST_DAMAGE_TIME = new HashMap<>();
-    private static final ResourceLocation CURSE_OF_RUST_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "curse_of_rust");
 
     @SubscribeEvent
-    @SuppressWarnings("deprecation")
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         LivingEntity player = event.getEntity();
 
@@ -39,7 +39,7 @@ public class CurseOfRustEventHandler {
         long currentTime = player.level().getGameTime();
         Long lastTime = LAST_DAMAGE_TIME.get(entityId);
 
-        // 每秒执行一次（20 tick）
+        // 每秒执行一次
         if (lastTime != null && currentTime - lastTime < 20) return;
 
         LAST_DAMAGE_TIME.put(entityId, currentTime);

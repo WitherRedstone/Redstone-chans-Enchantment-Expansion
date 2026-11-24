@@ -18,8 +18,9 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 矿工：在低于Y0时获得夜视效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class AdaptiveEventHandler {
-    private static final ResourceLocation ADAPTIVE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "adaptive");
+    private static final ResourceLocation ADAPTIVE_ID = RedstoneEnchants.id("adaptive");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -37,7 +38,6 @@ public class AdaptiveEventHandler {
 
         if (adaptiveEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = helmet.getEnchantments().getLevel(adaptiveEnchant);
         if (enchantLevel <= 0) return;
 

@@ -18,8 +18,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 狙击：与目标距离每增加10格，造成的伤害提高
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class SnipeEventHandler {
-    private static final ResourceLocation SNIPE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "snipe");
+    private static final ResourceLocation SNIPE_ID = RedstoneEnchants.id("snipe");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -42,7 +43,6 @@ public class SnipeEventHandler {
 
         if (snipeEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = bow.getEnchantments().getLevel(snipeEnchant);
         if (level <= 0) return;
 

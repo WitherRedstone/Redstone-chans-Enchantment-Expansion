@@ -5,28 +5,25 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * 精通采集：挖掘矿石时有概率触发双倍掉落
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class MasterGathererEventHandler {
-    private static final ResourceLocation MASTER_GATHERER_ID =
-            ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "master_gatherer");
-    private static final Random RANDOM = new Random();
+    private static final ResourceLocation MASTER_GATHERER_ID = RedstoneEnchants.id("master_gatherer");
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -46,19 +43,17 @@ public class MasterGathererEventHandler {
 
         if (masterGathererEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = tool.getEnchantments().getLevel(masterGathererEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查是否是矿石
-        Block block = event.getState().getBlock();
-        if (!isOre(Item.byBlock(block))) return;
+        if (!event.getState().is(Tags.Blocks.ORES)) return;
 
         // 根据附魔等级计算触发概率：每级20%
         float triggerChance = Math.min(enchantLevel * 0.20f, 1.0f);
 
         // 随机判定是否触发双倍掉落
-        if (RANDOM.nextFloat() < triggerChance) {
+        if (RedstoneEnchants.RANDOM.nextFloat() < triggerChance) {
             ServerLevel serverLevel = (ServerLevel) player.level();
 
             // 获取原方块的掉落物（已经包含时运效果）
@@ -80,12 +75,5 @@ public class MasterGathererEventHandler {
                 }
             }
         }
-    }
-
-    private static boolean isOre(Item item) {
-        // 检查方块是否属于矿石标签
-        return item.builtInRegistryHolder().is(TagKey.create(
-                Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ores")
-        ));
     }
 }

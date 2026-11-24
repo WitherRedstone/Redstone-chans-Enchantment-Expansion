@@ -16,8 +16,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 势能转化：下落攻击时，每格高度都增加伤害，并对有护甲的目标造成额外伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class PotentialConversionEventHandler {
-    private static final ResourceLocation POTENTIAL_CONVERSION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "potential_conversion");
+    private static final ResourceLocation POTENTIAL_CONVERSION_ID = RedstoneEnchants.id("potential_conversion");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -36,7 +37,6 @@ public class PotentialConversionEventHandler {
 
         if (potentialConversionEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(potentialConversionEnchant);
         if (level <= 0) return;
 

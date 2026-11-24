@@ -1,4 +1,4 @@
-package com.chinaex123.redstone_enchants.event.enchantment.swords;
+package com.chinaex123.redstone_enchants.event.enchantment.weapon;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
@@ -16,15 +16,14 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 屠夫：击杀动物时增加其掉落物
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ButcherEventHandler {
-    private static final Random RANDOM = new Random();
-    private static final ResourceLocation BUTCHER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "butcher");
+    private static final ResourceLocation BUTCHER_ID = RedstoneEnchants.id("butcher");
 
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
@@ -32,7 +31,7 @@ public class ButcherEventHandler {
 
         LivingEntity entity = event.getEntity();
 
-        // 只处理动物（包括猪、牛、羊等）
+        // 只处理动物
         if (!(entity instanceof Animal)) return;
 
         ItemStack weapon = attacker.getMainHandItem();
@@ -44,7 +43,6 @@ public class ButcherEventHandler {
 
         if (butcherEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(butcherEnchant);
         if (level <= 0) return;
 

@@ -18,10 +18,12 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 隐身斗篷：蹲伏时获得隐身效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class InvisibilityCloakEventHandler {
-    private static final ResourceLocation INVISIBILITY_CLOAK_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "invisibility_cloak");
+    private static final ResourceLocation INVISIBILITY_CLOAK_ID = RedstoneEnchants.id("invisibility_cloak");
 
-    private static final int BASE_INVISIBILITY_DURATION = 80; // 基础时间
+    /** 基础时间 */
+    private static final int BASE_INVISIBILITY_DURATION = 80;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -38,7 +40,6 @@ public class InvisibilityCloakEventHandler {
 
         if (invisibilityCloakEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = leggings.getEnchantments().getLevel(invisibilityCloakEnchant);
 
         if (level > 0 && player.isShiftKeyDown()) {

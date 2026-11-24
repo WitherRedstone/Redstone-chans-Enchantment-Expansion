@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
+import com.chinaex123.redstone_enchants.init.REEnchantmentTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**
@@ -44,7 +45,7 @@ public final class UnbreakingEnchantments {
     private static void advancedUnbreaking(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:enchantables", "#c:enchantables", 1, 1,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "any");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/unbreaking"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_UNBREAKING));
         e.value(builder, EnchantmentEffectComponents.ITEM_DAMAGE, removeBinomial(fraction(constant(4f), constant(5f))), null);
         e.register(builder, ADVANCED_UNBREAKING, 0xFFAA00, "advanced_unbreaking");
     }
@@ -53,7 +54,7 @@ public final class UnbreakingEnchantments {
     private static void indestructible(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:enchantables", "#c:enchantables", 1, 1,
                 Enchantment.constantCost(0), Enchantment.constantCost(0), 50, "any");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/indestructible"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_INDESTRUCTIBLE));
         e.register(builder, INDESTRUCTIBLE, 0xFF00BB, "indestructible");
     }
 
@@ -68,7 +69,7 @@ public final class UnbreakingEnchantments {
     private static void sacrifice(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:enchantables", "#c:enchantables", 2, 5,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "any");
-        builder = builder.exclusiveWith(e.enchantments("#redstone_enchants:exclusive_set/unbreaking"));
+        builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_UNBREAKING));
         e.register(builder, SACRIFICE, 0xFFAA00, "sacrifice");
     }
 

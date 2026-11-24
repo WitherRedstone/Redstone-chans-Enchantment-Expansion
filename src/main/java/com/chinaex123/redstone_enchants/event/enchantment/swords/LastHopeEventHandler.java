@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 /**
- * 背水一战：攻击时消耗主手武器（放手一搏），并在目标身上炸开冲击波粒子。
+ * 最后的希望：消耗武器对目标造成一击必杀效果(使用后武器消失)。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class LastHopeEventHandler {
@@ -27,9 +27,7 @@ public class LastHopeEventHandler {
         EnchantContext context = new EnchantContext(level, attacker, attacker.position());
         context.clearMainHand();
 
-        if (event.getEntity() != null) {
-            new EnchantContext(level, event.getEntity(), event.getEntity().position())
-                    .particle(ParticleTypes.SONIC_BOOM, 50, 1.0D, 1.0D, 1.0D, 0.5D);
-        }
+        new EnchantContext(level, event.getEntity(), event.getEntity().position())
+                .particle(ParticleTypes.SONIC_BOOM, 50, 1.0D, 1.0D, 1.0D, 0.5D);
     }
 }

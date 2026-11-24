@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 
 /**
- * 雨中系列附魔：箭矢命中方块时，在命中点上方召唤一圈下落的铁砧或滴水石锥。
+ * 雨系列附魔：箭矢命中方块时，在命中点上方召唤一圈实体。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class RainEventHandler {

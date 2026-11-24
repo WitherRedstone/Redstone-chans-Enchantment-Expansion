@@ -18,8 +18,9 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 踏浪者：可在水面行走，潜行时下潜到水下
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class WaveWalkerEventHandler {
-    private static final ResourceLocation WAVE_WALKER_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "wave_walker");
+    private static final ResourceLocation WAVE_WALKER_ID = RedstoneEnchants.id("wave_walker");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -37,7 +38,6 @@ public class WaveWalkerEventHandler {
 
         if (waveWalkerEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = boots.getEnchantments().getLevel(waveWalkerEnchant);
         if (enchantLevel <= 0) return;
 

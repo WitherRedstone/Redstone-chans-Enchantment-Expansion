@@ -23,8 +23,9 @@ import java.util.Random;
  * 灾厄：攻击时有概率让目标获得随机一个负面效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class CalamityEventHandler {
-    private static final ResourceLocation CALAMITY_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "calamity");
+    private static final ResourceLocation CALAMITY_ID = RedstoneEnchants.id("calamity");
     private static final Random RANDOM = new Random();
 
     @SubscribeEvent
@@ -44,7 +45,6 @@ public class CalamityEventHandler {
 
         if (calamityEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(calamityEnchant);
         if (level <= 0) return;
 

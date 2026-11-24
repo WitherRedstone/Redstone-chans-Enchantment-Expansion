@@ -19,15 +19,15 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * 水源诅咒：在水中或雨中时施加中毒效果
+ * 水源诅咒：接触水会给予中毒效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class CurseOfWaterSourceEventHandler {
+    private static final ResourceLocation CURSE_OF_WATER_SOURCE_ID = RedstoneEnchants.id("curse_of_water_source");
     private static final Map<UUID, Long> LAST_EFFECT_TIME = new HashMap<>();
-    private static final ResourceLocation CURSE_OF_WATER_SOURCE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "curse_of_water_source");
 
     @SubscribeEvent
-    @SuppressWarnings("deprecation")
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         LivingEntity player = event.getEntity();
 

@@ -1,4 +1,4 @@
-package com.chinaex123.redstone_enchants.event.enchantment.swords;
+package com.chinaex123.redstone_enchants.event.enchantment.weapon;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
@@ -15,8 +15,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 处决：对生命值低于25%的目标直接秒杀
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ExecutionEventHandler {
-    private static final ResourceLocation EXECUTION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "execution");
+    private static final ResourceLocation EXECUTION_ID = RedstoneEnchants.id("execution");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -33,7 +34,6 @@ public class ExecutionEventHandler {
 
         if (executionEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(executionEnchant);
         if (level <= 0) return;
 

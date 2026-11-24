@@ -19,11 +19,12 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * 恩赐：攻击时有概率获得随机一个正面效果
+ * 福佑：攻击时有概率获得随机一个正面效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class BoonsEventHandler {
-    private static final ResourceLocation BOONS_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "boons");
+    private static final ResourceLocation BOONS_ID = RedstoneEnchants.id("boons");
     private static final Random RANDOM = new Random();
 
     @SubscribeEvent
@@ -43,7 +44,6 @@ public class BoonsEventHandler {
 
         if (boonsEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(boonsEnchant);
         if (level <= 0) return;
 

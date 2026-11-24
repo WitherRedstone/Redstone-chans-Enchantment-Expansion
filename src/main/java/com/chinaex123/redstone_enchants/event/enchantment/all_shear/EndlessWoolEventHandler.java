@@ -24,8 +24,9 @@ import java.util.Objects;
  * 绵延不绝：剪羊毛时，有概率让羊立刻重新长出羊毛
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class EndlessWoolEventHandler {
-    private static final ResourceLocation ENDLESS_WOOL_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "endless_wool");
+    private static final ResourceLocation ENDLESS_WOOL_ID = RedstoneEnchants.id("endless_wool");
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
@@ -53,7 +54,6 @@ public class EndlessWoolEventHandler {
 
         if (endlessWoolEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = stack.getEnchantments().getLevel(endlessWoolEnchant);
         if (enchantLevel <= 0) return;
 

@@ -1,4 +1,4 @@
-package com.chinaex123.redstone_enchants.event.enchantment.trident_and_bow;
+package com.chinaex123.redstone_enchants.util;
 
 import com.chinaex123.redstone_enchants.event.EnchantContext;
 import java.util.List;
@@ -69,9 +69,6 @@ public final class FreezePicAnimation {
     private FreezePicAnimation() {
     }
 
-    /**
-     * 播放一次完整的冰冻动画。
-     */
     public static void play(EnchantContext context) {
         for (String snbt : START) {
             context.summon(snbt);

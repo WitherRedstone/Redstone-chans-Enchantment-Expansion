@@ -16,8 +16,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 背刺：从背后攻击造成额外伤害，而从正面攻击则伤害降低
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class BackstabEventHandler {
-    private static final ResourceLocation BACKSTAB_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "backstab");
+    private static final ResourceLocation BACKSTAB_ID = RedstoneEnchants.id("backstab");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -34,11 +35,16 @@ public class BackstabEventHandler {
 
         if (backstabEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = weapon.getEnchantments().getLevel(backstabEnchant);
         if (level <= 0) return;
 
         // 计算攻击者相对于目标的方向向量
+        float damageMultiplier = getDamageMultiplier(attacker, target, level);
+
+        event.setNewDamage(event.getNewDamage() * damageMultiplier);
+    }
+
+    private static float getDamageMultiplier(LivingEntity attacker, LivingEntity target, int level) {
         double dx = target.getX() - attacker.getX();
         double dz = target.getZ() - attacker.getZ();
 
@@ -60,7 +66,6 @@ public class BackstabEventHandler {
         else {
             damageMultiplier = 1.0f - (0.15f * level);
         }
-
-        event.setNewDamage(event.getNewDamage() * damageMultiplier);
+        return damageMultiplier;
     }
 }

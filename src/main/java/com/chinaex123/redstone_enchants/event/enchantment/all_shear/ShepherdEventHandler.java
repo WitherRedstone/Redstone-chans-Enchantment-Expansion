@@ -28,8 +28,9 @@ import java.util.List;
  * 牧羊人：修剪羊毛或采集蜜脾时有概率获得多个
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class ShepherdEventHandler {
-    private static final ResourceLocation SHEPHERD_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "shepherd");
+    private static final ResourceLocation SHEPHERD_ID = RedstoneEnchants.id("shepherd");
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
@@ -52,7 +53,6 @@ public class ShepherdEventHandler {
 
         if (shepherdEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = stack.getEnchantments().getLevel(shepherdEnchant);
         if (enchantLevel <= 0) return;
 
@@ -79,7 +79,6 @@ public class ShepherdEventHandler {
 
         if (shepherdEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int enchantLevel = stack.getEnchantments().getLevel(shepherdEnchant);
         if (enchantLevel <= 0) return;
 
@@ -112,6 +111,7 @@ public class ShepherdEventHandler {
         // 消耗耐久
         stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(event.getHand()));
     }
+
     private static void handleSheepShearing(Player player, Level level, ItemStack stack, Sheep sheep, int enchantLevel, PlayerInteractEvent.EntityInteract event) {
         if (!sheep.isShearable(player, stack, level, sheep.blockPosition())) return;
 

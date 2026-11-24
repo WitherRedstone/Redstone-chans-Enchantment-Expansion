@@ -17,15 +17,14 @@ import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 潮汐感知：雷雨天时，钓鱼等待时间大幅缩短且鱼的几率大幅提高
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
+@SuppressWarnings("deprecation")
 public class TideSenseEventHandler {
-    private static final ResourceLocation TIDE_SENSE_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "tide_sense");
-    private static final Random RANDOM = new Random();
+    private static final ResourceLocation TIDE_SENSE_ID = RedstoneEnchants.id("tide_sense");
 
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
@@ -44,14 +43,13 @@ public class TideSenseEventHandler {
 
         if (tideSenseEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = rod.getEnchantments().getLevel(tideSenseEnchant);
         if (level <= 0) return;
 
         // 雷雨天时大幅提高鱼的几率（替换垃圾和宝藏）
-        float fishChance = 0.7F + (level * 0.1F); // 70%-90%概率是鱼
+        float fishChance = 0.7F + (level * 0.1F);
 
-        if (RANDOM.nextFloat() < fishChance) {
+        if (RedstoneEnchants.RANDOM.nextFloat() < fishChance) {
             // 强制设为鱼类掉落
             event.getDrops().clear();
 
@@ -69,7 +67,7 @@ public class TideSenseEventHandler {
             }
 
             if (!fishItems.isEmpty()) {
-                Item randomFish = fishItems.get(RANDOM.nextInt(fishItems.size()));
+                Item randomFish = fishItems.get(RedstoneEnchants.RANDOM.nextInt(fishItems.size()));
                 event.getDrops().add(new ItemStack(randomFish));
             }
         }
