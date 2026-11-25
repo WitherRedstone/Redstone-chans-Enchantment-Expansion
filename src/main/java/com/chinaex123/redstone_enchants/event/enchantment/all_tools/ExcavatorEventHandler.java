@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +27,6 @@ import java.util.List;
  * 挖掘机：可以挖掘3x3/5x5/7x7区域的方块
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ExcavatorEventHandler {
     private static final ResourceLocation EXCAVATOR_ID = RedstoneEnchants.id("excavator");
 
@@ -39,24 +40,15 @@ public class ExcavatorEventHandler {
         if (player.isCreative()) return;
 
         ItemStack tool = player.getMainHandItem();
-        Holder.Reference<Enchantment> excavatorEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(EXCAVATOR_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> excavatorEnchant = EnchantContext.key(EXCAVATOR_ID);
 
-        if (excavatorEnchant == null) return;
-
-        int level = tool.getEnchantments().getLevel(excavatorEnchant);
-        if (level <= 0) return;
+        int radius = EnchantContext.level(tool, excavatorEnchant);
+        if (radius <= 0) return;
 
         // 只在主方块被破坏时触发（避免重复执行）
         if (!event.isCanceled()) {
             ServerLevel serverLevel = (ServerLevel) player.level();
             BlockPos centerPos = event.getPos();
-
-            // 计算挖掘半径：1级=1(3x3), 2级=2(5x5), 3级=3(7x7)
-            int radius = level;
 
             // 获取挖掘方向
             Direction facing = getFacingFromPlayer(player);

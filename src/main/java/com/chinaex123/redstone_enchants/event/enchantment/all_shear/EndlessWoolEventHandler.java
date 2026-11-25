@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_shear;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,7 +26,6 @@ import java.util.Objects;
  * 绵延不绝：剪羊毛时，有概率让羊立刻重新长出羊毛
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class EndlessWoolEventHandler {
     private static final ResourceLocation ENDLESS_WOOL_ID = RedstoneEnchants.id("endless_wool");
 
@@ -46,15 +47,9 @@ public class EndlessWoolEventHandler {
         // 检查羊是否有羊毛（未被剪过）
         if (sheep.isSheared()) return;
 
-        Holder.Reference<Enchantment> endlessWoolEnchant = level
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ENDLESS_WOOL_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> endlessWoolEnchant = EnchantContext.key(ENDLESS_WOOL_ID);
 
-        if (endlessWoolEnchant == null) return;
-
-        int enchantLevel = stack.getEnchantments().getLevel(endlessWoolEnchant);
+        int enchantLevel = EnchantContext.level(stack, endlessWoolEnchant);
         if (enchantLevel <= 0) return;
 
         // 每级10%概率让羊重新长出羊毛

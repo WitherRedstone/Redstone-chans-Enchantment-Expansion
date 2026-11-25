@@ -8,11 +8,15 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.function.Predicate;
 
+import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -29,6 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -75,24 +80,69 @@ public final class EnchantContext {
         return this.enchantLevel;
     }
 
+    public static ResourceKey<Enchantment> key(ResourceLocation id) {
+        return ResourceKey.create(Registries.ENCHANTMENT, id);
+    }
+
+    public static ResourceKey<Enchantment> key(String path) {
+        return key(RedstoneEnchants.id(path));
+    }
+
+    public static ResourceKey<Enchantment> key(ResourceKey<Enchantment> enchantment) {
+        return enchantment;
+    }
+
     public static Holder.Reference<Enchantment> holder(Level level, String path) {
         return level.registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ResourceLocation.fromNamespaceAndPath("redstone_enchants", path))
+                .getHolder(key(path))
                 .orElse(null);
     }
 
-    public static int level(LivingEntity entity, String path) {
-        Holder.Reference<Enchantment> enchantment = holder(entity.level(), path);
-        return enchantment == null ? 0 : EnchantmentHelper.getEnchantmentLevel(enchantment, entity);
-    }
-
-    public static int level(Level level, String path, ItemStack stack) {
+    public static int level(ItemStack stack, ResourceKey<Enchantment> enchantment) {
         if (stack == null || stack.isEmpty()) {
             return 0;
         }
-        Holder.Reference<Enchantment> enchantment = holder(level, path);
-        return enchantment == null ? 0 : EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack);
+        ItemEnchantments enchantments = stack.get(DataComponents.ENCHANTMENTS);
+        if (enchantments == null || enchantments.isEmpty()) {
+            return 0;
+        }
+        for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+            ResourceKey<Enchantment> entryKey = entry.getKey().getKey();
+            if (entryKey != null && entryKey.equals(enchantment)) {
+                return entry.getIntValue();
+            }
+        }
+        return 0;
+    }
+
+    public static int level(LivingEntity entity, ResourceKey<Enchantment> enchantment) {
+        int total = 0;
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack stack = entity.getItemBySlot(slot);
+            if (stack.isEmpty()) {
+                continue;
+            }
+            ItemEnchantments enchantments = stack.get(DataComponents.ENCHANTMENTS);
+            if (enchantments == null) {
+                continue;
+            }
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+                ResourceKey<Enchantment> entryKey = entry.getKey().getKey();
+                if (entryKey != null && entryKey.equals(enchantment) && entry.getKey().value().matchingSlot(slot)) {
+                    total += entry.getIntValue();
+                }
+            }
+        }
+        return total;
+    }
+
+    public static int level(LivingEntity entity, String path) {
+        return level(entity, key(path));
+    }
+
+    public static int level(Level level, String path, ItemStack stack) {
+        return level(stack, key(path));
     }
 
     public void particle(ParticleOptions particle, int count, double dx, double dy, double dz, double speed) {

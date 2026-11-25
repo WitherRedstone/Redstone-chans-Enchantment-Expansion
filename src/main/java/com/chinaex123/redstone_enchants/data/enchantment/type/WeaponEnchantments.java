@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -74,7 +75,9 @@ public final class WeaponEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.WEAPON, REItemTags.WEAPON, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(linear(1.5f, 0.25f)), entityProperties("this", entity().nbt(nbt("{Tags:[\"harmed_by_committed\"]}"))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(linear(1.5f, 0.25f)),
+                entityProperties("this", entity().nbt(nbt("{Tags:[\"harmed_by_committed\"]}")))
+        );
         e.register(builder, COMMITTED, 0xFFAA00, "committed");
     }
 
@@ -90,8 +93,13 @@ public final class WeaponEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.WEAPON, REItemTags.WEAPON, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE_BANE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.EXORCISM)));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:weakness,minecraft:slowness"), constant(1.5f), linear(3f, 0.5f), constant(1f), constant(1f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.EXORCISM)), damageSource(damageSourcePredicate().isDirect(true))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)),
+                entityProperties("this", e.entityOf(REEntityTypeTags.EXORCISM))
+        );
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.WEAKNESS, MobEffects.MOVEMENT_SLOWDOWN), constant(1.5f), linear(3f, 0.5f), constant(1f), constant(1f)),
+                allOf(entityProperties("this", e.entityOf(REEntityTypeTags.EXORCISM)), damageSource(damageSourcePredicate().isDirect(true)))
+        );
         e.register(builder, EXORCISM, 0xFF55FF, "exorcism");
     }
 
@@ -99,7 +107,9 @@ public final class WeaponEnchantments {
     private static void firstImpression(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.WEAPON, REItemTags.WEAPON, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(5.0f, 2.5f)), inverted(entityProperties("this", entity().nbt(nbt("{Tags:['redstone_enchants.first_impression']}")))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(5.0f, 2.5f)),
+                inverted(entityProperties("this", entity().nbt(nbt("{Tags:['redstone_enchants.first_impression']}"))))
+        );
         e.register(builder, FIRST_IMPRESSION, 0xFF55FF, "first_impression");
     }
 
@@ -109,7 +119,9 @@ public final class WeaponEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
         e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(constant(2f)), randomChance(constantNumber(0.33f)));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(constant(2f)), allOf(randomChance(constantNumber(0.33f)), entityProperties("direct_attacker", e.entityOf(REEntityTypeTags.PROJECTILES))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(constant(2f)),
+                allOf(randomChance(constantNumber(0.33f)), entityProperties("direct_attacker", e.entityOf(REEntityTypeTags.PROJECTILES)))
+        );
         e.register(builder, SHADOW_ASSAULT, 0xFF55FF, "shadow_assault");
     }
 
@@ -117,8 +129,12 @@ public final class WeaponEnchantments {
     private static void weighted(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.weighted_damage", e.attribute("minecraft:generic.attack_damage"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.weighted_speed", e.attribute("minecraft:generic.attack_speed"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.05f, -0.05f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.weighted_damage", e.attribute("minecraft:generic.attack_damage"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.weighted_speed", e.attribute("minecraft:generic.attack_speed"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.05f, -0.05f))
+        );
         e.register(builder, WEIGHTED, 0xFF55FF, "weighted");
     }
 
@@ -127,7 +143,9 @@ public final class WeaponEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.WEAPON, REItemTags.WEAPON, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(1f, 1.25f)), entityProperties("attacker", entity().subPredicate(player().setLevel(intsAtLeast(10)).build())));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(1f, 1.25f)),
+                entityProperties("attacker", entity().subPredicate(player().setLevel(intsAtLeast(10)).build()))
+        );
         e.register(builder, XP_BLADE, 0xFF55FF, "xp_blade");
     }
 

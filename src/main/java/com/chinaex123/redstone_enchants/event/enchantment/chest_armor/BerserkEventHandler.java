@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.chest_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +19,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 狂战士：根据损失的生命值百分比增加近战伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class BerserkEventHandler {
     private static final ResourceLocation BERSERK_ID = RedstoneEnchants.id("berserk");
 
@@ -30,15 +31,9 @@ public class BerserkEventHandler {
         ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
         if (chestplate.isEmpty()) return;
 
-        Holder.Reference<Enchantment> berserkEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(BERSERK_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> berserkEnchant = EnchantContext.key(BERSERK_ID);
 
-        if (berserkEnchant == null) return;
-
-        int enchantLevel = chestplate.getEnchantments().getLevel(berserkEnchant);
+        int enchantLevel = EnchantContext.level(chestplate, berserkEnchant);
         if (enchantLevel <= 0) return;
 
         // 计算生命值损失百分比

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.unbreaking;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
  * 坚不可摧：物品不再消耗耐久
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class IndestructibleEventHandler {
     private static final ResourceLocation INDESTRUCTIBLE_ID = RedstoneEnchants.id("indestructible");
 
@@ -40,15 +41,9 @@ public class IndestructibleEventHandler {
             ItemStack stack = entity.getItemBySlot(slot);
             if (stack.isEmpty()) continue;
 
-            Holder.Reference<Enchantment> indestructibleEnchant = entity.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(INDESTRUCTIBLE_ID)
-                    .orElse(null);
+            ResourceKey<Enchantment> indestructibleEnchant = EnchantContext.key(INDESTRUCTIBLE_ID);
 
-            if (indestructibleEnchant == null) continue;
-
-            int enchantLevel = stack.getEnchantments().getLevel(indestructibleEnchant);
+            int enchantLevel = EnchantContext.level(stack, indestructibleEnchant);
 
             if (enchantLevel > 0) {
                 // 添加不可摧毁组件

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -26,7 +28,6 @@ import java.util.List;
  * 自动熔炼：挖掘的方块自动熔炼成对应成品
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class AutoSmeltEventHandler {
     private static final ResourceLocation AUTO_SMELT_ID = RedstoneEnchants.id("auto_smelt");
 
@@ -37,15 +38,9 @@ public class AutoSmeltEventHandler {
         if (player.level().isClientSide()) return;
 
         ItemStack tool = player.getMainHandItem();
-        Holder.Reference<Enchantment> autoSmeltEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(AUTO_SMELT_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> autoSmeltEnchant = EnchantContext.key(AUTO_SMELT_ID);
 
-        if (autoSmeltEnchant == null) return;
-
-        int level = tool.getEnchantments().getLevel(autoSmeltEnchant);
+        int level = EnchantContext.level(tool, autoSmeltEnchant);
         if (level <= 0) return;
 
         // 阻止默认掉落，手动处理

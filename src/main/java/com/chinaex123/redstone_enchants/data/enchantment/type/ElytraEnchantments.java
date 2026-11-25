@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -39,8 +40,10 @@ public final class ElytraEnchantments {
     private static void enderHeart(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ELYTRA, REItemTags.ELYTRA, 3, 2,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:regeneration"), constant(3f), constant(3f), linear(0f, 1f), linear(0f, 1f)), entityProperties("this", entity().periodicTick(40)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.ender_heart_1", e.attribute("minecraft:generic.max_health"), EnchantmentConstructorHelper.operation("add_value"), linear(0f, 2f)));
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.REGENERATION), constant(3f), constant(3f), linear(0f, 1f), linear(0f, 1f)), entityProperties("this", entity().periodicTick(40)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.ender_heart_1", e.attribute("minecraft:generic.max_health"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0f, 2f))
+        );
         e.register(builder, ENDER_HEART, 0xFF55FF, "ender_heart");
     }
 
@@ -48,7 +51,9 @@ public final class ElytraEnchantments {
     private static void moonwalk(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ELYTRA, REItemTags.ELYTRA, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.moonwalk_1", e.attribute("minecraft:generic.gravity"), EnchantmentConstructorHelper.operation("add_value"), linear(-0.03f, -0.015f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.moonwalk_1", e.attribute("minecraft:generic.gravity"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-0.03f, -0.015f))
+        );
         e.register(builder, MOONWALK, 0xFF55FF, "moonwalk");
     }
 
@@ -56,7 +61,9 @@ public final class ElytraEnchantments {
     private static void safeLanding(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ELYTRA, REItemTags.ELYTRA, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantencore.safe_landing_1", e.attribute("minecraft:generic.safe_fall_distance"), EnchantmentConstructorHelper.operation("add_value"), linear(2f, 2.5f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantencore.safe_landing_1", e.attribute("minecraft:generic.safe_fall_distance"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(2f, 2.5f))
+        );
         e.register(builder, SAFE_LANDING, 0xFF55FF, "safe_landing");
     }
 

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -25,15 +27,9 @@ public class LifeStealEventHandler {
         if (attacker == null) return;
 
         ItemStack weapon = attacker.getMainHandItem();
-        Holder.Reference<Enchantment> lifeStealEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(LIFE_STEAL_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> lifeStealEnchant = EnchantContext.key(LIFE_STEAL_ID);
 
-        if (lifeStealEnchant == null) return;
-
-        int level = EnchantmentHelper.getEnchantmentLevel(lifeStealEnchant, attacker);
+        int level = EnchantContext.level(attacker, lifeStealEnchant);
         if (level > 0) {
             float damageDealt = event.getOriginalDamage();
             float healAmount = damageDealt * 0.10f;

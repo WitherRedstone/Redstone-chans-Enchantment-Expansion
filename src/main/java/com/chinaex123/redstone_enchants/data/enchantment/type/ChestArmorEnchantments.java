@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -71,8 +72,12 @@ public final class ChestArmorEnchantments {
     private static void dualCriticalBoost(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 1, 5,
                 Enchantment.dynamicCost(18, 8), Enchantment.dynamicCost(48, 18), 16, "chest");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dual_critical_boost_1", e.attribute("apothic_attributes:crit_chance"), EnchantmentConstructorHelper.operation("add_value"), linear(0.233f, 0.126f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dual_critical_boost_2", e.attribute("apothic_attributes:crit_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(0.582f, 0.286f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dual_critical_boost_1", e.attribute("apothic_attributes:crit_chance"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.233f, 0.126f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dual_critical_boost_2", e.attribute("apothic_attributes:crit_damage"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.582f, 0.286f))
+        );
         e.register(builder, DUAL_CRITICAL_BOOST, 0xFF00BB, "dual_critical_boost");
     }
 
@@ -80,10 +85,23 @@ public final class ChestArmorEnchantments {
     private static void frostThorn(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "chest");
-        e.postAttack(builder, target("victim"), target("attacker"), allEntities(damageEntity(constant(1f), constant(5f), e.damageType("minecraft:thorns")), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), null);
+        e.postAttack(builder, target("victim"), target("attacker"), allEntities(damageEntity(constant(1f), constant(5f),
+                        e.damageType("minecraft:thorns")), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"),
+                position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f),
+                velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)),
+                particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f),
+                        velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)),
+                particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f),
+                        velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), null
+        );
         e.postAttack(builder, target("victim"), target("victim"), damageItem(linear(0.15f, 0f)), null);
-        e.postAttack(builder, target("victim"), target("attacker"), mobEffect(e.mobEffects("minecraft:slowness"), linear(1f, 1f), linear(5f, 5f), linear(0f, 0.25f), linear(1f, 0.5f)), null);
-        e.entity(builder, EnchantmentEffectComponents.TICK, particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 2f), position("in_bounding_box", 1f, 2f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0.5f)), constantFloat(0.25f)), req(entityProperties("this", entity().periodicTick(15)), randomChance(constantNumber(0.75f))));
+        e.postAttack(builder, target("victim"), target("attacker"), mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN),
+                linear(1f, 1f), linear(5f, 5f), linear(0f, 0.25f), linear(1f, 0.5f)), null
+        );
+        e.entity(builder, EnchantmentEffectComponents.TICK, particles(particle("minecraft:snowflake"),
+                position("in_bounding_box", 0f, 2f), position("in_bounding_box", 1f, 2f),
+                velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0.5f)), constantFloat(0.25f)),
+                req(entityProperties("this", entity().periodicTick(15)), randomChance(constantNumber(0.75f))));
         e.register(builder, FROST_THORN, 0xFF55FF, "frost_thorn");
     }
 
@@ -91,7 +109,8 @@ public final class ChestArmorEnchantments {
     private static void resilientBastion(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "chest");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:resistance"), constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.DAMAGE_RESISTANCE),
+                constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, RESILIENT_BASTION, 0xFFAA00, "resilient_bastion");
     }
 
@@ -106,15 +125,33 @@ public final class ChestArmorEnchantments {
     private static void spellMagicResist(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:chest_armor", "#minecraft:chest_armor", 1, 5,
                 Enchantment.dynamicCost(18, 8), Enchantment.dynamicCost(48, 18), 16, "chest");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_1", e.attribute("irons_spellbooks:ice_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_2", e.attribute("irons_spellbooks:blood_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_3", e.attribute("irons_spellbooks:holy_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_4", e.attribute("irons_spellbooks:nature_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_5", e.attribute("irons_spellbooks:eldritch_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_6", e.attribute("irons_spellbooks:lightning_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_7", e.attribute("irons_spellbooks:evocation_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_8", e.attribute("irons_spellbooks:ender_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_9", e.attribute("irons_spellbooks:fire_magic_resist"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_1", e.attribute("irons_spellbooks:ice_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_2", e.attribute("irons_spellbooks:blood_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_3", e.attribute("irons_spellbooks:holy_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_4", e.attribute("irons_spellbooks:nature_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_5", e.attribute("irons_spellbooks:eldritch_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_6", e.attribute("irons_spellbooks:lightning_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_7", e.attribute("irons_spellbooks:evocation_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_8", e.attribute("irons_spellbooks:ender_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.magic_resist_9", e.attribute("irons_spellbooks:fire_magic_resist"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
         e.register(builder, SPELL_MAGIC_RESIST, 0xFF00BB, "magic_resist");
     }
 
@@ -122,15 +159,33 @@ public final class ChestArmorEnchantments {
     private static void spellPower(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:chest_armor", "#minecraft:chest_armor", 1, 5,
                 Enchantment.dynamicCost(18, 8), Enchantment.dynamicCost(48, 18), 16, "chest");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_1", e.attribute("irons_spellbooks:ice_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_2", e.attribute("irons_spellbooks:blood_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_3", e.attribute("irons_spellbooks:holy_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_4", e.attribute("irons_spellbooks:nature_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_5", e.attribute("irons_spellbooks:eldritch_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_6", e.attribute("irons_spellbooks:lightning_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_7", e.attribute("irons_spellbooks:evocation_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_8", e.attribute("irons_spellbooks:ender_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_9", e.attribute("irons_spellbooks:fire_spell_power"), EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_1", e.attribute("irons_spellbooks:ice_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_2", e.attribute("irons_spellbooks:blood_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_3", e.attribute("irons_spellbooks:holy_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_4", e.attribute("irons_spellbooks:nature_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_5", e.attribute("irons_spellbooks:eldritch_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_6", e.attribute("irons_spellbooks:lightning_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_7", e.attribute("irons_spellbooks:evocation_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_8", e.attribute("irons_spellbooks:ender_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.spell_power_9", e.attribute("irons_spellbooks:fire_spell_power"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.1f, 0.1f))
+        );
         e.register(builder, SPELL_POWER, 0xFF00BB, "spell_power");
     }
 
@@ -138,7 +193,9 @@ public final class ChestArmorEnchantments {
     private static void vitality(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_CHEST, REItemTags.ARMORS_CHEST, 2, 4,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "chest");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.vitality_1", e.attribute("minecraft:generic.max_health"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.25f, 0.25f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.vitality_1", e.attribute("minecraft:generic.max_health"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.25f, 0.25f))
+        );
         e.register(builder, VITALITY, 0xFFAA00, "vitality");
     }
 

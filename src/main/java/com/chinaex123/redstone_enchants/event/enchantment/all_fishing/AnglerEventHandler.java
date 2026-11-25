@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_fishing;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -24,7 +26,6 @@ import java.util.Objects;
  * 渔夫：钓鱼后收获鱼的数量有概率翻倍
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class AnglerEventHandler {
     private static final ResourceLocation ANGLER_ID = RedstoneEnchants.id("angler");
 
@@ -35,15 +36,9 @@ public class AnglerEventHandler {
 
         if (rod.isEmpty() || !rod.is(Items.FISHING_ROD)) return;
 
-        Holder.Reference<Enchantment> anglerEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ANGLER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> anglerEnchant = EnchantContext.key(ANGLER_ID);
 
-        if (anglerEnchant == null) return;
-
-        int level = rod.getEnchantments().getLevel(anglerEnchant);
+        int level = EnchantContext.level(rod, anglerEnchant);
         if (level <= 0) return;
 
         // 每级+10%概率翻倍

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.trident;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +30,6 @@ import java.util.List;
  * 海风：命中时产生推进风弹。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class SeaBreezeEventHandler {
     private static final ResourceLocation SEA_BREEZE_ID = RedstoneEnchants.id("sea_breeze");
 
@@ -54,15 +55,9 @@ public class SeaBreezeEventHandler {
         ItemStack weapon = arrow.getWeaponItem();
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> seaBreezeEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SEA_BREEZE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> seaBreezeEnchant = EnchantContext.key(SEA_BREEZE_ID);
 
-        if (seaBreezeEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(seaBreezeEnchant);
+        int level = EnchantContext.level(weapon, seaBreezeEnchant);
         if (level <= 0) return;
 
         LivingEntity target = event.getEntity();
@@ -131,15 +126,9 @@ public class SeaBreezeEventHandler {
         ItemStack weapon = arrow.getWeaponItem();
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> seaBreezeEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SEA_BREEZE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> seaBreezeEnchant = EnchantContext.key(SEA_BREEZE_ID);
 
-        if (seaBreezeEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(seaBreezeEnchant);
+        int level = EnchantContext.level(weapon, seaBreezeEnchant);
         if (level <= 0) return;
 
         HitResult hitResult = event.getRayTraceResult();

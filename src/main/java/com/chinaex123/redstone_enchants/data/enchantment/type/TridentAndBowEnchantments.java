@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -39,8 +40,13 @@ public final class TridentAndBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.TRIDENT_AND_BOW, REItemTags.TRIDENT_AND_BOW, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), linear(1f, 1f), linear(3f, 1f), linear(0f, 1f), linear(1f, 1f)), null);
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, replaceDisk(linear(3f, 2f), constant(1f), vec3i(0, 0, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:water", 0, 0, 0)), simpleState(e.state("minecraft:frosted_ice", "age", "0")), null), entityProperties("this", e.entityOf(REEntityTypeTags.PROJECTILES)));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), linear(1f, 1f), linear(3f, 1f), linear(0f, 1f), linear(1f, 1f)), null
+        );
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, replaceDisk(linear(3f, 2f), constant(1f), vec3i(0, 0, 0),
+                allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:water", 0, 0, 0)),
+                simpleState(e.state("minecraft:frosted_ice", "age", "0")), null),
+                entityProperties("this", e.entityOf(REEntityTypeTags.PROJECTILES)));
         e.register(builder, ETERNAL_FROST, 0xFFAA00, "eternal_frost");
     }
 

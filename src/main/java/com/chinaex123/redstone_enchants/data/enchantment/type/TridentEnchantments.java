@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -48,7 +49,10 @@ public final class TridentEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
         e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_WATER)));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_WATER)), damageSource(damageSourcePredicate().isDirect(true))));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)),
+                allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_WATER)), damageSource(damageSourcePredicate().isDirect(true)))
+        );
         e.register(builder, BANE_WATER, 0xFF55FF, "bane_water");
     }
 
@@ -64,7 +68,9 @@ public final class TridentEnchantments {
     private static void throwingEnhancement(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:enchantable/trident", "#minecraft:enchantable/trident", 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(3f, 1.5f)), entityProperties("direct_attacker", e.entityOf("minecraft:trident")));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(3f, 1.5f)),
+                entityProperties("direct_attacker", e.entityOf("minecraft:trident"))
+        );
         e.register(builder, THROWING_ENHANCEMENT, 0xFF55FF, "throwing_enhancement");
     }
 
@@ -72,7 +78,10 @@ public final class TridentEnchantments {
     private static void thundering(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#minecraft:enchantable/trident", "#minecraft:enchantable/trident", 3, 1,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, allEntities(summon(e.entityTypes("minecraft:lightning_bolt"), false), playSound(e.sound("minecraft:item.trident.thunder"), constantFloat(5.0f), constantFloat(1.0f))), allOf(weatherCheck(true, null), entityProperties("this", e.entityOf("minecraft:trident")), locationCheck(location().setCanSeeSky(true)), blockStateProperty(e.block("minecraft:lightning_rod").value())));
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, allEntities(summon(e.entityTypes("minecraft:lightning_bolt"), false),
+                playSound(e.sound("minecraft:item.trident.thunder"), constantFloat(5.0f), constantFloat(1.0f))),
+                allOf(weatherCheck(true, null), entityProperties("this", e.entityOf("minecraft:trident")),
+                        locationCheck(location().setCanSeeSky(true)), blockStateProperty(e.block("minecraft:lightning_rod").value())));
         e.register(builder, THUNDERING, 0xFF55FF, "thundering");
     }
 
@@ -81,7 +90,9 @@ public final class TridentEnchantments {
         Enchantment.Builder builder = e.builder("#minecraft:enchantable/trident", "#minecraft:enchantable/trident", 3, 1,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_NO_SEA_BREEZE));
-        e.postAttack(builder, target("attacker"), target("victim"), summon(e.entityTypes("minecraft:tnt"), false), req(randomChance(constantNumber(0.5f)), entityProperties("this", entity().located(location().setBlock(locBlockBuilder("minecraft:water"))))));
+        e.postAttack(builder, target("attacker"), target("victim"), summon(e.entityTypes("minecraft:tnt"), false),
+                req(randomChance(constantNumber(0.5f)), entityProperties("this", entity().located(location().setBlock(locBlockBuilder("minecraft:water")))))
+        );
         e.register(builder, UNDERWATER_BLASTING, 0xFF55FF, "underwater_blasting");
     }
 

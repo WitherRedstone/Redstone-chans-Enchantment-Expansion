@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -134,7 +135,10 @@ public final class SwordsEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
         e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_BOSS)));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_BOSS)), damageSource(damageSourcePredicate().isDirect(true))));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)),
+                allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_BOSS)), damageSource(damageSourcePredicate().isDirect(true)))
+        );
         e.register(builder, BANE_BOSS, 0xFF55FF, "bane_boss");
     }
 
@@ -144,7 +148,10 @@ public final class SwordsEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
         e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_END)));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_END)), damageSource(damageSourcePredicate().isDirect(true))));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)),
+                allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_END)), damageSource(damageSourcePredicate().isDirect(true)))
+        );
         e.register(builder, BANE_END, 0xFF55FF, "bane_end");
     }
 
@@ -153,8 +160,13 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_ILLAGER)));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_ILLAGER)), damageSource(damageSourcePredicate().isDirect(true))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)),
+                entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_ILLAGER))
+        );
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)),
+                allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_ILLAGER)), damageSource(damageSourcePredicate().isDirect(true)))
+        );
         e.register(builder, BANE_ILLAGER, 0xFF55FF, "bane_illager");
     }
 
@@ -163,8 +175,13 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_NETHER)));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)), allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_NETHER)), damageSource(damageSourcePredicate().isDirect(true))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)),
+                entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_NETHER))
+        );
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(1.5f), linear(1.5f, 0.5f), constant(3f), constant(3f)),
+                allOf(entityProperties("this", e.entityOf(REEntityTypeTags.ENTITY_NETHER)), damageSource(damageSourcePredicate().isDirect(true)))
+        );
         e.register(builder, BANE_NETHER, 0xFF55FF, "bane_nether");
     }
 
@@ -173,7 +190,10 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BANE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)), req(anyOf(entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")), entityProperties("this", e.entityOf("minecraft:phantom").flags(flags().setOnGround(false))))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(2.5f, 2.5f)),
+                req(anyOf(entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")), entityProperties("this",
+                        e.entityOf("minecraft:phantom").flags(flags().setOnGround(false)))))
+        );
         e.register(builder, BANE_PHANTOM, 0xFF55FF, "bane_phantom");
     }
 
@@ -216,8 +236,12 @@ public final class SwordsEnchantments {
     private static void dynamo(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(1f, 1f)), entityProperties("direct_attacker", entity().flags(flags().setSprinting(true))));
-        e.value(builder, EnchantmentEffectComponents.KNOCKBACK, add(linear(0.5f, 0.5f)), entityProperties("direct_attacker", entity().flags(flags().setSprinting(true))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(linear(1f, 1f)),
+                entityProperties("direct_attacker", entity().flags(flags().setSprinting(true)))
+        );
+        e.value(builder, EnchantmentEffectComponents.KNOCKBACK, add(linear(0.5f, 0.5f)),
+                entityProperties("direct_attacker", entity().flags(flags().setSprinting(true)))
+        );
         e.register(builder, DYNAMO, 0x55FFFF, "dynamo");
     }
 
@@ -233,7 +257,9 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.LAST_HOPE_WEAPONS, REItemTags.LAST_HOPE_WEAPONS, 1, 1,
                 Enchantment.dynamicCost(120, 100), Enchantment.dynamicCost(150, 120), 200, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(constant(2147483647f)), inverted(entityProperties("this", e.entityOf(REEntityTypeTags.BLACK_ENTITY))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, add(constant(2147483647f)),
+                inverted(entityProperties("this", e.entityOf(REEntityTypeTags.BLACK_ENTITY)))
+        );
         e.register(builder, LAST_HOPE, 0xFF00BB, "last_hope");
     }
 
@@ -255,7 +281,9 @@ public final class SwordsEnchantments {
     private static void resilienceShield(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 2, 4,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.resilience_shield_1", e.attribute("minecraft:generic.knockback_resistance"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.2f, 0.1f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.resilience_shield_1", e.attribute("minecraft:generic.knockback_resistance"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.2f, 0.1f))
+        );
         e.register(builder, RESILIENCE_SHIELD, 0xFFAA00, "resilience_shield");
     }
 
@@ -263,7 +291,10 @@ public final class SwordsEnchantments {
     private static void shadowPierce(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(linear(1.5f, 1.5f)), anyOf(entityProperties("this", entity().effects(effects().and(e.mobEffect("minecraft:invisibility")))), entityProperties("this", entity().effects(effects().and(e.mobEffect("minecraft:darkness"))))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE, multiply(linear(1.5f, 1.5f)),
+                anyOf(entityProperties("this", entity().effects(effects().and(e.mobEffect(MobEffects.INVISIBILITY)))),
+                        entityProperties("this", entity().effects(effects().and(e.mobEffect(MobEffects.DARKNESS)))))
+        );
         e.register(builder, SHADOW_PIERCE, 0xFF55FF, "shadow_pierce");
     }
 
@@ -272,7 +303,9 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.swift_shadowcutter_1", e.attribute("minecraft:generic.attack_speed"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.05f, 0.15f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.swift_shadowcutter_1", e.attribute("minecraft:generic.attack_speed"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.05f, 0.15f))
+        );
         e.register(builder, SWIFT_SHADOWCUTTER, 0xFF55FF, "swift_shadowcutter");
     }
 
@@ -281,7 +314,9 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_TOUCH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("apothic_attributes:bleeding"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null);
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects("apothic_attributes:bleeding"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null
+        );
         e.register(builder, TOUCH_BLEEDING, 0xFF55FF, "touch_bleeding");
     }
 
@@ -290,7 +325,9 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_TOUCH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:poison"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null);
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.POISON), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null
+        );
         e.register(builder, TOUCH_POISON, 0xFF55FF, "touch_poison");
     }
 
@@ -299,7 +336,9 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_TOUCH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:wither"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null);
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.WITHER), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null
+        );
         e.register(builder, TOUCH_WITHER, 0xFF55FF, "touch_wither");
     }
 
@@ -308,7 +347,9 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.postAttack(builder, target("attacker"), target("attacker"), mobEffect(e.mobEffects("minecraft:strength,minecraft:haste,minecraft:speed"), constant(5f), constant(5f), constant(0f), linear(0f, 1f)), null);
+        e.postAttack(builder, target("attacker"), target("attacker"),
+                mobEffect(e.mobEffects(MobEffects.DAMAGE_BOOST, MobEffects.DIG_SPEED, MobEffects.MOVEMENT_SPEED), constant(5f), constant(5f), constant(0f), linear(0f, 1f)), null
+        );
         e.register(builder, UNDER_PRESSURE, 0xFFAA00, "under_pressure");
     }
 
@@ -317,8 +358,12 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.postAttack(builder, target("attacker"), target("victim"), allEntities(mobEffect(e.mobEffects("twilightforest:frosted"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects("minecraft:wither"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects("minecraft:weakness"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), null);
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.undercurrent_1", e.attribute("apothic_attributes:cold_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(2f, 1.5f)));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                allEntities(mobEffect(e.mobEffects("twilightforest:frosted"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects(MobEffects.WITHER), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects(MobEffects.WEAKNESS), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), null
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.undercurrent_1", e.attribute("apothic_attributes:cold_damage"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(2f, 1.5f))
+        );
         e.register(builder, UNDERCURRENT, 0xFF55FF, "undercurrent");
     }
 

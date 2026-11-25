@@ -51,10 +51,18 @@ public final class HorseArmorEnchantments {
     private static void myLittlePony(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.HORSE_ARMOR, REItemTags.HORSE_ARMOR, 3, 1,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "body");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_1", e.attribute("minecraft:generic.scale"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.8f, -0.2f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_2", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(2f, 1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_3", e.attribute("minecraft:generic.safe_fall_distance"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(10f, 10f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_4", e.attribute("minecraft:generic.fall_damage_multiplier"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.99f, 0f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_1", e.attribute("minecraft:generic.scale"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.8f, -0.2f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_2", e.attribute("minecraft:generic.jump_strength"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(2f, 1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_3", e.attribute("minecraft:generic.safe_fall_distance"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(10f, 10f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.my_little_pony_4", e.attribute("minecraft:generic.fall_damage_multiplier"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.99f, 0f))
+        );
         e.register(builder, MY_LITTLE_PONY, 0xFF55FF, "my_little_pony");
     }
 

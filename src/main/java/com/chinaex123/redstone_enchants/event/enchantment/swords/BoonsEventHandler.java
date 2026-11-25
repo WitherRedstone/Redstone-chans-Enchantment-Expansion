@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -22,7 +24,6 @@ import java.util.Random;
  * 福佑：攻击时有概率获得随机一个正面效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class BoonsEventHandler {
     private static final ResourceLocation BOONS_ID = RedstoneEnchants.id("boons");
     private static final Random RANDOM = new Random();
@@ -36,15 +37,9 @@ public class BoonsEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> boonsEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(BOONS_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> boonsEnchant = EnchantContext.key(BOONS_ID);
 
-        if (boonsEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(boonsEnchant);
+        int level = EnchantContext.level(weapon, boonsEnchant);
         if (level <= 0) return;
 
         // 每级5%概率触发

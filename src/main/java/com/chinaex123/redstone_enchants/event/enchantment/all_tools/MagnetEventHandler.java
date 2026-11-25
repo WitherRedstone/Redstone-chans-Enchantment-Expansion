@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +20,6 @@ import java.util.List;
  * 磁力：吸引附近的掉落物到身边
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class MagnetEventHandler {
     private static final ResourceLocation MAGNET_ID = RedstoneEnchants.id("magnet");
 
@@ -30,21 +31,15 @@ public class MagnetEventHandler {
         ItemStack mainHand = player.getMainHandItem();
         ItemStack offHand = player.getOffhandItem();
 
-        Holder.Reference<Enchantment> magnetEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(MAGNET_ID)
-                .orElse(null);
-
-        if (magnetEnchant == null) return;
+        ResourceKey<Enchantment> magnetEnchant = EnchantContext.key(MAGNET_ID);
 
         int mainLevel = 0;
         int offLevel = 0;
 
-        int ml = mainHand.getEnchantments().getLevel(magnetEnchant);
+        int ml = EnchantContext.level(mainHand, magnetEnchant);
         mainLevel = ml;
 
-        int ol = offHand.getEnchantments().getLevel(magnetEnchant);
+        int ol = EnchantContext.level(offHand, magnetEnchant);
         offLevel = ol;
 
         int maxLevel = Math.max(mainLevel, offLevel);

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +27,6 @@ import java.util.*;
  * 连锁砍树：砍伐树木时，同时破坏其上方所有同种原木
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class TimberEventHandler {
     private static final ResourceLocation TIMBER_ID = RedstoneEnchants.id("timber");
 
@@ -39,15 +40,9 @@ public class TimberEventHandler {
         if (player.level().isClientSide()) return;
 
         ItemStack tool = player.getMainHandItem();
-        Holder.Reference<Enchantment> timberEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(TIMBER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> timberEnchant = EnchantContext.key(TIMBER_ID);
 
-        if (timberEnchant == null) return;
-
-        int level = tool.getEnchantments().getLevel(timberEnchant);
+        int level = EnchantContext.level(tool, timberEnchant);
         if (level <= 0) return;
 
         ServerLevel serverLevel = (ServerLevel) player.level();

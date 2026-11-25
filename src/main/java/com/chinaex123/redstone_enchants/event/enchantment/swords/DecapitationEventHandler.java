@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,15 +32,9 @@ public class DecapitationEventHandler {
         if (attacker == null) return;
 
         ItemStack weapon = attacker.getMainHandItem();
-        Holder.Reference<Enchantment> decapitationEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(DECAPITATION_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> decapitationEnchant = EnchantContext.key(DECAPITATION_ID);
 
-        if (decapitationEnchant == null) return;
-
-        int level = EnchantmentHelper.getEnchantmentLevel(decapitationEnchant, attacker);
+        int level = EnchantContext.level(attacker, decapitationEnchant);
         if (level <= 0) return;
 
         LivingEntity entity = event.getEntity();

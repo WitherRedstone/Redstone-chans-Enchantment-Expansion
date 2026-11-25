@@ -35,8 +35,12 @@ public final class AllWeaponAndToolsEnchantments {
     private static void extend(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.extend_1", e.attribute("minecraft:player.block_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(1f, 1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.extend_2", e.attribute("minecraft:player.entity_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(1f, 1f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.extend_1", e.attribute("minecraft:player.block_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(1f, 1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.extend_2", e.attribute("minecraft:player.entity_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(1f, 1f))
+        );
         e.register(builder, EXTEND, 0xFFAA00, "extend");
     }
 
@@ -44,7 +48,9 @@ public final class AllWeaponAndToolsEnchantments {
     private static void lightweight(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:lightweight", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.05f, 0.05f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:lightweight", e.attribute("minecraft:generic.movement_speed"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.05f, 0.05f))
+        );
         e.register(builder, LIGHTWEIGHT, 0xFF55FF, "lightweight");
     }
 

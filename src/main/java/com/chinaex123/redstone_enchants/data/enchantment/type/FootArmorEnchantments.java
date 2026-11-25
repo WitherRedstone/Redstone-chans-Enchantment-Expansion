@@ -227,7 +227,9 @@ public final class FootArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BOOTS_GALLOP));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.gallop_1", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.2f, 0.2f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.gallop_1", e.attribute("minecraft:generic.movement_speed"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.2f, 0.2f))
+        );
         e.register(builder, GALLOP, 0xFF55FF, "gallop");
     }
 
@@ -236,11 +238,23 @@ public final class FootArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BOOTS_GALLOP));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("minecraft:enchantment.soul_speed", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_value"), linear(0.0405f, 0.0105f)), allOf(inverted(entityProperties("this", entity().vehicle(entity()))), anyOf(allOf(enchantmentActive(true), entityProperties("this", entity().flags(flags().setIsFlying(false))), anyOf(entityProperties("this", entity().movementAffectedBy(location().setDimension(dimension("minecraft:the_end")))), entityProperties("this", entity().flags(flags().setOnGround(false))))), allOf(enchantmentActive(false), entityProperties("this", entity().flags(flags().setIsFlying(false)).movementAffectedBy(location().setDimension(dimension("minecraft:the_end"))))))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("minecraft:enchantment.soul_speed", e.attribute("minecraft:generic.movement_efficiency"), EnchantmentConstructorHelper.operation("add_value"), constant(1f)), entityProperties("this", entity().movementAffectedBy(location().setDimension(dimension("minecraft:the_end")))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, damageItem(constant(1f)), allOf(randomChance(levelNumber(constant(0.04f))), entityProperties("this", entity().flags(flags().setOnGround(true)).movementAffectedBy(location().setDimension(dimension("minecraft:the_end"))))));
-        e.entity(builder, EnchantmentEffectComponents.TICK, particles(particle("minecraft:soul"), position("in_bounding_box", 0f, 1f), position("entity_position", 0.1f, 1f), velocity(-0.2f, constantFloat(0f)), velocity(0f, constantFloat(0.1f)), constantFloat(1f)), entityProperties("this", entity().flags(flags().setOnGround(true).setIsFlying(false)).moving(allMovements(horizontalSpeed(atLeast(9.999999747378752e-06f)))).movementAffectedBy(location().setDimension(dimension("minecraft:the_end"))).periodicTick(5)));
-        e.entity(builder, EnchantmentEffectComponents.TICK, playSound(e.sound("minecraft:particle.soul_escape"), constantFloat(0.6f), uniformFloat(0.6f, 1f)), allOf(randomChance(constantNumber(0.35f)), entityProperties("this", entity().flags(flags().setOnGround(true).setIsFlying(false)).moving(allMovements(horizontalSpeed(atLeast(9.999999747378752e-06f)))).movementAffectedBy(location().setDimension(dimension("minecraft:the_end"))).periodicTick(5))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("minecraft:enchantment.soul_speed",
+                e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_value"), linear(0.0405f, 0.0105f)), allOf(inverted(entityProperties("this", entity().vehicle(entity()))), anyOf(allOf(enchantmentActive(true), entityProperties("this", entity().flags(flags().setIsFlying(false))), anyOf(entityProperties("this", entity().movementAffectedBy(location().setDimension(dimension("minecraft:the_end")))), entityProperties("this", entity().flags(flags().setOnGround(false))))), allOf(enchantmentActive(false), entityProperties("this", entity().flags(flags().setIsFlying(false)).movementAffectedBy(location().setDimension(dimension("minecraft:the_end"))))))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("minecraft:enchantment.soul_speed",
+                e.attribute("minecraft:generic.movement_efficiency"), EnchantmentConstructorHelper.operation("add_value"), constant(1f)),
+                entityProperties("this", entity().movementAffectedBy(location().setDimension(dimension("minecraft:the_end")))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, damageItem(constant(1f)), allOf(randomChance(levelNumber(constant(0.04f))),
+                entityProperties("this", entity().flags(flags().setOnGround(true)).movementAffectedBy(location().setDimension(dimension("minecraft:the_end"))))));
+        e.entity(builder, EnchantmentEffectComponents.TICK, particles(particle("minecraft:soul"), position("in_bounding_box", 0f, 1f),
+                position("entity_position", 0.1f, 1f), velocity(-0.2f, constantFloat(0f)), velocity(0f,
+                        constantFloat(0.1f)), constantFloat(1f)), entityProperties("this", entity().flags(flags()
+                .setOnGround(true).setIsFlying(false)).moving(allMovements(horizontalSpeed(atLeast(9.999999747378752e-06f)))).movementAffectedBy(location()
+                .setDimension(dimension("minecraft:the_end"))).periodicTick(5)));
+        e.entity(builder, EnchantmentEffectComponents.TICK, playSound(e.sound("minecraft:particle.soul_escape"),
+                constantFloat(0.6f), uniformFloat(0.6f, 1f)), allOf(randomChance(constantNumber(0.35f)),
+                entityProperties("this", entity().flags(flags().setOnGround(true).setIsFlying(false))
+                        .moving(allMovements(horizontalSpeed(atLeast(9.999999747378752e-06f)))).movementAffectedBy(location()
+                                .setDimension(dimension("minecraft:the_end"))).periodicTick(5))));
         e.register(builder, GALLOP_END, 0xFF55FF, "gallop_end");
     }
 
@@ -249,10 +263,24 @@ public final class FootArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BOOTS_GALLOP));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("redstone_enchants:enchantment.gallop_sand_1", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_value"), linear(0.0405f, 0.0105f)), allOf(inverted(entityProperties("this", entity().vehicle(entity()))), anyOf(allOf(enchantmentActive(true), entityProperties("this", entity().flags(flags().setIsFlying(false))), anyOf(entityProperties("this", entity().movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand")))), entityProperties("this", entity().flags(flags().setOnGround(false))))), allOf(enchantmentActive(false), entityProperties("this", entity().flags(flags().setIsFlying(false)).movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand"))))))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("redstone_enchants:enchantment.gallop_sand_2", e.attribute("minecraft:generic.movement_efficiency"), EnchantmentConstructorHelper.operation("add_value"), constant(1f)), entityProperties("this", entity().movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand")))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, damageItem(constant(1f)), allOf(randomChance(levelNumber(constant(0.04f))), entityProperties("this", entity().flags(flags().setOnGround(true)).movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand"))))));
-        e.entity(builder, EnchantmentEffectComponents.TICK, particles(dust(0f, 0f, 0f, 0.01f), position("in_bounding_box", 0f, 1f), position("entity_position", 0.1f, 1f), velocity(-0.2f, constantFloat(0f)), velocity(0f, constantFloat(0.1f)), constantFloat(1f)), entityProperties("this", entity().flags(flags().setOnGround(true).setIsFlying(false)).moving(allMovements(horizontalSpeed(atLeast(1e-05f)))).movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand"))).periodicTick(5)));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("redstone_enchants:enchantment.gallop_sand_1",
+                e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_value"), linear(0.0405f, 0.0105f)),
+                allOf(inverted(entityProperties("this", entity().vehicle(entity()))), anyOf(allOf(enchantmentActive(true),
+                        entityProperties("this", entity().flags(flags().setIsFlying(false))),
+                        anyOf(entityProperties("this", entity().movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand")))),
+                                entityProperties("this", entity().flags(flags().setOnGround(false))))), allOf(enchantmentActive(false),
+                        entityProperties("this", entity().flags(flags().setIsFlying(false))
+                                .movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand"))))))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, attributeEffect("redstone_enchants:enchantment.gallop_sand_2",
+                e.attribute("minecraft:generic.movement_efficiency"), EnchantmentConstructorHelper.operation("add_value"), constant(1f)),
+                entityProperties("this", entity().movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand")))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, damageItem(constant(1f)), allOf(randomChance(levelNumber(constant(0.04f))),
+                entityProperties("this", entity().flags(flags().setOnGround(true)).movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand"))))));
+        e.entity(builder, EnchantmentEffectComponents.TICK, particles(dust(0f, 0f, 0f, 0.01f), position("in_bounding_box", 0f, 1f),
+                position("entity_position", 0.1f, 1f), velocity(-0.2f, constantFloat(0f)),
+                velocity(0f, constantFloat(0.1f)), constantFloat(1f)),
+                entityProperties("this", entity().flags(flags().setOnGround(true).setIsFlying(false)).moving(allMovements(horizontalSpeed(atLeast(1e-05f))))
+                        .movementAffectedBy(location().setBlock(locBlockBuilder("#minecraft:sand"))).periodicTick(5)));
         e.register(builder, GALLOP_SAND, 0xFF55FF, "gallop_sand");
     }
 
@@ -260,8 +288,12 @@ public final class FootArmorEnchantments {
     private static void jumpAmplifier(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
-        e.attributes(builder, attributeEffect("minecraft:enchantment.leaping_jump_1", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.25f)));
-        e.attributes(builder, attributeEffect("minecraft:enchantment.leaping_jump_2", e.attribute("minecraft:generic.safe_fall_distance"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.25f)));
+        e.attributes(builder, attributeEffect("minecraft:enchantment.leaping_jump_1", e.attribute("minecraft:generic.jump_strength"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.25f))
+        );
+        e.attributes(builder, attributeEffect("minecraft:enchantment.leaping_jump_2", e.attribute("minecraft:generic.safe_fall_distance"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.25f))
+        );
         e.register(builder, JUMP_AMPLIFIER, 0xFF55FF, "jump_amplifier");
     }
 
@@ -277,9 +309,15 @@ public final class FootArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 2,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_WALKER));
-        e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true)).tag(damageTag("minecraft:bypasses_invulnerability", false))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(constant(WALKER_RADIUS), 0f, 16f), constant(1f), vec3i(0, -1, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:dirt", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:grass_block")), e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, particles(dust(0.016f, 0.761f, 0.114f, 1f), position("entity_position", 0f, 1f), position("entity_position", 0f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), null);
+        e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true))
+                .tag(damageTag("minecraft:bypasses_invulnerability", false))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(constant(WALKER_RADIUS), 0f, 16f),
+                constant(1f), vec3i(0, -1, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0),
+                        e.blockPredicate("minecraft:dirt", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:grass_block")),
+                e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, particles(dust(0.016f, 0.761f, 0.114f, 1f),
+                position("entity_position", 0f, 1f), position("entity_position", 0f, 1f),
+                velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), null);
         e.register(builder, WALKER_GRASS, 0xFF55FF, "walker_grass");
     }
 
@@ -288,8 +326,13 @@ public final class FootArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 2,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_WALKER));
-        e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true)).tag(damageTag("minecraft:bypasses_invulnerability", false))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(linear(3.0f, 1.0f), 0.0f, 16.0f), constant(1.0f), vec3i(0, -1, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.fluidPredicate("minecraft:lava", 0, 0, 0), unobstructed(0, 0, 0)), weightedState(weightedStates().add(state("minecraft:basalt"), 9)), null), entityProperties("this", entity().flags(flags().setOnGround(true))));
+        e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true))
+                .tag(damageTag("minecraft:bypasses_invulnerability", false))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(linear(3.0f, 1.0f), 0.0f, 16.0f),
+                constant(1.0f), vec3i(0, -1, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0),
+                        e.fluidPredicate("minecraft:lava", 0, 0, 0), unobstructed(0, 0, 0)),
+                weightedState(weightedStates().add(state("minecraft:basalt"), 9)), null),
+                entityProperties("this", entity().flags(flags().setOnGround(true))));
         e.register(builder, WALKER_MAGMA, 0xFF55FF, "walker_magma");
     }
 
@@ -298,9 +341,15 @@ public final class FootArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 3, 2,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_WALKER));
-        e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true)).tag(damageTag("minecraft:bypasses_invulnerability", false))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(constant(WALKER_RADIUS), 0f, 16f), constant(1f), vec3i(0, 0, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:snow", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:air")), e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, particles(dust(1.0f, 0.914f, 0.149f, 1f), position("entity_position", 0f, 1f), position("entity_position", 0f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), null);
+        e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true))
+                .tag(damageTag("minecraft:bypasses_invulnerability", false))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(constant(WALKER_RADIUS), 0f, 16f),
+                constant(1f), vec3i(0, 0, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0),
+                        e.blockPredicate("minecraft:snow", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:air")),
+                e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, particles(dust(1.0f, 0.914f, 0.149f, 1f),
+                position("entity_position", 0f, 1f), position("entity_position", 0f, 1f),
+                velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), null);
         e.register(builder, WALKER_SNOWMELT, 0xFF55FF, "walker_snowmelt");
     }
 

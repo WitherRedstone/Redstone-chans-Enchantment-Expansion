@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.weapon;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -15,7 +17,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 处决：对生命值低于25%的目标直接秒杀
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ExecutionEventHandler {
     private static final ResourceLocation EXECUTION_ID = RedstoneEnchants.id("execution");
 
@@ -26,15 +27,9 @@ public class ExecutionEventHandler {
         LivingEntity target = event.getEntity();
 
         ItemStack weapon = attacker.getMainHandItem();
-        Holder.Reference<Enchantment> executionEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(EXECUTION_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> executionEnchant = EnchantContext.key(EXECUTION_ID);
 
-        if (executionEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(executionEnchant);
+        int level = EnchantContext.level(weapon, executionEnchant);
         if (level <= 0) return;
 
         // 检查目标生命值是否低于25%

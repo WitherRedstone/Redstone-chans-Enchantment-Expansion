@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 踏浪者：可在水面行走，潜行时下潜到水下
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class WaveWalkerEventHandler {
     private static final ResourceLocation WAVE_WALKER_ID = RedstoneEnchants.id("wave_walker");
 
@@ -30,15 +31,9 @@ public class WaveWalkerEventHandler {
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         if (boots.isEmpty()) return;
 
-        Holder.Reference<Enchantment> waveWalkerEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(WAVE_WALKER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> waveWalkerEnchant = EnchantContext.key(WAVE_WALKER_ID);
 
-        if (waveWalkerEnchant == null) return;
-
-        int enchantLevel = boots.getEnchantments().getLevel(waveWalkerEnchant);
+        int enchantLevel = EnchantContext.level(boots, waveWalkerEnchant);
         if (enchantLevel <= 0) return;
 
         // 如果玩家潜行，允许正常下潜

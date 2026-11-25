@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.horse_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 牧场：马在草方块上时会自然恢复生命
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class PastureEventHandler {
     private static final ResourceLocation PASTURE_ID = RedstoneEnchants.id("pasture");
 
@@ -33,15 +34,9 @@ public class PastureEventHandler {
         ItemStack armor = horse.getItemBySlot(EquipmentSlot.BODY);
         if (armor.isEmpty()) return;
 
-        Holder.Reference<Enchantment> pastureEnchant = horse.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(PASTURE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> pastureEnchant = EnchantContext.key(PASTURE_ID);
 
-        if (pastureEnchant == null) return;
-
-        int enchantLevel = armor.getEnchantments().getLevel(pastureEnchant);
+        int enchantLevel = EnchantContext.level(armor, pastureEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查马是否在草方块上

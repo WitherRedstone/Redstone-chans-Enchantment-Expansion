@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +23,6 @@ import java.util.UUID;
  * 伏击：潜行时首次攻击增加伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class AmbushEventHandler {
     private static final ResourceLocation AMBUSH_ID = RedstoneEnchants.id("ambush");
     private static final Map<UUID, Boolean> hasAttackedMap = new HashMap<>();
@@ -35,15 +36,9 @@ public class AmbushEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> ambushEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(AMBUSH_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> ambushEnchant = EnchantContext.key(AMBUSH_ID);
 
-        if (ambushEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(ambushEnchant);
+        int level = EnchantContext.level(weapon, ambushEnchant);
         if (level <= 0) return;
 
         UUID playerId = attacker.getUUID();

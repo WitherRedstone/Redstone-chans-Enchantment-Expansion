@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_shear;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
  * 收获回响：剪刀右键使用时，获得生命恢复
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class HarvestEchoEventHandler {
     private static final ResourceLocation HARVEST_ECHO_ID = RedstoneEnchants.id("harvest_echo");
 
@@ -30,15 +31,9 @@ public class HarvestEchoEventHandler {
         ItemStack stack = event.getItemStack();
         if (!stack.is(Items.SHEARS)) return;
 
-        Holder.Reference<Enchantment> harvestEchoEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(HARVEST_ECHO_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> harvestEchoEnchant = EnchantContext.key(HARVEST_ECHO_ID);
 
-        if (harvestEchoEnchant == null) return;
-
-        int enchantLevel = stack.getEnchantments().getLevel(harvestEchoEnchant);
+        int enchantLevel = EnchantContext.level(stack, harvestEchoEnchant);
         if (enchantLevel <= 0) return;
 
         player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 0, false, true));

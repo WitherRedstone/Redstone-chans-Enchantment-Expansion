@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_flint_and_steel;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -20,7 +22,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
  * 灼烧：右键目标时使其燃烧
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class SearingEventHandler {
     private static final ResourceLocation SEARING_ID = RedstoneEnchants.id("searing");
 
@@ -33,15 +34,9 @@ public class SearingEventHandler {
 
         if (tool.isEmpty() || !tool.is(Items.FLINT_AND_STEEL)) return;
 
-        Holder.Reference<Enchantment> searingEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SEARING_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> searingEnchant = EnchantContext.key(SEARING_ID);
 
-        if (searingEnchant == null) return;
-
-        int level = tool.getEnchantments().getLevel(searingEnchant);
+        int level = EnchantContext.level(tool, searingEnchant);
         if (level <= 0) return;
 
         target.setRemainingFireTicks(20 * 2 * level);

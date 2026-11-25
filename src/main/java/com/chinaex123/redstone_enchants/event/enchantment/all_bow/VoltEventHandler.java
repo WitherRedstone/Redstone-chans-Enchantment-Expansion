@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_bow;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +19,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 伏特：雷雨天射出的箭矢伤害增加
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class VoltEventHandler {
     private static final ResourceLocation VOLT_ID = RedstoneEnchants.id("volt");
 
@@ -35,15 +36,9 @@ public class VoltEventHandler {
         if (bow.isEmpty()) bow = player.getOffhandItem();
         if (bow.isEmpty()) return;
 
-        Holder.Reference<Enchantment> voltEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(VOLT_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> voltEnchant = EnchantContext.key(VOLT_ID);
 
-        if (voltEnchant == null) return;
-
-        int level = bow.getEnchantments().getLevel(voltEnchant);
+        int level = EnchantContext.level(bow, voltEnchant);
         if (level <= 0) return;
 
         // 每级增加25%伤害

@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -57,8 +58,15 @@ public final class MaceEnchantments {
         Enchantment.Builder builder = e.builder("#c:tools/mace", "#c:tools/mace", 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_MACE));
-        e.postAttack(builder, target("attacker"), target("victim"), explode(false, e.damageType("minecraft:explosion"), null, null, vec(0.0, 0.0, 0.0), linear(2f, 1f), true, interaction("mob"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion"), e.sound("minecraft:entity.generic.explode")), entityProperties("attacker", entity().flags(flags().setIsFlying(false)).moving(allMovements(fallDistance(atLeast(4f))))));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.jump_strength_1", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_value"), linear(0.2f, 0.2f)));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                explode(false, e.damageType("minecraft:explosion"), null, null, vec(0.0, 0.0, 0.0),
+                        linear(2f, 1f), true, interaction("mob"), particle("minecraft:explosion_emitter"),
+                        particle("minecraft:explosion"), e.sound("minecraft:entity.generic.explode")),
+                entityProperties("attacker", entity().flags(flags().setIsFlying(false)).moving(allMovements(fallDistance(atLeast(4f)))))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.jump_strength_1", e.attribute("minecraft:generic.jump_strength"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.2f, 0.2f))
+        );
         e.register(builder, DIVE_BOMB, 0xFF55FF, "dive_bomb");
     }
 
@@ -66,8 +74,12 @@ public final class MaceEnchantments {
     private static void lightnessHeavyDualism(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:tools/mace", "#c:tools/mace", 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.lightness-heavy_dualism_1", e.attribute("minecraft:generic.gravity"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.12f, -0.02f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.lightness-heavy_dualism_2", e.attribute("minecraft:player.entity_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(0.8f, 0.05f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.lightness-heavy_dualism_1", e.attribute("minecraft:generic.gravity"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.12f, -0.02f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.lightness-heavy_dualism_2", e.attribute("minecraft:player.entity_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.8f, 0.05f))
+        );
         e.register(builder, LIGHTNESS_HEAVY_DUALISM, 0xFF55FF, "lightness-heavy_dualism");
     }
 
@@ -82,7 +94,10 @@ public final class MaceEnchantments {
     private static void slugger(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:tools/mace", "#c:tools/mace", 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(3f), constant(3f), constant(5f), constant(5f)), randomChance(levelNumber(linear(0.2f, 0.1f))));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(3f), constant(3f), constant(5f), constant(5f)),
+                randomChance(levelNumber(linear(0.2f, 0.1f)))
+        );
         e.register(builder, SLUGGER, 0xFF55FF, "slugger");
     }
 
@@ -90,7 +105,10 @@ public final class MaceEnchantments {
     private static void windPropulsion(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder("#c:tools/mace", "#c:tools/mace", 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, null, lookup(new float[] { 1.25f, 1.65f, 2.25f }, linear(1.25f, 0.35f)), e.blocks("#minecraft:blocks_wind_charge_explosions"), vec(0.0, 0.5, 0.0), constant(3.5f), false, interaction("trigger"), particle("minecraft:gust_emitter_small"), particle("minecraft:gust_emitter_large"), e.sound("minecraft:entity.wind_charge.wind_burst")), entityProperties("this", entity().flags(flags().setOnGround(true))));
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, null, lookup(new float[] { 1.25f, 1.65f, 2.25f }, linear(1.25f, 0.35f)),
+                e.blocks("#minecraft:blocks_wind_charge_explosions"), vec(0.0, 0.5, 0.0), constant(3.5f), false, interaction("trigger"),
+                particle("minecraft:gust_emitter_small"), particle("minecraft:gust_emitter_large"), e.sound("minecraft:entity.wind_charge.wind_burst")),
+                entityProperties("this", entity().flags(flags().setOnGround(true))));
         e.register(builder, WIND_PROPULSION, 0xFF55FF, "wind_propulsion");
     }
 

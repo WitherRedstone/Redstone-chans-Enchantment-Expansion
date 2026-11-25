@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.wolf_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +20,6 @@ import java.util.List;
  * 狼群领袖：附近每多一只狼，增加你狼的伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class PackLeaderEventHandler {
     private static final ResourceLocation PACK_LEADER_ID = RedstoneEnchants.id("pack_leader");
 
@@ -39,15 +40,9 @@ public class PackLeaderEventHandler {
         ItemStack armor = wolf.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.BODY);
         if (armor.isEmpty()) return;
 
-        Holder.Reference<Enchantment> packLeaderEnchant = wolf.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(PACK_LEADER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> packLeaderEnchant = EnchantContext.key(PACK_LEADER_ID);
 
-        if (packLeaderEnchant == null) return;
-
-        int enchantLevel = armor.getEnchantments().getLevel(packLeaderEnchant);
+        int enchantLevel = EnchantContext.level(armor, packLeaderEnchant);
         if (enchantLevel <= 0) return;
 
         // 计算附近的狼数量（16格范围内）

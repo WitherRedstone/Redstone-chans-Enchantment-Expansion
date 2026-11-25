@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -23,7 +25,6 @@ import java.util.Random;
  * 灾厄：攻击时有概率让目标获得随机一个负面效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class CalamityEventHandler {
     private static final ResourceLocation CALAMITY_ID = RedstoneEnchants.id("calamity");
     private static final Random RANDOM = new Random();
@@ -37,15 +38,9 @@ public class CalamityEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> calamityEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(CALAMITY_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> calamityEnchant = EnchantContext.key(CALAMITY_ID);
 
-        if (calamityEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(calamityEnchant);
+        int level = EnchantContext.level(weapon, calamityEnchant);
         if (level <= 0) return;
 
         // 每级5%概率触发

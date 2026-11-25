@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.mace;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 势能转化：下落攻击时，每格高度都增加伤害，并对有护甲的目标造成额外伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class PotentialConversionEventHandler {
     private static final ResourceLocation POTENTIAL_CONVERSION_ID = RedstoneEnchants.id("potential_conversion");
 
@@ -29,18 +30,12 @@ public class PotentialConversionEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> potentialConversionEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(POTENTIAL_CONVERSION_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> potentialConversionEnchant = EnchantContext.key(POTENTIAL_CONVERSION_ID);
 
-        if (potentialConversionEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(potentialConversionEnchant);
+        int level = EnchantContext.level(weapon, potentialConversionEnchant);
         if (level <= 0) return;
 
-        // 检查是否是下落攻击（fallDistance > 0）
+        // 检查是否是下落攻击
         float fallDistance = attacker.fallDistance;
         if (fallDistance <= 0) return;
 

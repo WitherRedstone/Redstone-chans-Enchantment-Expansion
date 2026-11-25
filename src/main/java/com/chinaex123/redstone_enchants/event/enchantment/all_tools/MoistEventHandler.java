@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.level.BlockEvent;
  * 湿润：犁过的地会湿润一会
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class MoistEventHandler {
     private static final ResourceLocation MOISTURE_ID = RedstoneEnchants.id("moist");
 
@@ -27,15 +28,9 @@ public class MoistEventHandler {
         if (!(event.getEntity() instanceof Player player)) return;
 
         ItemStack tool = player.getMainHandItem();
-        Holder.Reference<Enchantment> moistEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(MOISTURE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> moistEnchant = EnchantContext.key(MOISTURE_ID);
 
-        if (moistEnchant == null) return;
-
-        int level = tool.getEnchantments().getLevel(moistEnchant);
+        int level = EnchantContext.level(tool, moistEnchant);
         if (level <= 0) return;
 
         BlockState state = event.getState();

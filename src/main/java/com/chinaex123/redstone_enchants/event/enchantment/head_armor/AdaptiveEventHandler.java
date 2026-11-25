@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.head_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 矿工：在低于Y0时获得夜视效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class AdaptiveEventHandler {
     private static final ResourceLocation ADAPTIVE_ID = RedstoneEnchants.id("adaptive");
 
@@ -29,17 +30,11 @@ public class AdaptiveEventHandler {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        Holder.Reference<Enchantment> adaptiveEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ADAPTIVE_ID)
-                .orElse(null);
-
-        if (adaptiveEnchant == null) return;
+        ResourceKey<Enchantment> adaptiveEnchant = EnchantContext.key(ADAPTIVE_ID);
 
         // 检查头盔是否有矿工附魔
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        int enchantLevel = helmet.isEmpty() ? 0 : helmet.getEnchantments().getLevel(adaptiveEnchant);
+        int enchantLevel = helmet.isEmpty() ? 0 : EnchantContext.level(helmet, adaptiveEnchant);
 
         // 检查是否在Y0以下
         if (enchantLevel > 0 && player.getY() < 0) {

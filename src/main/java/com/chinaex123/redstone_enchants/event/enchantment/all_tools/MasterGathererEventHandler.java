@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +23,6 @@ import java.util.List;
  * 精通采集：挖掘矿石时有概率触发双倍掉落
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class MasterGathererEventHandler {
     private static final ResourceLocation MASTER_GATHERER_ID = RedstoneEnchants.id("master_gatherer");
 
@@ -35,15 +36,9 @@ public class MasterGathererEventHandler {
         ItemStack tool = player.getMainHandItem();
         if (tool.isEmpty()) return;
 
-        Holder.Reference<Enchantment> masterGathererEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(MASTER_GATHERER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> masterGathererEnchant = EnchantContext.key(MASTER_GATHERER_ID);
 
-        if (masterGathererEnchant == null) return;
-
-        int enchantLevel = tool.getEnchantments().getLevel(masterGathererEnchant);
+        int enchantLevel = EnchantContext.level(tool, masterGathererEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查是否是矿石

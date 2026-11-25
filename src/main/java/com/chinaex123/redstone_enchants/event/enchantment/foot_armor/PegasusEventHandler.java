@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
@@ -22,7 +24,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 只移除本附魔自己给的缓降，玩家或坐骑从其它来源获得的缓降不会被误删。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class PegasusEventHandler {
     private static final ResourceLocation PEGASUS_ID = RedstoneEnchants.id("pegasus");
 
@@ -33,16 +34,10 @@ public class PegasusEventHandler {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        Holder.Reference<Enchantment> pegasusEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(PEGASUS_ID)
-                .orElse(null);
-
-        if (pegasusEnchant == null) return;
+        ResourceKey<Enchantment> pegasusEnchant = EnchantContext.key(PEGASUS_ID);
 
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-        int level = boots.isEmpty() ? 0 : boots.getEnchantments().getLevel(pegasusEnchant);
+        int level = boots.isEmpty() ? 0 : EnchantContext.level(boots, pegasusEnchant);
 
         Entity vehicle = player.getVehicle();
 

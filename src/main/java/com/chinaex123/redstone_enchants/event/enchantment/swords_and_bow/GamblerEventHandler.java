@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords_and_bow;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 赌徒：50%概率伤害+40%，50%概率伤害-20%
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class GamblerEventHandler {
     private static final ResourceLocation GAMBLER_ID = RedstoneEnchants.id("gambler");
 
@@ -39,15 +40,9 @@ public class GamblerEventHandler {
             ItemStack weapon = attacker.getItemBySlot(slot);
             if (weapon.isEmpty()) continue;
 
-            Holder.Reference<Enchantment> gamblerEnchant = attacker.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(GAMBLER_ID)
-                    .orElse(null);
+            ResourceKey<Enchantment> gamblerEnchant = EnchantContext.key(GAMBLER_ID);
 
-            if (gamblerEnchant == null) continue;
-
-            int enchantLevel = weapon.getEnchantments().getLevel(gamblerEnchant);
+            int enchantLevel = EnchantContext.level(weapon, gamblerEnchant);
 
             if (enchantLevel > 0) {
                 hasGambler = true;

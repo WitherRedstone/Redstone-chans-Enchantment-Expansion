@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.curse;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -20,7 +22,6 @@ import java.util.UUID;
  * 腐蚀诅咒：在水中或雨中时每秒减少耐久
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class CurseOfRustEventHandler {
     private static final ResourceLocation CURSE_OF_RUST_ID = RedstoneEnchants.id("curse_of_rust");
     private static final Map<UUID, Long> LAST_DAMAGE_TIME = new HashMap<>();
@@ -49,16 +50,10 @@ public class CurseOfRustEventHandler {
             ItemStack stack = player.getItemBySlot(slot);
             if (stack.isEmpty()) continue;
 
-            Holder.Reference<Enchantment> curseEnchant = player.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(CURSE_OF_RUST_ID)
-                    .orElse(null);
-
-            if (curseEnchant == null) continue;
+            ResourceKey<Enchantment> curseEnchant = EnchantContext.key(CURSE_OF_RUST_ID);
 
             // 检查当前槽位的物品是否有腐蚀诅咒
-            int level = stack.getEnchantments().getLevel(curseEnchant);
+            int level = EnchantContext.level(stack, curseEnchant);
             if (level <= 0) continue;
 
             // 每级每秒消耗1点耐久

@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -111,7 +112,9 @@ public final class HeadArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "head");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_HEAD_LUCKY));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantencore.lucky_boost_1", e.attribute("minecraft:generic.luck"), EnchantmentConstructorHelper.operation("add_value"), linear(2f, 2.5f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantencore.lucky_boost_1", e.attribute("minecraft:generic.luck"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(2f, 2.5f))
+        );
         e.register(builder, LUCKY_BOOST, 0xFF55FF, "lucky_boost");
     }
 
@@ -120,7 +123,8 @@ public final class HeadArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 3, 5,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "head");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_HEAD_LUCKY));
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:luck"), constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.LUCK), constant(1f), constant(1f),
+                linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, LUCKY_LIGHT, 0xFF55FF, "lucky_light");
     }
 
@@ -129,14 +133,30 @@ public final class HeadArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 1, 4,
                 Enchantment.dynamicCost(18, 8), Enchantment.dynamicCost(48, 18), 16, "head");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS_HEAD));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_1", e.attribute("minecraft:generic.scale"), EnchantmentConstructorHelper.operation("add_multiplied_base"), lookup(new float[] { 0.15f, 0.25f, 0.35f, 0.5f }, linear(0.25f, 0.25f))));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_2", e.attribute("minecraft:generic.step_height"), EnchantmentConstructorHelper.operation("add_value"), linear(0.25f, 0.25f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_3", e.attribute("minecraft:generic.attack_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(1f, 0.5f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_4", e.attribute("minecraft:generic.max_health"), EnchantmentConstructorHelper.operation("add_value"), linear(2.5f, 2.5f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_5", e.attribute("minecraft:player.entity_interaction_range"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_6", e.attribute("minecraft:player.block_interaction_range"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_7", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_value"), linear(-0.015f, -0.01f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_8", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_value"), linear(-0.04f, -0.02f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_1", e.attribute("minecraft:generic.scale"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), lookup(new float[] { 0.15f, 0.25f, 0.35f, 0.5f }, linear(0.25f, 0.25f)))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_2", e.attribute("minecraft:generic.step_height"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.25f, 0.25f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_3", e.attribute("minecraft:generic.attack_damage"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(1f, 0.5f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_4", e.attribute("minecraft:generic.max_health"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(2.5f, 2.5f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_5", e.attribute("minecraft:player.entity_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_6", e.attribute("minecraft:player.block_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.15f, 0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_7", e.attribute("minecraft:generic.movement_speed"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-0.015f, -0.01f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.maximization_8", e.attribute("minecraft:generic.jump_strength"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-0.04f, -0.02f))
+        );
         e.register(builder, MAXIMIZATION, 0xFF00BB, "maximization");
     }
 
@@ -145,14 +165,31 @@ public final class HeadArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 1, 4,
                 Enchantment.dynamicCost(18, 8), Enchantment.dynamicCost(48, 18), 16, "head");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS_HEAD));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_1", e.attribute("minecraft:generic.scale"), EnchantmentConstructorHelper.operation("add_multiplied_base"), lookup(new float[] { -0.15f, -0.25f, -0.35f, -0.5f }, linear(-0.15f, -0.15f))));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_2", e.attribute("minecraft:generic.step_height"), EnchantmentConstructorHelper.operation("add_value"), linear(-0.25f, -0.25f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_3", e.attribute("minecraft:generic.attack_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(-1f, -0.5f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_4", e.attribute("minecraft:generic.max_health"), EnchantmentConstructorHelper.operation("add_value"), linear(-2.5f, -2.5f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_5", e.attribute("minecraft:player.entity_interaction_range"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.15f, -0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_6", e.attribute("minecraft:player.block_interaction_range"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.15f, -0.1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_7", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_value"), linear(0.015f, 0.01f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_8", e.attribute("minecraft:generic.jump_strength"), EnchantmentConstructorHelper.operation("add_value"), linear(0.04f, 0.02f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_1", e.attribute("minecraft:generic.scale"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), lookup(new float[] { -0.15f, -0.25f, -0.35f, -0.5f },
+                        linear(-0.15f, -0.15f)))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_2", e.attribute("minecraft:generic.step_height"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-0.25f, -0.25f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_3", e.attribute("minecraft:generic.attack_damage"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-1f, -0.5f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_4", e.attribute("minecraft:generic.max_health"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-2.5f, -2.5f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_5", e.attribute("minecraft:player.entity_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.15f, -0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_6", e.attribute("minecraft:player.block_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.15f, -0.1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_7", e.attribute("minecraft:generic.movement_speed"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.015f, 0.01f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.minify_8", e.attribute("minecraft:generic.jump_strength"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.04f, 0.02f))
+        );
         e.register(builder, MINIFY, 0xFF00BB, "minify");
     }
 

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.mixin;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.util.PreservationFeedback;
 import net.minecraft.core.Holder;
@@ -21,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * 耐久最多消耗到 0，之后不再掉耐久、也不会损坏；第一次到达 0 耐久时播放一次损坏音效与碎屑粒子
  */
 @Mixin(ItemStack.class)
-@SuppressWarnings("deprecation")
 public class PreservationMixin {
     @Unique
     private static final ResourceLocation PRESERVATION_ID = RedstoneEnchants.id("preservation");
@@ -33,15 +34,9 @@ public class PreservationMixin {
         if (entity == null) return;
         if (!stack.isDamageableItem()) return;
 
-        Holder.Reference<Enchantment> preservationEnchant = entity.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(PRESERVATION_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> preservationEnchant = EnchantContext.key(PRESERVATION_ID);
 
-        if (preservationEnchant == null) return;
-
-        int level = stack.getEnchantments().getLevel(preservationEnchant);
+        int level = EnchantContext.level(stack, preservationEnchant);
         if (level <= 0) return;
 
         int maxDamage = stack.getMaxDamage();

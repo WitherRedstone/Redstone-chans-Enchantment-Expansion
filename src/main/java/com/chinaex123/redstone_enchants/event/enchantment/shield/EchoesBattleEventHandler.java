@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.shield;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +21,6 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
  * 战斗回响：盾牌格挡后，提升下一次攻击的伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class EchoesBattleEventHandler {
     private static final ResourceLocation ECHOES_BATTLE_ID = RedstoneEnchants.id("echoes_battle");
     private static final ResourceLocation ECHOES_BATTLE_MODIFIER_ID = RedstoneEnchants.id("echoes_battle_bonus");
@@ -32,18 +33,12 @@ public class EchoesBattleEventHandler {
         if (target instanceof Player player && player.isBlocking()) {
             ItemStack shield = player.getUseItem();
             if (!shield.isEmpty()) {
-                Holder.Reference<Enchantment> echoesBattleEnchant = player.level()
-                        .registryAccess()
-                        .registryOrThrow(Registries.ENCHANTMENT)
-                        .getHolder(ECHOES_BATTLE_ID)
-                        .orElse(null);
+                ResourceKey<Enchantment> echoesBattleEnchant = EnchantContext.key(ECHOES_BATTLE_ID);
 
-                if (echoesBattleEnchant != null) {
-                    int level = shield.getEnchantments().getLevel(echoesBattleEnchant);
-                    if (level > 0) {
-                        applyAttackDamageBonus(player, level);
-                        return;
-                    }
+                int level = EnchantContext.level(shield, echoesBattleEnchant);
+                if (level > 0) {
+                    applyAttackDamageBonus(player, level);
+                    return;
                 }
             }
         }

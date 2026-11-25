@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.weapon;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +23,6 @@ import java.util.List;
  * 屠夫：击杀动物时增加其掉落物
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ButcherEventHandler {
     private static final ResourceLocation BUTCHER_ID = RedstoneEnchants.id("butcher");
 
@@ -35,15 +36,9 @@ public class ButcherEventHandler {
         if (!(entity instanceof Animal)) return;
 
         ItemStack weapon = attacker.getMainHandItem();
-        Holder.Reference<Enchantment> butcherEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(BUTCHER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> butcherEnchant = EnchantContext.key(BUTCHER_ID);
 
-        if (butcherEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(butcherEnchant);
+        int level = EnchantContext.level(weapon, butcherEnchant);
         if (level <= 0) return;
 
         ServerLevel serverLevel = (ServerLevel) entity.level();

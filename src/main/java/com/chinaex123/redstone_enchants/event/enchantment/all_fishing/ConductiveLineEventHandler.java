@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_fishing;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -25,7 +27,6 @@ import java.util.UUID;
  * 导电鱼线：雷雨天时，勾住生物产生闪电
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ConductiveLineEventHandler {
     private static final ResourceLocation CONDUCTIVE_LINE_ID = RedstoneEnchants.id("conductive_line");
     private static final Set<UUID> struckEntities = new HashSet<>();
@@ -42,15 +43,9 @@ public class ConductiveLineEventHandler {
 
         if (!owner.level().isThundering()) return;
 
-        Holder.Reference<Enchantment> conductiveLineEnchant = owner.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(CONDUCTIVE_LINE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> conductiveLineEnchant = EnchantContext.key(CONDUCTIVE_LINE_ID);
 
-        if (conductiveLineEnchant == null) return;
-
-        int level = rod.getEnchantments().getLevel(conductiveLineEnchant);
+        int level = EnchantContext.level(rod, conductiveLineEnchant);
         if (level <= 0) return;
 
         // 检查是否勾住生物

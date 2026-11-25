@@ -1,6 +1,9 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,9 +30,8 @@ import java.util.List;
  * 重生护盾：受到致命伤害时阻止死亡，并给予生命恢复/抗性提升和抗火，触发后该附魔消失1个等级
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ReviveWardEventHandler {
-    private static final ResourceLocation REVIVE_WARD_ID = RedstoneEnchants.id("revive_ward");
+    private static final ResourceKey<Enchantment> REVIVE_WARD = EnchantContext.key("revive_ward");
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -58,15 +60,7 @@ public class ReviveWardEventHandler {
             ItemStack armor = entity.getItemBySlot(slot);
             if (armor.isEmpty()) continue;
 
-            Holder.Reference<Enchantment> reviveWardEnchant = entity.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(REVIVE_WARD_ID)
-                    .orElse(null);
-
-            if (reviveWardEnchant == null) continue;
-
-            int enchantLevel = armor.getEnchantments().getLevel(reviveWardEnchant);
+            int enchantLevel = EnchantContext.level(armor, REVIVE_WARD);
 
             if (enchantLevel > 0) {
                 slotsWithEnchant.add(slot);
@@ -110,33 +104,34 @@ public class ReviveWardEventHandler {
                 MobEffects.DAMAGE_RESISTANCE, 20 * 40, 2, false, true
         ));
 
-        // 减少最高等级的附魔1级
         ItemStack armor = entity.getItemBySlot(maxLevelSlot);
         if (!armor.isEmpty()) {
-            Holder.Reference<Enchantment> reviveWardEnchant = entity.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(REVIVE_WARD_ID)
-                    .orElse(null);
+            ItemEnchantments currentEnchants = armor.get(DataComponents.ENCHANTMENTS);
+            if (currentEnchants == null) return;
 
-            if (reviveWardEnchant != null) {
-                int currentLevel = armor.getEnchantments().getLevel(reviveWardEnchant);
-
-                ItemEnchantments currentEnchants = armor.get(DataComponents.ENCHANTMENTS);
-                if (currentEnchants != null) {
-                    ItemEnchantments.Mutable mutableEnchants = new ItemEnchantments.Mutable(currentEnchants);
-
-                    if (currentLevel > 1) {
-                        // 如果等级大于1，减少1级
-                        mutableEnchants.set(reviveWardEnchant, currentLevel - 1);
-                    } else {
-                        // 如果等级是1，移除附魔
-                        mutableEnchants.removeIf(enchant -> enchant.equals(reviveWardEnchant));
-                    }
-
-                    armor.set(DataComponents.ENCHANTMENTS, mutableEnchants.toImmutable());
+            Holder<Enchantment> reviveWard = null;
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : currentEnchants.entrySet()) {
+                ResourceKey<Enchantment> entryKey = entry.getKey().getKey();
+                if (entryKey != null && entryKey.equals(REVIVE_WARD)) {
+                    reviveWard = entry.getKey();
+                    break;
                 }
             }
+            if (reviveWard == null) return;
+
+            int currentLevel = currentEnchants.getLevel(reviveWard);
+            ItemEnchantments.Mutable mutableEnchants = new ItemEnchantments.Mutable(currentEnchants);
+
+            if (currentLevel > 1) {
+                // 如果等级大于1，减少1级
+                mutableEnchants.set(reviveWard, currentLevel - 1);
+            } else {
+                // 如果等级是1，移除附魔
+                Holder<Enchantment> target = reviveWard;
+                mutableEnchants.removeIf(holder -> holder.equals(target));
+            }
+
+            armor.set(DataComponents.ENCHANTMENTS, mutableEnchants.toImmutable());
         }
     }
 }

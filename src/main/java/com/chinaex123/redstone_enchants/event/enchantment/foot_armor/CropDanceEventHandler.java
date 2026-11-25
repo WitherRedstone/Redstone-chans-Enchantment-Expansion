@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -25,7 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 庄稼舞：蹲下时走过农田会加速周围作物生长
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class CropDanceEventHandler {
     private static final ResourceLocation CROP_DANCE_ID = RedstoneEnchants.id("crop_dance");
 
@@ -47,15 +48,9 @@ public class CropDanceEventHandler {
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         if (boots.isEmpty()) return;
 
-        Holder.Reference<Enchantment> cropDanceEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(CROP_DANCE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> cropDanceEnchant = EnchantContext.key(CROP_DANCE_ID);
 
-        if (cropDanceEnchant == null) return;
-
-        int level = boots.getEnchantments().getLevel(cropDanceEnchant);
+        int level = EnchantContext.level(boots, cropDanceEnchant);
         if (level <= 0) return;
 
         boolean isSneaking = player.isShiftKeyDown();

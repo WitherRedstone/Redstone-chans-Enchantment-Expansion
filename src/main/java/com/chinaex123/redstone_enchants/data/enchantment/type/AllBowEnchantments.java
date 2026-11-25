@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -136,8 +137,18 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE_BOW));
-        e.postAttack(builder, target("attacker"), target("victim"), explode(false, e.damageType("minecraft:explosion"), linear(0.5f, 0.25f), e.blocks("#minecraft:blocks_wind_charge_explosions"), vec(0.0, 0.5, 0.0), linear(1.5f, 0.75f), false, interaction("none"), particle("minecraft:gust_emitter_small"), particle("minecraft:gust_emitter_large"), e.sound("minecraft:entity.wind_charge.wind_burst")), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, e.damageType("minecraft:explosion"), linear(0.5f, 0.25f), e.blocks("#minecraft:blocks_wind_charge_explosions"), vec(0.0, 0.5, 0.0), linear(1.5f, 0.75f), false, interaction("none"), particle("minecraft:gust_emitter_small"), particle("minecraft:gust_emitter_large"), e.sound("minecraft:entity.wind_charge.wind_burst")), entityProperties("this", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                explode(false, e.damageType("minecraft:explosion"), linear(0.5f, 0.25f),
+                        e.blocks("#minecraft:blocks_wind_charge_explosions"), vec(0.0, 0.5, 0.0),
+                        linear(1.5f, 0.75f), false, interaction("none"), particle("minecraft:gust_emitter_small"),
+                        particle("minecraft:gust_emitter_large"), e.sound("minecraft:entity.wind_charge.wind_burst")),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, e.damageType("minecraft:explosion"),
+                linear(0.5f, 0.25f), e.blocks("#minecraft:blocks_wind_charge_explosions"),
+                vec(0.0, 0.5, 0.0), linear(1.5f, 0.75f), false, interaction("none"),
+                particle("minecraft:gust_emitter_small"), particle("minecraft:gust_emitter_large"),
+                e.sound("minecraft:entity.wind_charge.wind_burst")), entityProperties("this", e.entityOf("#minecraft:arrows")));
         e.register(builder, BLAST_ARROWS, 0xFFAA00, "blast_arrows");
     }
 
@@ -147,8 +158,18 @@ public final class AllBowEnchantments {
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE_BOW));
         e.value(builder, EnchantmentEffectComponents.DAMAGE, add(constant(2f)), null);
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, e.damageType("redstone_enchants:explosive_arrow"), null, null, vec(0.0, 0.5, 0.0), linear(1.0f, 0.5f), false, interaction("none"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)), allOf(entityProperties("this", e.entityOf("#minecraft:arrows"))));
-        e.postAttack(builder, target("attacker"), target("victim"), explode(false, e.damageType("redstone_enchants:explosive_arrow"), constant(0f), null, vec(0.0, 0.5, 0.0), linear(0.5f, 0.5f), false, interaction("none"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false,
+                e.damageType("redstone_enchants:explosive_arrow"), null, null, vec(0.0, 0.5, 0.0),
+                linear(1.0f, 0.5f), false, interaction("none"), particle("minecraft:explosion_emitter"),
+                particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)),
+                allOf(entityProperties("this", e.entityOf("#minecraft:arrows"))));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                explode(false, e.damageType("redstone_enchants:explosive_arrow"), constant(0f), null,
+                        vec(0.0, 0.5, 0.0), linear(0.5f, 0.5f), false, interaction("none"),
+                        particle("minecraft:explosion_emitter"), particle("minecraft:explosion_emitter"),
+                        e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, BOMB_ARROWS, 0xFFAA00, "bomb_arrows");
     }
 
@@ -156,7 +177,8 @@ public final class AllBowEnchantments {
     private static void bulletTime(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, mobEffect(e.mobEffects("minecraft:slow_falling"), constant(1.3f), constant(1.3f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, mobEffect(e.mobEffects(MobEffects.SLOW_FALLING),
+                constant(1.3f), constant(1.3f), linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, BULLET_TIME, 0xFF55FF, "bullet_time");
     }
 
@@ -172,7 +194,14 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 1, 1,
                 Enchantment.dynamicCost(80, 50), Enchantment.dynamicCost(100, 50), 200, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE_BOW));
-        e.postAttack(builder, target("attacker"), target("attacker"), allEntities(mobEffect(e.mobEffects("minecraft:bad_omen"), constant(3f), constant(3f), constant(2f), constant(2f)), mobEffect(e.mobEffects("minecraft:weakness"), constant(120f), constant(120f), constant(2f), constant(2f)), mobEffect(e.mobEffects("minecraft:unluck"), constant(600f), constant(600f), constant(9f), constant(9f)), mobEffect(e.mobEffects("minecraft:blindness"), constant(60f), constant(60f), constant(1f), constant(1f))), allOf(entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")), inverted(entityProperties("this", e.entityOf(REEntityTypeTags.BLACK_ENTITY)))));
+        e.postAttack(builder, target("attacker"), target("attacker"),
+                allEntities(mobEffect(e.mobEffects(MobEffects.BAD_OMEN), constant(3f), constant(3f), constant(2f), constant(2f)),
+                        mobEffect(e.mobEffects(MobEffects.WEAKNESS), constant(120f), constant(120f), constant(2f), constant(2f)),
+                        mobEffect(e.mobEffects(MobEffects.UNLUCK), constant(600f), constant(600f), constant(9f), constant(9f)),
+                        mobEffect(e.mobEffects(MobEffects.BLINDNESS), constant(60f), constant(60f), constant(1f), constant(1f))),
+                allOf(entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")),
+                        inverted(entityProperties("this", e.entityOf(REEntityTypeTags.BLACK_ENTITY))))
+        );
         e.register(builder, FATAL_ARROW, 0xFF00BB, "fatal_arrow");
     }
 
@@ -197,8 +226,12 @@ public final class AllBowEnchantments {
     private static void glassBreaker(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 6, 1,
                 Enchantment.dynamicCost(8, 4), Enchantment.dynamicCost(16, 8), 4, "mainhand", "offhand");
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, replaceBlock(vec3i(0, 0, 0), e.blockPredicate("#c:glass_blocks", 0, 0, 0), simpleState(state("minecraft:air")), null), entityProperties("this", e.entityOf("#minecraft:arrows")));
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, particles(particle("minecraft:electric_spark"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(0.3f)), null);
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, replaceBlock(vec3i(0, 0, 0),
+                e.blockPredicate("#c:glass_blocks", 0, 0, 0), simpleState(state("minecraft:air")), null),
+                entityProperties("this", e.entityOf("#minecraft:arrows")));
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, particles(particle("minecraft:electric_spark"),
+                position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0f, 1f),
+                velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(0.3f)), null);
         e.register(builder, GLASS_BREAKER, 0xFFFF55, "glass_breaker");
     }
 
@@ -207,7 +240,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 2, 1,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(4f), constant(8f), constant(0f), constant(0f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(4f), constant(8f), constant(0f), constant(0f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, ICE_ARROWS, 0xFFAA00, "ice_arrows");
     }
 
@@ -231,7 +267,9 @@ public final class AllBowEnchantments {
     private static void rapid(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:rapid", e.attribute("apothic_attributes:draw_speed"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.3f, 0.15f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:rapid", e.attribute("apothic_attributes:draw_speed"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.3f, 0.15f))
+        );
         e.register(builder, RAPID, 0xFF55FF, "rapid");
     }
 
@@ -260,7 +298,10 @@ public final class AllBowEnchantments {
         e.value(builder, EnchantmentEffectComponents.PROJECTILE_COUNT, add(linear(0f, 1f)), null);
         e.value(builder, EnchantmentEffectComponents.PROJECTILE_SPREAD, add(linear(0f, 1f)), null);
         e.special(builder, EnchantmentEffectComponents.CROSSBOW_CHARGE_TIME, add(linear(0.5f, 0.25f)));
-        e.value(builder, EnchantmentEffectComponents.ITEM_DAMAGE, multiply(fraction(constant(1f), linear(1f, 1f))), randomChance(constantNumber(0.9f)));
+        e.value(builder, EnchantmentEffectComponents.ITEM_DAMAGE,
+                multiply(fraction(constant(1f), linear(1f, 1f))),
+                randomChance(constantNumber(0.9f))
+        );
         e.register(builder, SHOTGUN, 0xFFAA00, "shotgun");
     }
 
@@ -276,7 +317,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:blindness"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.BLINDNESS), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_BLINDNESS, 0xFF55FF, "splash_blindness");
     }
 
@@ -285,7 +329,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 2, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("ars_nouveau:blasting"), constant(3f), constant(3f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects("ars_nouveau:blasting"), constant(3f), constant(3f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_DELAYED_EXPLOSION, 0xFF55FF, "splash_delayed_explosion");
     }
 
@@ -294,7 +341,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:glowing"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.GLOWING), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_GLOWING, 0xFF55FF, "splash_glowing");
     }
 
@@ -303,7 +353,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:hunger"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.HUNGER), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_HUNGER, 0xFF55FF, "splash_hunger");
     }
 
@@ -312,7 +365,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:infested"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.INFESTED), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_INFESTED, 0xFF55FF, "splash_infested");
     }
 
@@ -321,7 +377,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:oozing"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.OOZING), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_OOZING, 0xFF55FF, "splash_oozing");
     }
 
@@ -330,7 +389,11 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:poison"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"),
+target("victim"),
+                mobEffect(e.mobEffects(MobEffects.POISON), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_POISON, 0xFF55FF, "splash_poison");
     }
 
@@ -339,7 +402,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:regeneration"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.REGENERATION), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_REGENERATION, 0xFF55FF, "splash_regeneration");
     }
 
@@ -348,7 +414,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slow_falling"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.SLOW_FALLING), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_SLOW_FALLING, 0xFF55FF, "splash_slow_falling");
     }
 
@@ -357,7 +426,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:slowness"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SLOWDOWN), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_SLOWNESS, 0xFF55FF, "splash_slowness");
     }
 
@@ -366,7 +438,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_BOOTS_GALLOP));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:speed"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.MOVEMENT_SPEED), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_SPEED, 0xFF55FF, "splash_speed");
     }
 
@@ -375,7 +450,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:weaving"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.WEAVING), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_WEAVING, 0xFF55FF, "splash_weaving");
     }
 
@@ -384,7 +462,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:wind_charged"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.WIND_CHARGED), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_WIND_CHARGED, 0xFF55FF, "splash_wind_charged");
     }
 
@@ -393,7 +474,10 @@ public final class AllBowEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_BOW, REItemTags.ALL_BOW, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_SPLASH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:wither"), constant(4f), constant(8f), constant(0f), linear(0f, 1f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.postAttack(builder, target("attacker"), target("victim"),
+                mobEffect(e.mobEffects(MobEffects.WITHER), constant(4f), constant(8f), constant(0f), linear(0f, 1f)),
+                entityProperties("direct_attacker", e.entityOf("#minecraft:arrows"))
+        );
         e.register(builder, SPLASH_WITHER, 0xFF55FF, "splash_wither");
     }
 

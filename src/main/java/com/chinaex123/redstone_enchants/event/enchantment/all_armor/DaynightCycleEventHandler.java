@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 昼夜流转：白天增加伤害，夜晚增加移动速度
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class DaynightCycleEventHandler {
     private static final ResourceLocation DAYNIGHT_CYCLE_ID = RedstoneEnchants.id("daynight_cycle");
     private static final ResourceLocation DAMAGE_MODIFIER_ID = RedstoneEnchants.id("daynight_cycle_damage");
@@ -42,15 +43,9 @@ public class DaynightCycleEventHandler {
             ItemStack armor = player.getItemBySlot(slot);
             if (armor.isEmpty()) continue;
 
-            Holder.Reference<Enchantment> daynightCycleEnchant = player.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(DAYNIGHT_CYCLE_ID)
-                    .orElse(null);
+            ResourceKey<Enchantment> daynightCycleEnchant = EnchantContext.key(DAYNIGHT_CYCLE_ID);
 
-            if (daynightCycleEnchant == null) continue;
-
-            int enchantLevel = armor.getEnchantments().getLevel(daynightCycleEnchant);
+            int enchantLevel = EnchantContext.level(armor, daynightCycleEnchant);
             totalLevel += enchantLevel;
         }
 

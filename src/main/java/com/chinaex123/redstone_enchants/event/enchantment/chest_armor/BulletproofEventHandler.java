@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.chest_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +21,6 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
  * 防弹：有概率免疫潜影子弹伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class BulletproofEventHandler {
     private static final ResourceLocation BULLETPROOF_ID = RedstoneEnchants.id("bulletproof");
 
@@ -37,15 +38,9 @@ public class BulletproofEventHandler {
         ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
         if (chestplate.isEmpty()) return;
 
-        Holder.Reference<Enchantment> bulletproofEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(BULLETPROOF_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> bulletproofEnchant = EnchantContext.key(BULLETPROOF_ID);
 
-        if (bulletproofEnchant == null) return;
-
-        int level = chestplate.getEnchantments().getLevel(bulletproofEnchant);
+        int level = EnchantContext.level(chestplate, bulletproofEnchant);
         if (level <= 0) return;
 
         // 检查伤害来源是否是潜影子弹

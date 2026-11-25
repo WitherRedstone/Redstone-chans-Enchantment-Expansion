@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 背刺：从背后攻击造成额外伤害，而从正面攻击则伤害降低
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class BackstabEventHandler {
     private static final ResourceLocation BACKSTAB_ID = RedstoneEnchants.id("backstab");
 
@@ -27,15 +28,9 @@ public class BackstabEventHandler {
         LivingEntity target = event.getEntity();
 
         ItemStack weapon = attacker.getMainHandItem();
-        Holder.Reference<Enchantment> backstabEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(BACKSTAB_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> backstabEnchant = EnchantContext.key(BACKSTAB_ID);
 
-        if (backstabEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(backstabEnchant);
+        int level = EnchantContext.level(weapon, backstabEnchant);
         if (level <= 0) return;
 
         // 计算攻击者相对于目标的方向向量

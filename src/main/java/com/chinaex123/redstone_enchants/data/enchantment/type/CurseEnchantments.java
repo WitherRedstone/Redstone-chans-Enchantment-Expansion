@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -73,7 +74,8 @@ public final class CurseEnchantments {
     private static void curseOfAcrophobia(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 4, 1,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "head");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:nausea,minecraft:slowness"), constant(1f), constant(1f), constant(2f), constant(2f)), locationCheck(location().setY(atLeast(180f))));
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.CONFUSION, MobEffects.MOVEMENT_SLOWDOWN),
+                constant(1f), constant(1f), constant(2f), constant(2f)), locationCheck(location().setY(atLeast(180f))));
         e.register(builder, CURSE_OF_ACROPHOBIA, 0xFF5555, "curse_of_acrophobia");
     }
 
@@ -81,7 +83,8 @@ public final class CurseEnchantments {
     private static void curseOfBasiphobia(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 4, 1,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "head");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:mining_fatigue,minecraft:darkness"), constant(1f), constant(1f), constant(2f), constant(2f)), locationCheck(location().setY(atMost(-36f))));
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.DIG_SLOWDOWN, MobEffects.DARKNESS),
+                constant(1f), constant(1f), constant(2f), constant(2f)), locationCheck(location().setY(atMost(-36f))));
         e.register(builder, CURSE_OF_BASIPHOBIA, 0xFF5555, "curse_of_basiphobia");
     }
 
@@ -96,7 +99,8 @@ public final class CurseEnchantments {
     private static void curseOfBlindness(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 4, 3,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "head");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:blindness"), constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.BLINDNESS), constant(1f),
+                constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, CURSE_OF_BLINDNESS, 0xFF5555, "curse_of_blindness");
     }
 
@@ -126,7 +130,9 @@ public final class CurseEnchantments {
     private static void curseOfDoubleEdge(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 4, 1,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "mainhand", "offhand");
-        e.postAttack(builder, target("attacker"), target("attacker"), damageEntity(constant(2f), constant(4f), e.damageType("minecraft:magic")), randomChance(constantNumber(0.4f)));
+        e.postAttack(builder, target("attacker"), target("attacker"), damageEntity(constant(2f), constant(4f), e.damageType("minecraft:magic")),
+                randomChance(constantNumber(0.4f))
+        );
         e.register(builder, CURSE_OF_DOUBLE_EDGE, 0xFF5555, "curse_of_double_edge");
     }
 
@@ -134,7 +140,9 @@ public final class CurseEnchantments {
     private static void curseOfGravity(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_FOOT, REItemTags.ARMORS_FOOT, 4, 3,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "feet");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_gravity_1", e.attribute("minecraft:generic.gravity"), EnchantmentConstructorHelper.operation("add_value"), linear(0.02f, 0.06f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_gravity_1", e.attribute("minecraft:generic.gravity"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(0.02f, 0.06f))
+        );
         e.register(builder, CURSE_OF_GRAVITY, 0xFF5555, "curse_of_gravity");
     }
 
@@ -142,7 +150,9 @@ public final class CurseEnchantments {
     private static void curseOfHiding(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 4, 1,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "mainhand", "offhand");
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:invisibility"), linear(2f, 3f), linear(5f, 5f), linear(1f, 1f), linear(1f, 1f)), damageSource(damageSourcePredicate()));
+        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects(MobEffects.INVISIBILITY),
+                linear(2f, 3f), linear(5f, 5f), linear(1f, 1f), linear(1f, 1f)), damageSource(damageSourcePredicate())
+        );
         e.register(builder, CURSE_OF_HIDING, 0xFF5555, "curse_of_hiding");
     }
 
@@ -150,7 +160,8 @@ public final class CurseEnchantments {
     private static void curseOfHunger(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 4, 4,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "head");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:hunger"), constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.HUNGER), constant(1f), constant(1f),
+                linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, CURSE_OF_HUNGER, 0xFF5555, "curse_of_hunger");
     }
 
@@ -158,8 +169,12 @@ public final class CurseEnchantments {
     private static void curseOfReach(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ALL_TOOLS, REItemTags.ALL_TOOLS, 4, 3,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "mainhand", "offhand");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_reach_1", e.attribute("minecraft:player.block_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(-1f, -1f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_reach_2", e.attribute("minecraft:player.entity_interaction_range"), EnchantmentConstructorHelper.operation("add_value"), linear(-1f, -1f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_reach_1", e.attribute("minecraft:player.block_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-1f, -1f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_reach_2", e.attribute("minecraft:player.entity_interaction_range"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-1f, -1f))
+        );
         e.register(builder, CURSE_OF_REACH, 0xFF5555, "curse_of_reach");
     }
 
@@ -174,7 +189,9 @@ public final class CurseEnchantments {
     private static void curseOfStillness(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 4, 1,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "armor");
-        e.entity(builder, EnchantmentEffectComponents.TICK, damageEntity(constant(0f), constant(0.5f), e.damageType("minecraft:dry_out")), entityProperties("this", entity().moving(allMovements(speed(exactly(0f)), horizontalSpeed(exactly(0f)), verticalSpeed(exactly(0f)), fallDistance(exactly(0f))))));
+        e.entity(builder, EnchantmentEffectComponents.TICK, damageEntity(constant(0f), constant(0.5f), e.damageType("minecraft:dry_out")),
+                entityProperties("this", entity().moving(allMovements(speed(exactly(0f)), horizontalSpeed(exactly(0f)),
+                        verticalSpeed(exactly(0f)), fallDistance(exactly(0f))))));
         e.register(builder, CURSE_OF_STILLNESS, 0xFF5555, "curse_of_stillness");
     }
 
@@ -182,7 +199,8 @@ public final class CurseEnchantments {
     private static void curseOfUnlucky(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_HEAD, REItemTags.ARMORS_HEAD, 5, 4,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "head");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:unluck"), constant(1f), constant(1f), linear(0f, 1f), linear(0f, 1f)), null);
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.UNLUCK), constant(1f), constant(1f),
+                linear(0f, 1f), linear(0f, 1f)), null);
         e.register(builder, CURSE_OF_UNLUCKY, 0xFF5555, "curse_of_unlucky");
     }
 
@@ -190,8 +208,12 @@ public final class CurseEnchantments {
     private static void curseOfVulnerability(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_vulnerability_damage", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.2f, 0f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_vulnerability_speed", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.1f, 0f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_vulnerability_damage", e.attribute("minecraft:generic.armor"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.2f, 0f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.curse_of_vulnerability_speed", e.attribute("minecraft:generic.movement_speed"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.1f, 0f))
+        );
         e.register(builder, CURSE_OF_VULNERABILITY, 0xFF5555, "curse_of_vulnerability");
     }
 

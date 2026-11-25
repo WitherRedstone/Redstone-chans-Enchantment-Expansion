@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.wolf_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -15,7 +17,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
  * 尸体回收：狼击杀生物后回复最大生命值
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class CarrionEaterEventHandler {
     private static final ResourceLocation CARRION_EATER_ID = RedstoneEnchants.id("carrion_eater");
 
@@ -30,15 +31,9 @@ public class CarrionEaterEventHandler {
         ItemStack armor = wolf.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.BODY);
         if (armor.isEmpty()) return;
 
-        Holder.Reference<Enchantment> carrionEaterEnchant = wolf.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(CARRION_EATER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> carrionEaterEnchant = EnchantContext.key(CARRION_EATER_ID);
 
-        if (carrionEaterEnchant == null) return;
-
-        int enchantLevel = armor.getEnchantments().getLevel(carrionEaterEnchant);
+        int enchantLevel = EnchantContext.level(armor, carrionEaterEnchant);
         if (enchantLevel <= 0) return;
 
         // 计算治疗量：每级25%最大生命值

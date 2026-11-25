@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.curse;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
@@ -22,7 +24,6 @@ import java.util.UUID;
  * 水源诅咒：接触水会给予中毒效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class CurseOfWaterSourceEventHandler {
     private static final ResourceLocation CURSE_OF_WATER_SOURCE_ID = RedstoneEnchants.id("curse_of_water_source");
     private static final Map<UUID, Long> LAST_EFFECT_TIME = new HashMap<>();
@@ -52,13 +53,7 @@ public class CurseOfWaterSourceEventHandler {
 
         LAST_EFFECT_TIME.put(entityId, currentTime);
 
-        Holder.Reference<Enchantment> curseEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(CURSE_OF_WATER_SOURCE_ID)
-                .orElse(null);
-
-        if (curseEnchant == null) return;
+        ResourceKey<Enchantment> curseEnchant = EnchantContext.key(CURSE_OF_WATER_SOURCE_ID);
 
         // 检查所有装备槽
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -66,7 +61,7 @@ public class CurseOfWaterSourceEventHandler {
             if (stack.isEmpty()) continue;
 
             // 检查当前槽位的物品是否有水源诅咒
-            int level = stack.getEnchantments().getLevel(curseEnchant);
+            int level = EnchantContext.level(stack, curseEnchant);
             if (level <= 0) continue;
 
             // 施加中毒效果

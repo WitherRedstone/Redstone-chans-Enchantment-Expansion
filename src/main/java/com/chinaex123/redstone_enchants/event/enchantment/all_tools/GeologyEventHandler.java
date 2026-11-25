@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,7 +29,6 @@ import java.util.List;
  * 地质学：挖掘石头有概率掉落矿石
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class GeologyEventHandler {
     private static final ResourceLocation GEOLOGY_ID = RedstoneEnchants.id("geology");
 
@@ -38,15 +39,9 @@ public class GeologyEventHandler {
         if (player.level().isClientSide()) return;
 
         ItemStack tool = player.getMainHandItem();
-        Holder.Reference<Enchantment> geologyEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(GEOLOGY_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> geologyEnchant = EnchantContext.key(GEOLOGY_ID);
 
-        if (geologyEnchant == null) return;
-
-        int level = EnchantmentHelper.getEnchantmentLevel(geologyEnchant, player);
+        int level = EnchantContext.level(player, geologyEnchant);
         if (level <= 0) return;
 
         // 只处理石头类方块
@@ -64,15 +59,11 @@ public class GeologyEventHandler {
             ItemStack oreDrop = ores.get(RedstoneEnchants.RANDOM.nextInt(ores.size()));
 
             // 应用时运效果
-            Holder.Reference<Enchantment> fortuneEnchant = player.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(Enchantments.FORTUNE)
-                    .orElse(null);
+            ResourceKey<Enchantment> fortuneEnchant = EnchantContext.key(Enchantments.FORTUNE);
 
             int fortuneLevel = 0;
             if (fortuneEnchant != null) {
-                int fortLvl = tool.getEnchantments().getLevel(fortuneEnchant);
+                int fortLvl = EnchantContext.level(tool, fortuneEnchant);
                 fortuneLevel = fortLvl;
             }
 

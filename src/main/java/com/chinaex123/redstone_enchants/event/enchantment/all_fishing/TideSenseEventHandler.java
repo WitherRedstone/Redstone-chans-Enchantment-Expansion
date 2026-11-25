@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_fishing;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -22,7 +24,6 @@ import java.util.List;
  * 潮汐感知：雷雨天时，钓鱼等待时间大幅缩短且鱼的几率大幅提高
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class TideSenseEventHandler {
     private static final ResourceLocation TIDE_SENSE_ID = RedstoneEnchants.id("tide_sense");
 
@@ -35,15 +36,9 @@ public class TideSenseEventHandler {
         ItemStack rod = player.getMainHandItem();
         if (rod.isEmpty() || !rod.is(Items.FISHING_ROD)) return;
 
-        Holder.Reference<Enchantment> tideSenseEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(TIDE_SENSE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> tideSenseEnchant = EnchantContext.key(TIDE_SENSE_ID);
 
-        if (tideSenseEnchant == null) return;
-
-        int level = rod.getEnchantments().getLevel(tideSenseEnchant);
+        int level = EnchantContext.level(rod, tideSenseEnchant);
         if (level <= 0) return;
 
         // 雷雨天时大幅提高鱼的几率（替换垃圾和宝藏）

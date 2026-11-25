@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.unbreaking;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 牺牲：受到攻击时自动修复手持物品
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class SacrificeEventHandler {
     private static final ResourceLocation SACRIFICE_ID = RedstoneEnchants.id("sacrifice");
 
@@ -29,15 +30,9 @@ public class SacrificeEventHandler {
             ItemStack stack = entity.getItemBySlot(slot);
             if (stack.isEmpty()) continue;
 
-            Holder.Reference<Enchantment> sacrificeEnchant = entity.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(SACRIFICE_ID)
-                    .orElse(null);
+            ResourceKey<Enchantment> sacrificeEnchant = EnchantContext.key(SACRIFICE_ID);
 
-            if (sacrificeEnchant == null) continue;
-
-            int level = stack.getEnchantments().getLevel(sacrificeEnchant);
+            int level = EnchantContext.level(stack, sacrificeEnchant);
             if (level <= 0) continue;
 
             // 计算修复量：基础-1.0，每级额外-0.5

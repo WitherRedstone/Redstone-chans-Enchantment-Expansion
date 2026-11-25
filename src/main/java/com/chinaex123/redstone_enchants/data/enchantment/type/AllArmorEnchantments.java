@@ -2,6 +2,7 @@ package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
@@ -71,8 +72,12 @@ public final class AllArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dangerous_edge_1", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_value"), linear(-2.5f, -1.5f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dangerous_edge_2", e.attribute("minecraft:generic.attack_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(2.5f, 1.5f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dangerous_edge_1", e.attribute("minecraft:generic.armor"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(-2.5f, -1.5f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.dangerous_edge_2", e.attribute("minecraft:generic.attack_damage"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(2.5f, 1.5f))
+        );
         e.register(builder, DANGEROUS_EDGE, 0xFF55FF, "dangerous_edge");
     }
 
@@ -87,7 +92,9 @@ public final class AllArmorEnchantments {
     private static void exoskeleton(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.exoskeleton_1", e.attribute("minecraft:generic.armor_toughness"), EnchantmentConstructorHelper.operation("add_value"), linear(4f, 2f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.exoskeleton_1", e.attribute("minecraft:generic.armor_toughness"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(4f, 2f))
+        );
         e.register(builder, EXOSKELETON, 0xFF55FF, "exoskeleton");
     }
 
@@ -95,8 +102,13 @@ public final class AllArmorEnchantments {
     private static void fireProtection(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
-        e.attributes(builder, attributeEffect("minecraft:enchantment.fire_protection_1", e.attribute("minecraft:generic.burning_time"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.25f, -0.25f)));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2.0f, 2.0f)), allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:is_fire", true)).tag(damageTag("minecraft:bypasses_invulnerability", false)))));
+        e.attributes(builder, attributeEffect("minecraft:enchantment.fire_protection_1", e.attribute("minecraft:generic.burning_time"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(-0.25f, -0.25f))
+        );
+        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2.0f, 2.0f)),
+                allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:is_fire", true)).
+                        tag(damageTag("minecraft:bypasses_invulnerability", false))))
+        );
         e.register(builder, FIRE_PROTECTION, 0xFF55FF, "fire_protection");
     }
 
@@ -104,7 +116,9 @@ public final class AllArmorEnchantments {
     private static void fortitude(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.fortitude_1", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.14f, 0.12f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.fortitude_1", e.attribute("minecraft:generic.armor"),
+                EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.14f, 0.12f))
+        );
         e.register(builder, FORTITUDE, 0xFF55FF, "fortitude");
     }
 
@@ -114,8 +128,12 @@ public final class AllArmorEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
         e.value(builder, EnchantmentEffectComponents.ARMOR_EFFECTIVENESS, add(linear(-0.045f, -0.035f)), null);
-        e.attributes(builder, attributeEffect("minecraft:enchantment.fury_1", e.attribute("minecraft:generic.attack_damage"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.2f, 0.2f)));
-        e.attributes(builder, attributeEffect("minecraft:enchantment.fury_2", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.1f, -0.2f)));
+        e.attributes(builder, attributeEffect("minecraft:enchantment.fury_1", e.attribute("minecraft:generic.attack_damage"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(0.2f, 0.2f))
+        );
+        e.attributes(builder, attributeEffect("minecraft:enchantment.fury_2", e.attribute("minecraft:generic.armor"),
+                EnchantmentConstructorHelper.operation("add_multiplied_total"), linear(-0.1f, -0.2f))
+        );
         e.register(builder, FURY, 0xFF55FF, "fury");
     }
 
@@ -124,7 +142,10 @@ public final class AllArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)), allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))), timeCheck(24000, 0, 12000)));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)),
+                allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))),
+                        timeCheck(24000, 0, 12000))
+        );
         e.register(builder, PROTECTION_DAY, 0xFF55FF, "protection_day");
     }
 
@@ -133,7 +154,10 @@ public final class AllArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)), allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))), locationCheck(location().setDimension(dimension("minecraft:the_end")))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)),
+                allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))),
+                        locationCheck(location().setDimension(dimension("minecraft:the_end"))))
+        );
         e.register(builder, PROTECTION_END, 0xFF55FF, "protection_end");
     }
 
@@ -142,7 +166,10 @@ public final class AllArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)), allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))), locationCheck(location().setDimension(dimension("minecraft:the_nether")))));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)),
+                allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))),
+                        locationCheck(location().setDimension(dimension("minecraft:the_nether"))))
+        );
         e.register(builder, PROTECTION_NETHER, 0xFF55FF, "protection_nether");
     }
 
@@ -151,7 +178,10 @@ public final class AllArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
-        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)), allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))), timeCheck(24000, 12000, 24000)));
+        e.value(builder, EnchantmentEffectComponents.DAMAGE_PROTECTION, add(linear(2f, 2f)),
+                allOf(damageSource(damageSourcePredicate().tag(damageTag("minecraft:bypasses_invulnerability", false))),
+                        timeCheck(24000, 12000, 24000))
+        );
         e.register(builder, PROTECTION_NIGHT, 0xFF55FF, "protection_night");
     }
 
@@ -174,9 +204,17 @@ public final class AllArmorEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 3, 4,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "armor");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_ARMORS));
-        e.attributes(builder, attributeEffect("redstone_enchants:weak_armor_1", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_value"), linear(-1.0f, -1.0f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:weak_armor_2", e.attribute("minecraft:generic.movement_speed"), EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.05f, 0.05f)));
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:resistance"), constant(0.2f), constant(0.2f), constant(1f), constant(1f)), entityProperties("this", entity().flags(flags().setOnGround(true).setCrouching(true))));
+        e.attributes(builder,
+                attributeEffect("redstone_enchants:weak_armor_1", e.attribute("minecraft:generic.armor"),
+                        EnchantmentConstructorHelper.operation("add_value"), linear(-1.0f, -1.0f))
+        );
+        e.attributes(builder,
+                attributeEffect("redstone_enchants:weak_armor_2", e.attribute("minecraft:generic.movement_speed"),
+                        EnchantmentConstructorHelper.operation("add_multiplied_base"), linear(0.05f, 0.05f))
+        );
+        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects(MobEffects.DAMAGE_RESISTANCE),
+                constant(0.2f), constant(0.2f), constant(1f), constant(1f)),
+                entityProperties("this", entity().flags(flags().setOnGround(true).setCrouching(true))));
         e.register(builder, WEAK_ARMOR, 0xFF55FF, "weak_armor");
     }
 

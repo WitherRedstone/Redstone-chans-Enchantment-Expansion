@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.head_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -22,7 +24,6 @@ import java.util.List;
  * 以寡敌众：根据周围敌人数目，每多一个敌人伤害/护甲+2%
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class AgainstAllOddsEventHandler {
     private static final ResourceLocation AGAINST_ALL_ODDS_ID = RedstoneEnchants.id("against_all_odds");
     private static final ResourceLocation DAMAGE_MODIFIER_ID = RedstoneEnchants.id("against_all_odds_damage");
@@ -39,15 +40,9 @@ public class AgainstAllOddsEventHandler {
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         if (helmet.isEmpty()) return;
 
-        Holder.Reference<Enchantment> againstAllOddsEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(AGAINST_ALL_ODDS_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> againstAllOddsEnchant = EnchantContext.key(AGAINST_ALL_ODDS_ID);
 
-        if (againstAllOddsEnchant == null) return;
-
-        int enchantLevel = helmet.getEnchantments().getLevel(againstAllOddsEnchant);
+        int enchantLevel = EnchantContext.level(helmet, againstAllOddsEnchant);
         if (enchantLevel <= 0) return;
 
         // 获取范围内的敌对生物数量

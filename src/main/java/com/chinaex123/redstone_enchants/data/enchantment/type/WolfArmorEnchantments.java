@@ -62,9 +62,15 @@ public final class WolfArmorEnchantments {
     private static void wolfSpiritShield(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.WOLF_ARMOR, REItemTags.WOLF_ARMOR, 2, 5,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "body");
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.wolf_spirit_shield_1", e.attribute("minecraft:generic.attack_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(5.0f, 5.0f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.wolf_spirit_shield_2", e.attribute("minecraft:generic.armor"), EnchantmentConstructorHelper.operation("add_value"), linear(5f, 5f)));
-        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.wolf_spirit_shield_3", e.attribute("minecraft:generic.max_health"), EnchantmentConstructorHelper.operation("add_value"), linear(10f, 10f)));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.wolf_spirit_shield_1", e.attribute("minecraft:generic.attack_damage"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(5.0f, 5.0f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.wolf_spirit_shield_2", e.attribute("minecraft:generic.armor"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(5f, 5f))
+        );
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.wolf_spirit_shield_3", e.attribute("minecraft:generic.max_health"),
+                EnchantmentConstructorHelper.operation("add_value"), linear(10f, 10f))
+        );
         e.register(builder, WOLF_SPIRIT_SHIELD, 0xFFAA00, "wolf_spirit_shield");
     }
 }

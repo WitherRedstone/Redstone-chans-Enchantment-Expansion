@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * 急速：手持时获得急迫效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class HasteEventHandler {
     private static final ResourceLocation HASTE_ID = RedstoneEnchants.id("haste");
 
@@ -30,15 +31,9 @@ public class HasteEventHandler {
         Player player = event.getEntity();
         ItemStack mainHand = player.getMainHandItem();
 
-        Holder.Reference<Enchantment> hasteEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(HASTE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> hasteEnchant = EnchantContext.key(HASTE_ID);
 
-        if (hasteEnchant == null) return;
-
-        int level = mainHand.getEnchantments().getLevel(hasteEnchant);
+        int level = EnchantContext.level(mainHand, hasteEnchant);
 
         if (level > 0) {
             int amplifier = level - 1;

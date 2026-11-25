@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.horse_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +21,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 精神：马在夜晚时增加速度
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class SpiritEventHandler {
     private static final ResourceLocation SPIRIT_ID = RedstoneEnchants.id("spirit");
     private static final ResourceLocation SPIRIT_SPEED_ID = RedstoneEnchants.id("spirit_speed");
@@ -35,15 +36,9 @@ public class SpiritEventHandler {
         ItemStack armor = horse.getItemBySlot(EquipmentSlot.BODY);
         if (armor.isEmpty()) return;
 
-        Holder.Reference<Enchantment> spiritEnchant = horse.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SPIRIT_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> spiritEnchant = EnchantContext.key(SPIRIT_ID);
 
-        if (spiritEnchant == null) return;
-
-        int enchantLevel = armor.getEnchantments().getLevel(spiritEnchant);
+        int enchantLevel = EnchantContext.level(armor, spiritEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查是否是夜晚

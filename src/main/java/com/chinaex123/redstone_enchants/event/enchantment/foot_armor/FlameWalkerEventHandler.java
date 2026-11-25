@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 踏焰者：可在岩浆上行走，潜行时下潜到岩浆下
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class FlameWalkerEventHandler {
     private static final ResourceLocation FLAME_WALKER_ID = RedstoneEnchants.id("flame_walker");
 
@@ -29,15 +30,9 @@ public class FlameWalkerEventHandler {
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         if (boots.isEmpty()) return;
 
-        Holder.Reference<Enchantment> flameWalkerEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(FLAME_WALKER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> flameWalkerEnchant = EnchantContext.key(FLAME_WALKER_ID);
 
-        if (flameWalkerEnchant == null) return;
-
-        int enchantLevel = boots.getEnchantments().getLevel(flameWalkerEnchant);
+        int enchantLevel = EnchantContext.level(boots, flameWalkerEnchant);
         if (enchantLevel <= 0) return;
 
         // 如果玩家潜行，允许正常下潜

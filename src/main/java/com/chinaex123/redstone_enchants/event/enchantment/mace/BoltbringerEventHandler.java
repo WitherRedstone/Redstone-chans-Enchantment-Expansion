@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.mace;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -23,7 +25,6 @@ import java.util.UUID;
  * 闪电使者：从高处(≥8格)攻击时召唤闪电
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class BoltbringerEventHandler {
     private static final ResourceLocation BOLTBRINGER_ID = RedstoneEnchants.id("boltbringer");
     private static final Map<UUID, Long> lastStrikeTime = new HashMap<>();
@@ -42,15 +43,9 @@ public class BoltbringerEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> boltbringerEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(BOLTBRINGER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> boltbringerEnchant = EnchantContext.key(BOLTBRINGER_ID);
 
-        if (boltbringerEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(boltbringerEnchant);
+        int level = EnchantContext.level(weapon, boltbringerEnchant);
         if (level <= 0) return;
 
         // 检查是否从高处攻击

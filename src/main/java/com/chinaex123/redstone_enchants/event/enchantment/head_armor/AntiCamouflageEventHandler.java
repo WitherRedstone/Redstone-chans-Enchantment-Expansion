@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.head_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +23,6 @@ import java.util.List;
  * 反伪装：潜行时显示周围的敌对生物
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class AntiCamouflageEventHandler {
     private static final ResourceLocation ANTI_CAMOUFLAGE_ID = RedstoneEnchants.id("anti_camouflage");
 
@@ -36,15 +37,9 @@ public class AntiCamouflageEventHandler {
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         if (helmet.isEmpty()) return;
 
-        Holder.Reference<Enchantment> antiCamouflageEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ANTI_CAMOUFLAGE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> antiCamouflageEnchant = EnchantContext.key(ANTI_CAMOUFLAGE_ID);
 
-        if (antiCamouflageEnchant == null) return;
-
-        int enchantLevel = helmet.getEnchantments().getLevel(antiCamouflageEnchant);
+        int enchantLevel = EnchantContext.level(helmet, antiCamouflageEnchant);
         if (enchantLevel <= 0) return;
 
         // 只在潜行时生效

@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +23,6 @@ import java.util.Random;
  * 消解：攻击时有概率移除目标身上的一个正面效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class NullifyEventHandler {
     private static final ResourceLocation NULLIFY_ID = RedstoneEnchants.id("nullify");
     private static final Random RANDOM = new Random();
@@ -35,15 +36,9 @@ public class NullifyEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> nullifyEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(NULLIFY_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> nullifyEnchant = EnchantContext.key(NULLIFY_ID);
 
-        if (nullifyEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(nullifyEnchant);
+        int level = EnchantContext.level(weapon, nullifyEnchant);
         if (level <= 0) return;
 
         // 每级5%概率触发

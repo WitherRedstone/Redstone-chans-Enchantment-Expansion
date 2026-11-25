@@ -203,6 +203,10 @@ public final class EnchantmentConstructorHelper {
         return this.holder(Registries.MOB_EFFECT, ResourceKey.create(Registries.MOB_EFFECT, ResourceLocation.parse(id)));
     }
 
+    public Holder<MobEffect> mobEffect(Holder<MobEffect> effect) {
+        return effect;
+    }
+
     public HolderSet<MobEffect> mobEffects(String tagOrId) {
         if (tagOrId.startsWith("#")) {
             return this.lookup(Registries.MOB_EFFECT).getOrThrow(TagKey.create(Registries.MOB_EFFECT, ResourceLocation.parse(stripHash(tagOrId))));
@@ -210,6 +214,15 @@ public final class EnchantmentConstructorHelper {
         List<Holder<MobEffect>> holders = new ArrayList<>();
         for (String s : tagOrId.split(",")) {
             holders.add(this.mobEffect(s.trim()));
+        }
+        return HolderSet.direct(holders);
+    }
+
+    @SafeVarargs
+    public final HolderSet<MobEffect> mobEffects(Holder<MobEffect>... effects) {
+        List<Holder<MobEffect>> holders = new ArrayList<>();
+        for (Holder<MobEffect> effect : effects) {
+            holders.add(this.mobEffect(effect));
         }
         return HolderSet.direct(holders);
     }

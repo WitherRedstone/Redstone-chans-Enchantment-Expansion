@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_shear;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -28,7 +30,6 @@ import java.util.List;
  * 牧羊人：修剪羊毛或采集蜜脾时有概率获得多个
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ShepherdEventHandler {
     private static final ResourceLocation SHEPHERD_ID = RedstoneEnchants.id("shepherd");
 
@@ -45,15 +46,9 @@ public class ShepherdEventHandler {
         if (!(target instanceof Sheep sheep)) return;
         if (!stack.is(Items.SHEARS)) return;
 
-        Holder.Reference<Enchantment> shepherdEnchant = level
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SHEPHERD_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> shepherdEnchant = EnchantContext.key(SHEPHERD_ID);
 
-        if (shepherdEnchant == null) return;
-
-        int enchantLevel = stack.getEnchantments().getLevel(shepherdEnchant);
+        int enchantLevel = EnchantContext.level(stack, shepherdEnchant);
         if (enchantLevel <= 0) return;
 
         handleSheepShearing(player, level, stack, sheep, enchantLevel, event);
@@ -71,15 +66,9 @@ public class ShepherdEventHandler {
         BlockState state = level.getBlockState(event.getPos());
         if (!(state.getBlock() instanceof BeehiveBlock)) return;
 
-        Holder.Reference<Enchantment> shepherdEnchant = level
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SHEPHERD_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> shepherdEnchant = EnchantContext.key(SHEPHERD_ID);
 
-        if (shepherdEnchant == null) return;
-
-        int enchantLevel = stack.getEnchantments().getLevel(shepherdEnchant);
+        int enchantLevel = EnchantContext.level(stack, shepherdEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查是否有蜂蜜

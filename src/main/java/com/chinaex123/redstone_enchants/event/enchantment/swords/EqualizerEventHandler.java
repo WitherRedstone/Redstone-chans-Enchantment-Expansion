@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 均衡器：伤害根据目标血量百分比变化；目标血量越高，伤害越高
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class EqualizerEventHandler {
     private static final ResourceLocation EQUALIZER_ID = RedstoneEnchants.id("equalizer");
 
@@ -29,15 +30,9 @@ public class EqualizerEventHandler {
 
         if (weapon.isEmpty()) return;
 
-        Holder.Reference<Enchantment> equalizerEnchant = attacker.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(EQUALIZER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> equalizerEnchant = EnchantContext.key(EQUALIZER_ID);
 
-        if (equalizerEnchant == null) return;
-
-        int level = weapon.getEnchantments().getLevel(equalizerEnchant);
+        int level = EnchantContext.level(weapon, equalizerEnchant);
         if (level <= 0) return;
 
         // 计算目标血量百分比

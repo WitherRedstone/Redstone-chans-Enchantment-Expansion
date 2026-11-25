@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.head_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +21,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 绝境逆袭：自身拥有失明或黑暗时增加攻击伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class DesperateCounterEventHandler {
     private static final ResourceLocation DESPERATE_COUNTER_ID = RedstoneEnchants.id("desperate_counter");
     private static final ResourceLocation DESPERATE_COUNTER_MODIFIER_ID = RedstoneEnchants.id("desperate_counter_damage");
@@ -32,15 +33,9 @@ public class DesperateCounterEventHandler {
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         if (helmet.isEmpty()) return;
 
-        Holder.Reference<Enchantment> desperateCounterEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(DESPERATE_COUNTER_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> desperateCounterEnchant = EnchantContext.key(DESPERATE_COUNTER_ID);
 
-        if (desperateCounterEnchant == null) return;
-
-        int enchantLevel = helmet.getEnchantments().getLevel(desperateCounterEnchant);
+        int enchantLevel = EnchantContext.level(helmet, desperateCounterEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查是否有失明或黑暗效果

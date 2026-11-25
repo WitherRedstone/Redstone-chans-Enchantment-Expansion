@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.leg_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * 隐身斗篷：蹲伏时获得隐身效果
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class InvisibilityCloakEventHandler {
     private static final ResourceLocation INVISIBILITY_CLOAK_ID = RedstoneEnchants.id("invisibility_cloak");
 
@@ -29,16 +30,10 @@ public class InvisibilityCloakEventHandler {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        Holder.Reference<Enchantment> invisibilityCloakEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(INVISIBILITY_CLOAK_ID)
-                .orElse(null);
-
-        if (invisibilityCloakEnchant == null) return;
+        ResourceKey<Enchantment> invisibilityCloakEnchant = EnchantContext.key(INVISIBILITY_CLOAK_ID);
 
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
-        int level = leggings.isEmpty() ? 0 : leggings.getEnchantments().getLevel(invisibilityCloakEnchant);
+        int level = leggings.isEmpty() ? 0 : EnchantContext.level(leggings, invisibilityCloakEnchant);
 
         if (level > 0 && player.isShiftKeyDown()) {
             EnchantEffectTracker.apply(player, MobEffects.INVISIBILITY, BASE_INVISIBILITY_DURATION, 0);

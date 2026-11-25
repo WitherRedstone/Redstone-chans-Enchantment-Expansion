@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_bow;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +20,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
  * 狙击：与目标距离每增加10格，造成的伤害提高
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class SnipeEventHandler {
     private static final ResourceLocation SNIPE_ID = RedstoneEnchants.id("snipe");
 
@@ -35,15 +36,9 @@ public class SnipeEventHandler {
         if (bow.isEmpty()) bow = player.getOffhandItem();
         if (bow.isEmpty()) return;
 
-        Holder.Reference<Enchantment> snipeEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(SNIPE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> snipeEnchant = EnchantContext.key(SNIPE_ID);
 
-        if (snipeEnchant == null) return;
-
-        int level = bow.getEnchantments().getLevel(snipeEnchant);
+        int level = EnchantContext.level(bow, snipeEnchant);
         if (level <= 0) return;
 
         // 计算距离

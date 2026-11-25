@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.leg_armor;
 
+import net.minecraft.resources.ResourceKey;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
  * 战术护膝：落地时潜行可抵消掉落伤害
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class TacticalKneeEventHandler {
     private static final ResourceLocation TACTICAL_KNEE_ID = RedstoneEnchants.id("tactical_knee");
 
@@ -28,15 +29,9 @@ public class TacticalKneeEventHandler {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         if (leggings.isEmpty()) return;
 
-        Holder.Reference<Enchantment> tacticalKneeEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(TACTICAL_KNEE_ID)
-                .orElse(null);
+        ResourceKey<Enchantment> tacticalKneeEnchant = EnchantContext.key(TACTICAL_KNEE_ID);
 
-        if (tacticalKneeEnchant == null) return;
-
-        int enchantLevel = leggings.getEnchantments().getLevel(tacticalKneeEnchant);
+        int enchantLevel = EnchantContext.level(leggings, tacticalKneeEnchant);
         if (enchantLevel <= 0) return;
 
         // 检查玩家是否潜行
