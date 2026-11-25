@@ -129,18 +129,7 @@
             }
           ]
         },
-        "enchanted": "attacker",
-        "requirements": {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "equipment": {
-              "mainhand": {
-                "items": "#redstone_enchants:swords_and_axes"
-              }
-            }
-          }
-        }
+        "enchanted": "attacker"
       }
     ]
   },

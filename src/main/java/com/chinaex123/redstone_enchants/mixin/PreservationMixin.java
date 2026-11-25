@@ -1,6 +1,7 @@
 package com.chinaex123.redstone_enchants.mixin;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.util.PreservationFeedback;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -15,16 +16,22 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * 附魔 - 保全
+ * 保全：装备不会因无耐久而损坏消失。
+ * <p>
+ * 耐久最多消耗到 0，之后不再掉耐久、也不会损坏；第一次到达 0 耐久时播放一次损坏音效与碎屑粒子
  */
 @Mixin(ItemStack.class)
+@SuppressWarnings("deprecation")
 public class PreservationMixin {
     @Unique
-    private static final ResourceLocation PRESERVATION_ID = ResourceLocation.fromNamespaceAndPath(RedstoneEnchants.MODID, "preservation");
+    private static final ResourceLocation PRESERVATION_ID = RedstoneEnchants.id("preservation");
 
     @Inject(method = "hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V", at = @At("HEAD"), cancellable = true)
     public void preservation_preventBreak(int amount, LivingEntity entity, EquipmentSlot slot, CallbackInfo ci) {
         ItemStack stack = (ItemStack) (Object) this;
+
+        if (entity == null) return;
+        if (!stack.isDamageableItem()) return;
 
         Holder.Reference<Enchantment> preservationEnchant = entity.level()
                 .registryAccess()
@@ -34,16 +41,21 @@ public class PreservationMixin {
 
         if (preservationEnchant == null) return;
 
-        @SuppressWarnings("deprecation")
         int level = stack.getEnchantments().getLevel(preservationEnchant);
         if (level <= 0) return;
 
-        // 检查是否会损坏
-        int newDamage = stack.getDamageValue() + amount;
-        if (newDamage >= stack.getMaxDamage()) {
-            // 阻止损坏，设置耐久为最大值（显示为红色损坏状态，无法使用）
-            stack.setDamageValue(stack.getMaxDamage());
-            ci.cancel();
+        int maxDamage = stack.getMaxDamage();
+        if (maxDamage <= 0) return;
+
+        if (stack.getDamageValue() + amount < maxDamage) {
+            // 还有耐久：被修好过就清掉标记，下次耗尽能再提示一次
+            PreservationFeedback.clearWarned(stack);
+            return;
         }
+
+        // 耐久耗尽：固定在 0 耐久并拦截，物品不会损坏
+        stack.setDamageValue(maxDamage);
+        PreservationFeedback.warnIfNeeded(stack, entity);
+        ci.cancel();
     }
 }

@@ -147,8 +147,8 @@ public final class AllBowEnchantments {
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand", "offhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE_BOW));
         e.value(builder, EnchantmentEffectComponents.DAMAGE, add(constant(2f)), null);
-        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, e.damageType("minecraft:arrow"), null, null, vec(0.0, 0.5, 0.0), linear(1.0f, 0.5f), false, interaction("none"), particle("minecraft:ash"), particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)), allOf(entityProperties("this", e.entityOf("#minecraft:arrows"))));
-        e.postAttack(builder, target("attacker"), target("victim"), explode(false, e.damageType("minecraft:arrow"), constant(0f), null, vec(0.0, 0.5, 0.0), linear(0.5f, 0.5f), false, interaction("none"), particle("minecraft:ash"), particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
+        e.entity(builder, EnchantmentEffectComponents.HIT_BLOCK, explode(false, e.damageType("redstone_enchants:explosive_arrow"), null, null, vec(0.0, 0.5, 0.0), linear(1.0f, 0.5f), false, interaction("none"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)), allOf(entityProperties("this", e.entityOf("#minecraft:arrows"))));
+        e.postAttack(builder, target("attacker"), target("victim"), explode(false, e.damageType("redstone_enchants:explosive_arrow"), constant(0f), null, vec(0.0, 0.5, 0.0), linear(0.5f, 0.5f), false, interaction("none"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion_emitter"), e.fixedRangeSound("minecraft:entity.warden.sonic_boom", 16f)), entityProperties("direct_attacker", e.entityOf("#minecraft:arrows")));
         e.register(builder, BOMB_ARROWS, 0xFFAA00, "bomb_arrows");
     }
 

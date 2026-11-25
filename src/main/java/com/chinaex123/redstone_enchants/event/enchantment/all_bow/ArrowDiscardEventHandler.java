@@ -29,7 +29,7 @@ public class ArrowDiscardEventHandler {
 
         for (String id : DISCARD_ON_HIT) {
             if (EnchantContext.level(level, id, arrow.getWeaponItem()) > 0) {
-                arrow.discard();
+                new EnchantContext(level, arrow, arrow.position()).schedule(1, arrow::discard);
                 return;
             }
         }

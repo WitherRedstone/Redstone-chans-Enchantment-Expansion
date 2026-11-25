@@ -1,7 +1,8 @@
 {
   "values": [
+    "#c:tools/fishing_rod",
     {
-      "id": "#c:tools/fishing_rod",
+      "id": "#c:tools/fishing",
       "required": false
     }
   ]

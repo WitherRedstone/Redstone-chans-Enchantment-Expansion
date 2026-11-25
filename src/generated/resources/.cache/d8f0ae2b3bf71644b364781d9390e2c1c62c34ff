@@ -1,7 +1,7 @@
-// 1.21.1	2026-11-23T18:49:34.1976171	Tags for minecraft:item mod id redstone_enchants
+// 1.21.1	2026-11-25T13:27:49.5704067	Tags for minecraft:item mod id redstone_enchants
 de75671f136ad29ecb1fee30fc8326bbb0cce33f data/redstone_enchants/tags/item/all_bow.json
 97702667db0ce600be298b669c82e872fe8e89ea data/redstone_enchants/tags/item/all_brush.json
-c7fad06d0809ce7989f90baa2dbd51f79873bc37 data/redstone_enchants/tags/item/all_fishing.json
+5b9932c672d5491506c30aa4e4685a0cf24aba53 data/redstone_enchants/tags/item/all_fishing.json
 2b4a1688e23305eaa49ff4596f5c22eb6051e07c data/redstone_enchants/tags/item/all_flint_and_steel.json
 06c10c0bf30184ff1fcfbf3b5f75bf9590edbfb8 data/redstone_enchants/tags/item/all_shear.json
 6fc050246523f3566660961c74c500a95a9f985c data/redstone_enchants/tags/item/all_special_tools.json

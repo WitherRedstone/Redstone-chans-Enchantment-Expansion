@@ -18,7 +18,7 @@
         "effect": {
           "type": "minecraft:explode",
           "block_interaction": "none",
-          "damage_type": "minecraft:arrow",
+          "damage_type": "redstone_enchants:explosive_arrow",
           "large_particle": {
             "type": "minecraft:explosion_emitter"
           },
@@ -33,7 +33,7 @@
             "per_level_above_first": 0.5
           },
           "small_particle": {
-            "type": "minecraft:ash"
+            "type": "minecraft:explosion_emitter"
           },
           "sound": {
             "range": 16.0,
@@ -55,7 +55,7 @@
         "effect": {
           "type": "minecraft:explode",
           "block_interaction": "none",
-          "damage_type": "minecraft:arrow",
+          "damage_type": "redstone_enchants:explosive_arrow",
           "knockback_multiplier": 0.0,
           "large_particle": {
             "type": "minecraft:explosion_emitter"
@@ -71,7 +71,7 @@
             "per_level_above_first": 0.5
           },
           "small_particle": {
-            "type": "minecraft:ash"
+            "type": "minecraft:explosion_emitter"
           },
           "sound": {
             "range": 16.0,

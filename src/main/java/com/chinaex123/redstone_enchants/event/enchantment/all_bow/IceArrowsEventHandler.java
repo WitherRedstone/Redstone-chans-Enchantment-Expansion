@@ -66,13 +66,12 @@ public class IceArrowsEventHandler {
         addModifier(victim, Attributes.ATTACK_SPEED);
         addModifier(victim, Attributes.FLYING_SPEED);
         addModifier(victim, Attributes.JUMP_STRENGTH);
-        level.getServer().tell(new net.minecraft.server.TickTask(
-                level.getServer().getTickCount() + FREEZE_TICKS, () -> {
+        new EnchantContext(level, victim, victim.position()).schedule(FREEZE_TICKS, () -> {
             removeModifier(victim, Attributes.MOVEMENT_SPEED);
             removeModifier(victim, Attributes.ATTACK_SPEED);
             removeModifier(victim, Attributes.FLYING_SPEED);
             removeModifier(victim, Attributes.JUMP_STRENGTH);
-        }));
+        });
     }
 
     private static void addModifier(LivingEntity living, Holder<Attribute> attribute) {

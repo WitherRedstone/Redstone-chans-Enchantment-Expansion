@@ -89,9 +89,6 @@ public final class CurseEnchantments {
     private static void curseOfBlast(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS, REItemTags.ARMORS, 4, 1,
                 Enchantment.dynamicCost(10, 6), Enchantment.dynamicCost(20, 10), 6, "armor");
-        e.postAttack(builder, target("victim"), target("victim"), allEntities(explode(true, e.damageType("minecraft:explosion"), constant(1f), null, vec(0.0, 1.0, 0.0), constant(3f), true,
-                interaction("tnt"), particle("minecraft:explosion_emitter"), particle("minecraft:explosion_emitter"), e.sound("minecraft:entity.generic.explode")),
-                damageEntity(constant(4f), constant(4f), e.damageType("minecraft:explosion")), ignite(constant(5f))), randomChance(constantNumber(0.3f)));
         e.register(builder, CURSE_OF_BLAST, 0xFF5555, "curse_of_blast");
     }
 

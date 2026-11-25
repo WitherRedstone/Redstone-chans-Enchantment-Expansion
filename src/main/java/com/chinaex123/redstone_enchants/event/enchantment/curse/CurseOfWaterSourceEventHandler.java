@@ -1,10 +1,10 @@
 package com.chinaex123.redstone_enchants.event.enchantment.curse;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,6 +27,9 @@ public class CurseOfWaterSourceEventHandler {
     private static final ResourceLocation CURSE_OF_WATER_SOURCE_ID = RedstoneEnchants.id("curse_of_water_source");
     private static final Map<UUID, Long> LAST_EFFECT_TIME = new HashMap<>();
 
+    /** 中毒持续时间 */
+    private static final int POISON_DURATION = 40;
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         LivingEntity player = event.getEntity();
@@ -36,9 +39,7 @@ public class CurseOfWaterSourceEventHandler {
         boolean inRain = player.level().isRaining() && player.level().canSeeSky(player.blockPosition());
 
         if (!inWater && !inRain) {
-            if (player.hasEffect(MobEffects.POISON)) {
-                player.removeEffect(MobEffects.POISON);
-            }
+            EnchantEffectTracker.removeIfTracked(player, MobEffects.POISON);
             return;
         }
 
@@ -51,25 +52,25 @@ public class CurseOfWaterSourceEventHandler {
 
         LAST_EFFECT_TIME.put(entityId, currentTime);
 
+        Holder.Reference<Enchantment> curseEnchant = player.level()
+                .registryAccess()
+                .registryOrThrow(Registries.ENCHANTMENT)
+                .getHolder(CURSE_OF_WATER_SOURCE_ID)
+                .orElse(null);
+
+        if (curseEnchant == null) return;
+
         // 检查所有装备槽
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack stack = player.getItemBySlot(slot);
             if (stack.isEmpty()) continue;
-
-            Holder.Reference<Enchantment> curseEnchant = player.level()
-                    .registryAccess()
-                    .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolder(CURSE_OF_WATER_SOURCE_ID)
-                    .orElse(null);
-
-            if (curseEnchant == null) continue;
 
             // 检查当前槽位的物品是否有水源诅咒
             int level = stack.getEnchantments().getLevel(curseEnchant);
             if (level <= 0) continue;
 
             // 施加中毒效果
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0));
+            EnchantEffectTracker.apply(player, MobEffects.POISON, POISON_DURATION, 0);
             break;
         }
     }

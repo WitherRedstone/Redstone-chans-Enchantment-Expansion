@@ -39,12 +39,12 @@
       {
         "amount": {
           "type": "minecraft:linear",
-          "base": 0.01,
-          "per_level_above_first": 0.01
+          "base": -0.99,
+          "per_level_above_first": 0.0
         },
         "attribute": "minecraft:generic.fall_damage_multiplier",
         "id": "redstone_enchants:enchantment.my_little_pony_4",
-        "operation": "add_multiplied_base"
+        "operation": "add_multiplied_total"
       }
     ]
   },

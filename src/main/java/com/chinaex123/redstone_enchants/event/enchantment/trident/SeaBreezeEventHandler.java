@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -52,8 +51,8 @@ public class SeaBreezeEventHandler {
         Entity owner = arrow.getOwner();
         if (!(owner instanceof LivingEntity attacker)) return;
 
-        ItemStack weapon = attacker.getMainHandItem();
-        if (weapon.isEmpty() || !weapon.is(Items.TRIDENT)) return;
+        ItemStack weapon = arrow.getWeaponItem();
+        if (weapon.isEmpty()) return;
 
         Holder.Reference<Enchantment> seaBreezeEnchant = attacker.level()
                 .registryAccess()
@@ -129,8 +128,8 @@ public class SeaBreezeEventHandler {
         Entity owner = arrow.getOwner();
         if (!(owner instanceof LivingEntity attacker)) return;
 
-        ItemStack weapon = attacker.getMainHandItem();
-        if (weapon.isEmpty() || !weapon.is(Items.TRIDENT)) return;
+        ItemStack weapon = arrow.getWeaponItem();
+        if (weapon.isEmpty()) return;
 
         Holder.Reference<Enchantment> seaBreezeEnchant = attacker.level()
                 .registryAccess()

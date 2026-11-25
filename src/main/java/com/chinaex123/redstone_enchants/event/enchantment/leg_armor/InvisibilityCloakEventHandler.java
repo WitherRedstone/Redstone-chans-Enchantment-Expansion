@@ -1,10 +1,10 @@
 package com.chinaex123.redstone_enchants.event.enchantment.leg_armor;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -29,9 +29,6 @@ public class InvisibilityCloakEventHandler {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
-        if (leggings.isEmpty()) return;
-
         Holder.Reference<Enchantment> invisibilityCloakEnchant = player.level()
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
@@ -40,22 +37,13 @@ public class InvisibilityCloakEventHandler {
 
         if (invisibilityCloakEnchant == null) return;
 
-        int level = leggings.getEnchantments().getLevel(invisibilityCloakEnchant);
+        ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
+        int level = leggings.isEmpty() ? 0 : leggings.getEnchantments().getLevel(invisibilityCloakEnchant);
 
         if (level > 0 && player.isShiftKeyDown()) {
-            if (!player.hasEffect(MobEffects.INVISIBILITY)) {
-                player.addEffect(new MobEffectInstance(
-                        MobEffects.INVISIBILITY,
-                        BASE_INVISIBILITY_DURATION,
-                        0,
-                        false,
-                        false
-                ));
-            }
+            EnchantEffectTracker.apply(player, MobEffects.INVISIBILITY, BASE_INVISIBILITY_DURATION, 0);
         } else {
-            if (player.hasEffect(MobEffects.INVISIBILITY)) {
-                player.removeEffect(MobEffects.INVISIBILITY);
-            }
+            EnchantEffectTracker.removeIfTracked(player, MobEffects.INVISIBILITY);
         }
     }
 }

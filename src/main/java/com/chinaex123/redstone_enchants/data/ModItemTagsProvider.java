@@ -5,6 +5,7 @@ import com.chinaex123.redstone_enchants.init.REItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +35,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(REItemTags.ALL_BRUSH)
                 .addTag(Tags.Items.TOOLS_BRUSH);
         tag(REItemTags.ALL_FISHING)
-                .addOptionalTag(Tags.Items.TOOLS_FISHING_ROD);
+                .addTag(Tags.Items.TOOLS_FISHING_ROD)
+                .addOptionalTag(ResourceLocation.parse("c:tools/fishing"));
         tag(REItemTags.ALL_FLINT_AND_STEEL)
                 .addTag(Tags.Items.TOOLS_IGNITER);
         tag(REItemTags.ALL_SHEAR)

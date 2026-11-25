@@ -10,13 +10,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent.Post;
 
 /**
- * 拖尾类附魔：穿戴者在头顶留下对应颜色的粒子轨迹。
+ * 移动轨迹系列附魔。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class TrailEventHandler {
+
+    /** 每次触发产生的粒子数量。 */
+    private static final int PARTICLE_COUNT = 3;
+    /** 粒子扩散范围。 */
+    private static final double SPREAD = 0.3D;
 
     private static final Map<String, ParticleOptions> TRAILS = new LinkedHashMap<>();
 
@@ -33,15 +38,15 @@ public class TrailEventHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
+    public static void onPlayerTick(Post event) {
         Player player = event.getEntity();
         if (!(player.level() instanceof ServerLevel level)) return;
-        if (player.getDeltaMovement().horizontalDistanceSqr() < 1.0E-4D) return;
+        if (!EnchantContext.moved(player)) return;
 
         EnchantContext context = new EnchantContext(level, player, player.position().add(0.0D, 1.0D, 0.0D));
         for (Map.Entry<String, ParticleOptions> entry : TRAILS.entrySet()) {
             if (EnchantContext.level(player, entry.getKey()) <= 0) continue;
-            context.particle(entry.getValue(), 3, 0.3D, 0.3D, 0.3D, 0.0D);
+            context.particle(entry.getValue(), PARTICLE_COUNT, SPREAD, SPREAD, SPREAD, 0.0D);
         }
     }
 }

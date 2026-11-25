@@ -15,6 +15,10 @@ import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConst
  * 只能附魔在靴子上
  */
 public final class FootArmorEnchantments {
+
+    /** 草皮行者 / 融雪行者的作用半径（格）。 */
+    private static final float WALKER_RADIUS = 1.0F;
+
     /** 燃烧光环：移动过程中，自身的2格范围内产生火焰(同时获得火焰抗性) */
     public static final ResourceKey<Enchantment> AURA_BURNING = EnchantmentConstructorHelper.key("aura_burning");
     /** 发光光环：移动过程中，自身的4格范围内产生发光效果 */
@@ -274,7 +278,7 @@ public final class FootArmorEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_WALKER));
         e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true)).tag(damageTag("minecraft:bypasses_invulnerability", false))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(linear(3f, 1f), 0f, 16f), constant(1f), vec3i(0, -1, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:dirt", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:grass_block")), e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(constant(WALKER_RADIUS), 0f, 16f), constant(1f), vec3i(0, -1, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:dirt", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:grass_block")), e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
         e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, particles(dust(0.016f, 0.761f, 0.114f, 1f), position("entity_position", 0f, 1f), position("entity_position", 0f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), null);
         e.register(builder, WALKER_GRASS, 0xFF55FF, "walker_grass");
     }
@@ -295,7 +299,7 @@ public final class FootArmorEnchantments {
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "feet");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_WALKER));
         e.immunity(builder, damageSource(damageSourcePredicate().tag(damageTag("minecraft:burn_from_stepping", true)).tag(damageTag("minecraft:bypasses_invulnerability", false))));
-        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(linear(3f, 1f), 0f, 16f), constant(1f), vec3i(0, 0, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:snow", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:air")), e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
+        e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, replaceDisk(clamped(constant(WALKER_RADIUS), 0f, 16f), constant(1f), vec3i(0, 0, 0), allBlockPredicates(e.blockPredicate("minecraft:air", 0, 1, 0), e.blockPredicate("minecraft:snow", 0, 0, 0), unobstructed(0, 0, 0)), simpleState(state("minecraft:air")), e.gameEvent("minecraft:block_place")), entityProperties("this", entity().flags(flags().setOnGround(true))));
         e.location(builder, EnchantmentEffectComponents.LOCATION_CHANGED, particles(dust(1.0f, 0.914f, 0.149f, 1f), position("entity_position", 0f, 1f), position("entity_position", 0f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), null);
         e.register(builder, WALKER_SNOWMELT, 0xFF55FF, "walker_snowmelt");
     }

@@ -4,6 +4,7 @@ import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -11,26 +12,26 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent.Post;
 
 /**
- * 光环类附魔：穿戴者移动时，对周围生物施加对应状态效果。
+ * 光环系列附魔。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class AuraEventHandler {
 
-    /** 光环半径。 */
+    /** 光环半径（格）。 */
     private static final double RADIUS = 4.0D;
-    /** 燃烧光环半径。 */
+    /** 燃烧光环半径（格）。 */
     private static final double BURNING_RADIUS = 2.0D;
     /** 光环效果持续时间（tick）。 */
     private static final int DURATION = 100;
     /** 光环效果等级（0 = I 级）。 */
     private static final int AMPLIFIER = 0;
-    /** 燃烧光环点燃时长（秒）。 */
-    private static final int BURNING_SECONDS = 4;
 
     private static final Map<String, Holder<MobEffect>> AURAS = new LinkedHashMap<>();
 
@@ -50,11 +51,10 @@ public class AuraEventHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
+    public static void onPlayerTick(Post event) {
         Player player = event.getEntity();
         if (!(player.level() instanceof ServerLevel level)) return;
-        // 只在移动时触发
-        if (player.getDeltaMovement().horizontalDistanceSqr() < 1.0E-4D) return;
+        if (!EnchantContext.moved(player)) return;
 
         EnchantContext context = new EnchantContext(level, player, player.position());
 
@@ -66,10 +66,23 @@ public class AuraEventHandler {
         }
 
         if (EnchantContext.level(player, "aura_burning") > 0) {
-            for (Entity target : context.entities(BURNING_RADIUS, Integer.MAX_VALUE, false, AuraEventHandler::isLiving)) {
-                target.setRemainingFireTicks(BURNING_SECONDS * 20);
-            }
+            igniteGround(player, level);
             context.effect(MobEffects.FIRE_RESISTANCE, DURATION / 20.0F, AMPLIFIER);
+        }
+    }
+
+    private static void igniteGround(Player player, ServerLevel level) {
+        BlockPos feet = player.blockPosition();
+        int radius = (int) Math.floor(BURNING_RADIUS);
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                if (dx * dx + dz * dz > BURNING_RADIUS * BURNING_RADIUS) continue;
+                BlockPos pos = feet.offset(dx, 0, dz);
+                if (!level.isEmptyBlock(pos)) continue;
+                BlockState fire = Blocks.FIRE.defaultBlockState();
+                if (!fire.canSurvive(level, pos)) continue;
+                level.setBlockAndUpdate(pos, fire);
+            }
         }
     }
 

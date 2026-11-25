@@ -281,7 +281,7 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_TOUCH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("apothic_attributes:bleeding"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), entityProperties("this", entity().equipment(equipment().mainhand(itemPredicate().of(itemTag("redstone_enchants:swords_and_axes"))))));
+        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("apothic_attributes:bleeding"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null);
         e.register(builder, TOUCH_BLEEDING, 0xFF55FF, "touch_bleeding");
     }
 
@@ -290,7 +290,7 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_TOUCH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:poison"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), entityProperties("this", entity().equipment(equipment().mainhand(itemPredicate().of(itemTag("redstone_enchants:swords_and_axes"))))));
+        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:poison"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null);
         e.register(builder, TOUCH_POISON, 0xFF55FF, "touch_poison");
     }
 
@@ -299,7 +299,7 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 3, 3,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_TOUCH));
-        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:wither"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), entityProperties("this", entity().equipment(equipment().mainhand(itemPredicate().of(itemTag("redstone_enchants:swords_and_axes"))))));
+        e.postAttack(builder, target("attacker"), target("victim"), mobEffect(e.mobEffects("minecraft:wither"), constant(4f), constant(6f), constant(0f), linear(0f, 1f)), null);
         e.register(builder, TOUCH_WITHER, 0xFF55FF, "touch_wither");
     }
 
@@ -308,7 +308,7 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.postAttack(builder, target("attacker"), target("attacker"), mobEffect(e.mobEffects("minecraft:strength,minecraft:haste,minecraft:speed"), constant(5f), constant(5f), constant(0f), linear(0f, 1f)), entityProperties("this", entity().equipment(equipment().mainhand(itemPredicate().of(itemTag("minecraft:enchantable/weapon"))))));
+        e.postAttack(builder, target("attacker"), target("attacker"), mobEffect(e.mobEffects("minecraft:strength,minecraft:haste,minecraft:speed"), constant(5f), constant(5f), constant(0f), linear(0f, 1f)), null);
         e.register(builder, UNDER_PRESSURE, 0xFFAA00, "under_pressure");
     }
 
@@ -317,7 +317,7 @@ public final class SwordsEnchantments {
         Enchantment.Builder builder = e.builder(REItemTags.SWORDS_AND_AXES, REItemTags.SWORDS, 2, 3,
                 Enchantment.dynamicCost(16, 8), Enchantment.dynamicCost(32, 16), 12, "mainhand");
         builder = builder.exclusiveWith(e.enchantments(REEnchantmentTags.EXCLUSIVE_SET_DAMAGE));
-        e.postAttack(builder, target("attacker"), target("victim"), allEntities(mobEffect(e.mobEffects("twilightforest:frosted"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects("minecraft:wither"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects("minecraft:weakness"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), entityProperties("this", entity().equipment(equipment().mainhand(itemPredicate().of(itemTag("redstone_enchants:swords_and_axes"))))));
+        e.postAttack(builder, target("attacker"), target("victim"), allEntities(mobEffect(e.mobEffects("twilightforest:frosted"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects("minecraft:wither"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), mobEffect(e.mobEffects("minecraft:weakness"), constant(5f), constant(10f), constant(0f), linear(0f, 1f)), playSound(e.sound("minecraft:entity.player.hurt_freeze"), constantFloat(5.0f), uniformFloat(0.6f, 0.8f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f)), particles(particle("minecraft:snowflake"), position("in_bounding_box", 0f, 1f), position("in_bounding_box", 0.5f, 1f), velocity(0f, constantFloat(0f)), velocity(0f, constantFloat(0f)), constantFloat(1f))), null);
         e.attributes(builder, attributeEffect("redstone_enchants:enchantment.undercurrent_1", e.attribute("apothic_attributes:cold_damage"), EnchantmentConstructorHelper.operation("add_value"), linear(2f, 1.5f)));
         e.register(builder, UNDERCURRENT, 0xFF55FF, "undercurrent");
     }

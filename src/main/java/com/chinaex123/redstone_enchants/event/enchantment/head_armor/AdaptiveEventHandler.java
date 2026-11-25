@@ -1,10 +1,10 @@
 package com.chinaex123.redstone_enchants.event.enchantment.head_armor;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -22,13 +22,12 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class AdaptiveEventHandler {
     private static final ResourceLocation ADAPTIVE_ID = RedstoneEnchants.id("adaptive");
 
+    /** 夜视持续时间 */
+    private static final int NIGHT_VISION_DURATION = 20 * 12;
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
-
-        // 检查头盔是否有矿工附魔
-        ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (helmet.isEmpty()) return;
 
         Holder.Reference<Enchantment> adaptiveEnchant = player.level()
                 .registryAccess()
@@ -38,20 +37,15 @@ public class AdaptiveEventHandler {
 
         if (adaptiveEnchant == null) return;
 
-        int enchantLevel = helmet.getEnchantments().getLevel(adaptiveEnchant);
-        if (enchantLevel <= 0) return;
+        // 检查头盔是否有矿工附魔
+        ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+        int enchantLevel = helmet.isEmpty() ? 0 : helmet.getEnchantments().getLevel(adaptiveEnchant);
 
         // 检查是否在Y0以下
-        if (player.getY() < 0) {
-            // 给予夜视效果
-            player.addEffect(new MobEffectInstance(
-                    MobEffects.NIGHT_VISION, 20 * 12, 0, false, false
-            ));
+        if (enchantLevel > 0 && player.getY() < 0) {
+            EnchantEffectTracker.apply(player, MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0);
         } else {
-            // 不在Y0以下时，移除夜视效果
-            if (player.hasEffect(MobEffects.NIGHT_VISION)) {
-                player.removeEffect(MobEffects.NIGHT_VISION);
-            }
+            EnchantEffectTracker.removeIfTracked(player, MobEffects.NIGHT_VISION);
         }
     }
 }

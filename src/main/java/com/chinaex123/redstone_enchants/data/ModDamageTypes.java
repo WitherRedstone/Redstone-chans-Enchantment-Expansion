@@ -21,5 +21,7 @@ public final class ModDamageTypes {
                 new DamageType("water_block", DamageScaling.ALWAYS, 0.0F, DamageEffects.HURT, DeathMessageType.DEFAULT));
         context.register(ResourceKey.create(Registries.DAMAGE_TYPE, RedstoneEnchants.id("water_rain")),
                 new DamageType("water_rain", DamageScaling.ALWAYS, 0.0F, DamageEffects.HURT, DeathMessageType.DEFAULT));
+        context.register(ResourceKey.create(Registries.DAMAGE_TYPE, RedstoneEnchants.id("explosive_arrow")),
+                new DamageType("explosive_arrow", DamageScaling.ALWAYS, 0.0F, DamageEffects.HURT, DeathMessageType.DEFAULT));
     }
 }

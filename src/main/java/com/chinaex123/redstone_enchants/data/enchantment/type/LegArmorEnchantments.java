@@ -51,7 +51,7 @@ public final class LegArmorEnchantments {
     private static void fastSwim(EnchantmentConstructorHelper e) {
         Enchantment.Builder builder = e.builder(REItemTags.ARMORS_LEG, REItemTags.ARMORS_LEG, 3, 1,
                 Enchantment.dynamicCost(12, 6), Enchantment.dynamicCost(24, 12), 8, "legs");
-        e.entity(builder, EnchantmentEffectComponents.TICK, mobEffect(e.mobEffects("minecraft:dolphins_grace"), constant(4f), constant(8f), constant(0f), constant(0f)), req(entityProperties("this", entity().flags(flags().setSwimming(true)).periodicTick(80))));
+        e.attributes(builder, attributeEffect("redstone_enchants:enchantment.fast_swim", e.attribute("neoforge:swim_speed"), operation("add_multiplied_base"), constant(0.5f)));
         e.register(builder, FAST_SWIM, 0xFF55FF, "fast_swim");
     }
 

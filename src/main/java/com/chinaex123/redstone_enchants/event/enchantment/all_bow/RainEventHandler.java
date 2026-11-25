@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.function.Consumer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 
 /**
- * 雨系列附魔：箭矢命中方块时，在命中点上方召唤一圈实体。
+ * 铁砧雨与石锥雨：箭矢命中方块或实体时，在命中点上方召唤一圈坠落物。
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class RainEventHandler {
@@ -100,8 +100,11 @@ public class RainEventHandler {
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
-        if (!(event.getRayTraceResult() instanceof BlockHitResult hit)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
+
+        // 命中方块与命中实体都触发
+        HitResult hit = event.getRayTraceResult();
+        if (hit == null || hit.getType() == HitResult.Type.MISS) return;
 
         EnchantContext context = new EnchantContext(level, arrow, hit.getLocation());
         boolean hitSomething = false;

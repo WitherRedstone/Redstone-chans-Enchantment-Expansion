@@ -5,26 +5,12 @@
     "translate": "enchantment.redstone_enchants.fast_swim"
   },
   "effects": {
-    "minecraft:tick": [
+    "minecraft:attributes": [
       {
-        "effect": {
-          "type": "minecraft:apply_mob_effect",
-          "max_amplifier": 0.0,
-          "max_duration": 8.0,
-          "min_amplifier": 0.0,
-          "min_duration": 4.0,
-          "to_apply": "minecraft:dolphins_grace"
-        },
-        "requirements": {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "flags": {
-              "is_swimming": true
-            },
-            "periodic_tick": 80
-          }
-        }
+        "amount": 0.5,
+        "attribute": "neoforge:swim_speed",
+        "id": "redstone_enchants:enchantment.fast_swim",
+        "operation": "add_multiplied_base"
       }
     ]
   },

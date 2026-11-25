@@ -21,12 +21,19 @@ public class AirTossEventHandler {
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
+
         LivingEntity victim = event.getEntity();
 
         int enchantLevel = EnchantContext.level(attacker, ID);
         if (enchantLevel <= 0) return;
 
-        new EnchantContext(level, victim, victim.position())
-                .motion(victim, new Vec3(0.0D, enchantLevel, 0.0D));
+        double motion = 0.5D + enchantLevel * 0.35D;
+        EnchantContext context = new EnchantContext(level, victim, victim.position());
+        context.schedule(1, () -> {
+            if (victim.isAlive()) {
+                Vec3 d = victim.getDeltaMovement();
+                context.motion(victim, new Vec3(d.x, motion, d.z));
+            }
+        });
     }
 }

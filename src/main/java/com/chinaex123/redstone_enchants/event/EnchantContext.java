@@ -1,7 +1,11 @@
 package com.chinaex123.redstone_enchants.event;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.Predicate;
 
 import net.minecraft.core.Holder;
@@ -11,7 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.TickTask;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import com.chinaex123.redstone_enchants.init.REEntityTypeTags;
@@ -150,9 +153,12 @@ public final class EnchantContext {
     }
 
     public void mergeNbt(Entity target, String snbt) {
-        if (target != null) {
-            target.load(parse(snbt));
+        if (target == null) {
+            return;
         }
+        CompoundTag merged = target.saveWithoutId(new CompoundTag());
+        merged.merge(parse(snbt));
+        target.load(merged);
     }
 
     public static List<Entity> allWithTag(ServerLevel level, String tag) {
@@ -214,6 +220,33 @@ public final class EnchantContext {
         return target != null && target.getType().is(NON_LIVING);
     }
 
+    private record MoveRecord(Vec3 previous, Vec3 current, long tick) {
+    }
+
+    private static final Map<Player, MoveRecord> MOVE_RECORDS = new WeakHashMap<>();
+
+    public static boolean moved(Player player) {
+        long now = player.level().getGameTime();
+        Vec3 pos = player.position();
+
+        MoveRecord record = MOVE_RECORDS.get(player);
+        if (record == null) {
+            MOVE_RECORDS.put(player, new MoveRecord(pos, pos, now));
+            return false;
+        }
+
+        if (record.tick() != now) {
+            record = new MoveRecord(record.current(), pos, now);
+            MOVE_RECORDS.put(player, record);
+        }
+
+        double dx = record.current().x - record.previous().x;
+        double dz = record.current().z - record.previous().z;
+        return dx * dx + dz * dz > 1.0E-4D;
+    }
+
+    private static final Map<ServerLevel, Map<Long, List<Runnable>>> DELAYED_TASKS = new WeakHashMap<>();
+
     public Entity nearestEntity(double minDistance, double maxDistance, boolean includeSelf, Predicate<Entity> filter) {
         List<Entity> candidates = this.entities(maxDistance, Integer.MAX_VALUE, includeSelf, filter);
         double minSqr = minDistance * minDistance;
@@ -227,7 +260,8 @@ public final class EnchantContext {
 
     public List<Entity> entities(double radius, int limit, boolean includeSelf, Predicate<Entity> filter) {
         AABB box = new AABB(this.pos, this.pos).inflate(radius);
-        List<Entity> found = new ArrayList<>(this.level.getEntities(this.entity, box,
+        Entity except = includeSelf ? null : this.entity;
+        List<Entity> found = new ArrayList<>(this.level.getEntities(except, box,
                 candidate -> (includeSelf || candidate != this.entity) && candidate.isAlive() && filter.test(candidate)));
         found.sort((left, right) -> Double.compare(left.position().distanceToSqr(this.pos), right.position().distanceToSqr(this.pos)));
         return found.size() > limit ? found.subList(0, limit) : found;
@@ -276,7 +310,32 @@ public final class EnchantContext {
     }
 
     public void schedule(int delayTicks, Runnable task) {
-        int target = this.level.getServer().getTickCount() + Math.max(0, delayTicks);
-        this.level.getServer().tell(new TickTask(target, task));
+        if (delayTicks <= 0) {
+            task.run();
+            return;
+        }
+        long target = this.level.getGameTime() + delayTicks;
+        DELAYED_TASKS.computeIfAbsent(this.level, key -> new HashMap<>())
+                .computeIfAbsent(target, key -> new ArrayList<>())
+                .add(task);
+    }
+
+    public static void runDueTasks(ServerLevel level) {
+        Map<Long, List<Runnable>> tasks = DELAYED_TASKS.get(level);
+        if (tasks == null || tasks.isEmpty()) return;
+
+        long now = level.getGameTime();
+        List<Runnable> due = new ArrayList<>();
+        Iterator<Map.Entry<Long, List<Runnable>>> iterator = tasks.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Long, List<Runnable>> entry = iterator.next();
+            if (entry.getKey() <= now) {
+                due.addAll(entry.getValue());
+                iterator.remove();
+            }
+        }
+        for (Runnable task : due) {
+            task.run();
+        }
     }
 }

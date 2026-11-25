@@ -45,8 +45,8 @@ public class AccuracyShotEventHandler {
             }
         }
         if (!arrows.isEmpty()) {
-            level.getServer().tell(new net.minecraft.server.TickTask(
-                    level.getServer().getTickCount() + 100, () -> accuracyCheck(level)));
+            EnchantContext context = new EnchantContext(level, arrows.get(0), arrows.get(0).position());
+            context.schedule(100, () -> accuracyCheck(level));
         }
     }
 }

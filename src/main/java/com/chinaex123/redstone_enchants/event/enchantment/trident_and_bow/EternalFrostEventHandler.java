@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -36,7 +37,9 @@ public class EternalFrostEventHandler {
 
         EnchantContext context = new EnchantContext(level, projectile, hit.getLocation()).at(0.0D, 0.25D, 0.0D);
         FreezePicAnimation.play(context);
-        context.discard(projectile);
+        if (!(projectile instanceof ThrownTrident)) {
+            context.discard(projectile);
+        }
     }
 
     @SubscribeEvent

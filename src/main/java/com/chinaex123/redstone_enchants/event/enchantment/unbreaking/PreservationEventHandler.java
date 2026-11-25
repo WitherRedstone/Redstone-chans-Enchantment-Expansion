@@ -1,13 +1,11 @@
 package com.chinaex123.redstone_enchants.event.enchantment.unbreaking;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.util.PreservationFeedback;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -15,112 +13,50 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 保全：装备不会因无耐久而损坏消失
- * <p>
- * 主功能在PreservationMixin
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 @SuppressWarnings("deprecation")
 public class PreservationEventHandler {
     private static final ResourceLocation PRESERVATION_ID = RedstoneEnchants.id("preservation");
-    private static final Map<String, Integer> lastDamageMap = new HashMap<>();
 
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        Player player = event.getEntity();
+    private static boolean isExhausted(ItemStack stack, Holder.Reference<Enchantment> enchantment) {
+        if (stack.isEmpty() || !stack.isDamageableItem()) return false;
+        if (stack.getEnchantments().getLevel(enchantment) <= 0) return false;
+        return stack.getDamageValue() >= stack.getMaxDamage();
+    }
 
-        Holder.Reference<Enchantment> preservationEnchant = player.level()
+    private static Holder.Reference<Enchantment> findEnchantment(Player player) {
+        return player.level()
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
                 .getHolder(PRESERVATION_ID)
                 .orElse(null);
-
-        if (preservationEnchant == null) return;
-
-        // 检查所有装备槽位
-        for (ItemStack stack : player.getInventory().items) {
-            if (stack.isEmpty()) continue;
-
-            int level = stack.getEnchantments().getLevel(preservationEnchant);
-            if (level <= 0) continue;
-
-            int currentDamage = stack.getDamageValue();
-            int maxDamage = stack.getMaxDamage();
-
-            String stackKey = player.getUUID() + "_" + System.identityHashCode(stack);
-
-            // 检测是否刚达到最大耐久
-            if (currentDamage >= maxDamage) {
-                Integer lastDamage = lastDamageMap.get(stackKey);
-                if (lastDamage == null || lastDamage < maxDamage) {
-                    // 刚达到最大耐久，播放音效和粒子
-                    player.playSound(SoundEvents.ITEM_BREAK, 1.0F, 1.0F);
-
-                    ItemParticleOption particle = new ItemParticleOption(ParticleTypes.ITEM, stack);
-                    for (int i = 0; i < 5; i++) {
-                        double dx = (player.getRandom().nextDouble() - 0.5) * 0.5;
-                        double dy = player.getRandom().nextDouble() * 0.5;
-                        double dz = (player.getRandom().nextDouble() - 0.5) * 0.5;
-                        player.level().addParticle(particle,
-                                player.getX(), player.getY() + 1.5, player.getZ(),
-                                dx, dy, dz);
-                    }
-                }
-            }
-
-            lastDamageMap.put(stackKey, currentDamage);
-        }
     }
 
     @SubscribeEvent
     public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Player player = event.getEntity();
+        Holder.Reference<Enchantment> enchantment = findEnchantment(player);
+        if (enchantment == null) return;
 
-        ItemStack stack = player.getMainHandItem();
-        if (stack.isEmpty()) return;
-
-        Holder.Reference<Enchantment> preservationEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(PRESERVATION_ID)
-                .orElse(null);
-
-        if (preservationEnchant == null) return;
-
-        int level = stack.getEnchantments().getLevel(preservationEnchant);
-        if (level <= 0) return;
-
-        // 如果耐久为最大值（0耐久状态），阻止挖掘
-        if (stack.getDamageValue() >= stack.getMaxDamage()) {
+        if (isExhausted(player.getMainHandItem(), enchantment)) {
+            PreservationFeedback.warnIfNeeded(player.getMainHandItem(), player);
             event.setCanceled(true);
         }
     }
 
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-
         if (event.getEntity() == null) return;
 
-        Holder.Reference<Enchantment> preservationEnchant = event.getEntity().level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(PRESERVATION_ID)
-                .orElse(null);
+        Holder.Reference<Enchantment> enchantment = findEnchantment(event.getEntity());
+        if (enchantment == null) return;
 
-        if (preservationEnchant == null) return;
-
-        int level = stack.getEnchantments().getLevel(preservationEnchant);
-        if (level <= 0) return;
-
-        // 如果耐久为最大值，显示已损坏提示
-        if (stack.getDamageValue() >= stack.getMaxDamage()) {
+        // 耐久耗尽后显示已损坏提示
+        if (isExhausted(event.getItemStack(), enchantment)) {
             event.getToolTip().add(Component.translatable("tooltip.redstone_enchants.preservation_broken"));
         }
     }

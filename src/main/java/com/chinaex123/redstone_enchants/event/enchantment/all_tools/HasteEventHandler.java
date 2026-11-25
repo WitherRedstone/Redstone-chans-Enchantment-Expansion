@@ -1,6 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -40,24 +41,21 @@ public class HasteEventHandler {
         int level = mainHand.getEnchantments().getLevel(hasteEnchant);
 
         if (level > 0) {
-            if (player.hasEffect(MobEffects.DIG_SPEED)) {
-                MobEffectInstance existingEffect = player.getEffect(MobEffects.DIG_SPEED);
-                if (existingEffect != null && existingEffect.getAmplifier() >= level - 1) {
-                    return;
-                }
+            int amplifier = level - 1;
+
+            if (EnchantEffectTracker.isTracked(player, MobEffects.DIG_SPEED)) {
+                EnchantEffectTracker.apply(player, MobEffects.DIG_SPEED, HASTE_DURATION, amplifier);
+                return;
             }
 
-            player.addEffect(new MobEffectInstance(
-                    MobEffects.DIG_SPEED,
-                    HASTE_DURATION,
-                    level - 1,
-                    false,
-                    false
-            ));
-        } else {
-            if (player.hasEffect(MobEffects.DIG_SPEED)) {
-                player.removeEffect(MobEffects.DIG_SPEED);
+            MobEffectInstance existing = player.getEffect(MobEffects.DIG_SPEED);
+            if (existing != null && existing.getAmplifier() >= amplifier) {
+                return;
             }
+
+            EnchantEffectTracker.apply(player, MobEffects.DIG_SPEED, HASTE_DURATION, amplifier);
+        } else {
+            EnchantEffectTracker.removeIfTracked(player, MobEffects.DIG_SPEED);
         }
     }
 }

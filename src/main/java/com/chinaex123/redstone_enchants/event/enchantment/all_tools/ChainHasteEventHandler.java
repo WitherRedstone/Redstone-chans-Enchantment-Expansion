@@ -1,122 +1,128 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * 连锁急迫：连续挖掘同类型方块时，速度逐渐加快
+ * 连锁效率：挖掘方块时，把周围同类型的方块一起连锁挖掉
  */
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
-@SuppressWarnings("deprecation")
 public class ChainHasteEventHandler {
-    private static final ResourceLocation CHAIN_HASTE_ID = RedstoneEnchants.id("chain_haste");
-    private static final ResourceLocation CHAIN_HASTE_MODIFIER_ID = RedstoneEnchants.id("chain_haste_bonus");
-    private static final Map<UUID, MiningStreak> MINING_STREAKS = new HashMap<>();
 
-    private static class MiningStreak {
-        BlockPos lastPos;
-        BlockState lastBlock;
-        int streak;
-        long lastTime;
+    private static final String ID = "chain_haste";
 
-        MiningStreak(BlockPos pos, BlockState state) {
-            this.lastPos = pos;
-            this.lastBlock = state;
-            this.streak = 1;
-            this.lastTime = System.currentTimeMillis();
-        }
-    }
+    /** 防止连锁掉落触发的后续事件再次进入本方法 */
+    private static final ThreadLocal<Boolean> CHAINING = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (CHAINING.get()) {
+            return;
+        }
+        if (!(event.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
         Player player = event.getPlayer();
-
         ItemStack tool = player.getMainHandItem();
-        Holder.Reference<Enchantment> chainHasteEnchant = player.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(CHAIN_HASTE_ID)
-                .orElse(null);
+        int enchantLevel = EnchantContext.level(level, ID, tool);
+        if (enchantLevel <= 0) {
+            return;
+        }
 
-        if (chainHasteEnchant == null) return;
+        BlockPos origin = event.getPos();
+        BlockState originState = event.getState();
+        if (originState.isAir()) {
+            return;
+        }
+        // 基岩这类不可破坏的方块不参与连锁
+        if (originState.getDestroySpeed(level, origin) < 0.0F) {
+            return;
+        }
 
-        int level = tool.getEnchantments().getLevel(chainHasteEnchant);
-        if (level <= 0) return;
+        int radius = Math.min(1 + enchantLevel, 4);
+        int maxBlocks = enchantLevel * 8;
+        List<BlockPos> targets = collect(level, origin, originState, radius, maxBlocks);
+        if (targets.isEmpty()) {
+            return;
+        }
 
-        UUID playerId = player.getUUID();
-        BlockPos currentPos = event.getPos();
-        BlockState currentState = event.getState();
-
-        MiningStreak streak = MINING_STREAKS.get(playerId);
-
-        // 检查是否是连续挖掘同类型方块
-        if (streak != null &&
-                streak.lastBlock.is(currentState.getBlock()) &&
-                System.currentTimeMillis() - streak.lastTime < 2000) { // 2秒内
-
-            streak.streak++;
-            streak.lastPos = currentPos;
-            streak.lastBlock = currentState;
-            streak.lastTime = System.currentTimeMillis();
-
-            // 每连挖1个方块增加 (level)% 挖掘速度，最多80%
-            double bonusPerBlock = level * 0.01;
-            double bonus = Math.min(streak.streak * bonusPerBlock, 0.8);
-            applyMiningSpeed(player, bonus);
-        } else {
-            // 重置连击
-            removeMiningSpeed(player);
-            MINING_STREAKS.put(playerId, new MiningStreak(currentPos, currentState));
+        CHAINING.set(Boolean.TRUE);
+        try {
+            for (BlockPos pos : targets) {
+                BlockState state = level.getBlockState(pos);
+                if (!state.is(originState.getBlock())) {
+                    continue;
+                }
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (!player.isCreative()) {
+                    Block.dropResources(state, level, pos, blockEntity, player, tool);
+                }
+                level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            }
+        } finally {
+            CHAINING.set(Boolean.FALSE);
         }
     }
 
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        Player player = event.getEntity();
-        UUID playerId = player.getUUID();
+    private static List<BlockPos> collect(ServerLevel level, BlockPos origin, BlockState originState,
+                                          int radius, int maxBlocks) {
+        List<BlockPos> result = new ArrayList<>();
+        Set<BlockPos> visited = new HashSet<>();
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        visited.add(origin);
+        queue.add(origin);
 
-        MiningStreak streak = MINING_STREAKS.get(playerId);
-        if (streak != null && System.currentTimeMillis() - streak.lastTime >= 2000) {
-            // 超过2秒未挖掘，移除属性并清理记录
-            removeMiningSpeed(player);
-            MINING_STREAKS.remove(playerId);
+        while (!queue.isEmpty() && result.size() < maxBlocks) {
+            BlockPos current = queue.poll();
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        if (dx == 0 && dy == 0 && dz == 0) {
+                            continue;
+                        }
+                        BlockPos next = current.offset(dx, dy, dz);
+                        if (!visited.add(next)) {
+                            continue;
+                        }
+                        if (Math.abs(next.getX() - origin.getX()) > radius
+                                || Math.abs(next.getY() - origin.getY()) > radius
+                                || Math.abs(next.getZ() - origin.getZ()) > radius) {
+                            continue;
+                        }
+                        BlockState state = level.getBlockState(next);
+                        if (!state.is(originState.getBlock())) {
+                            continue;
+                        }
+                        if (state.getDestroySpeed(level, next) < 0.0F) {
+                            continue;
+                        }
+                        result.add(next);
+                        queue.add(next);
+                        if (result.size() >= maxBlocks) {
+                            return result;
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    private static void applyMiningSpeed(Player player, double bonus) {
-        AttributeInstance attribute = player.getAttribute(Attributes.BLOCK_BREAK_SPEED);
-        if (attribute == null) return;
-        attribute.removeModifier(CHAIN_HASTE_MODIFIER_ID);
-        AttributeModifier modifier = new AttributeModifier(
-                CHAIN_HASTE_MODIFIER_ID,
-                bonus,
-                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
-        );
-        attribute.addTransientModifier(modifier);
-    }
-
-    private static void removeMiningSpeed(Player player) {
-        AttributeInstance attribute = player.getAttribute(Attributes.BLOCK_BREAK_SPEED);
-        if (attribute == null) return;
-
-        attribute.removeModifier(CHAIN_HASTE_MODIFIER_ID);
+        return result;
     }
 }

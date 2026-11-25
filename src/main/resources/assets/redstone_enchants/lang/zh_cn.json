@@ -27,7 +27,7 @@
   "enchantment.redstone_enchants.curse_of_reach":"短手诅咒",
   "enchantment.redstone_enchants.curse_of_reach.desc": "减少交互和攻击距离",
   "enchantment.redstone_enchants.curse_of_clumsiness":"笨拙诅咒",
-  "enchantment.redstone_enchants.curse_of_clumsiness.desc": "使用时有几率掉落物品",
+  "enchantment.redstone_enchants.curse_of_clumsiness.desc": "使用时有几率把主手物品脱手掉落",
   "enchantment.redstone_enchants.curse_of_double_edge":"双刃剑诅咒",
   "enchantment.redstone_enchants.curse_of_double_edge.desc": "使用时有几率伤害自己",
   "enchantment.redstone_enchants.curse_of_water_source":"水源诅咒",
@@ -486,5 +486,8 @@
   "enchantment.redstone_enchants.carrion_eater.desc": "狼击杀生物后回复最大生命值",
 
   "_enchantment.tooltip":"工具提示",
-  "tooltip.redstone_enchants.preservation_broken": "§c已损坏（需修复）"
+  "tooltip.redstone_enchants.preservation_broken": "§c已损坏（需修复）",
+
+  "death.attack.explosive_arrow": "%1$s被爆炸箭炸死了",
+  "death.attack.explosive_arrow.player": "%1$s被%2$s的爆炸箭炸死了"
 }
