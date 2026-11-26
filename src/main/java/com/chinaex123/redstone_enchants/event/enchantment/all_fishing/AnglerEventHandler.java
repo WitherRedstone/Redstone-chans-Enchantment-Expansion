@@ -29,6 +29,11 @@ import java.util.Objects;
 public class AnglerEventHandler {
     private static final ResourceLocation ANGLER_ID = RedstoneEnchants.id("angler");
 
+    /** 1 级时的翻倍概率 */
+    private static final double CHANCE_BASE = 0.1D;
+    /** 每级额外增加的概率 */
+    private static final double CHANCE_PER_LEVEL = 0.1D;
+
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
         Player player = event.getEntity();
@@ -41,8 +46,8 @@ public class AnglerEventHandler {
         int level = EnchantContext.level(rod, anglerEnchant);
         if (level <= 0) return;
 
-        // 每级+10%概率翻倍
-        float chance = level * 0.1F;
+        // 翻倍概率随附魔等级提高
+        double chance = Math.min(1.0D, CHANCE_BASE + CHANCE_PER_LEVEL * (level - 1));
 
         // 延迟一tick后复制掉落物
         Objects.requireNonNull(player.level().getServer()).execute(() -> {

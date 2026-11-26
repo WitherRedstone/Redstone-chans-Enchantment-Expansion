@@ -1,6 +1,10 @@
 {
   "neoforge:conditions": [
     {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "touch_bleeding"
+    },
+    {
       "type": "neoforge:mod_loaded",
       "modid": "apothic_attributes"
     }

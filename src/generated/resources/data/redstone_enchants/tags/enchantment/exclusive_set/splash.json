@@ -1,22 +1,70 @@
 {
   "values": [
     "minecraft:infinity",
-    "redstone_enchants:splash_speed",
-    "redstone_enchants:splash_slowness",
-    "redstone_enchants:splash_regeneration",
-    "redstone_enchants:splash_hunger",
-    "redstone_enchants:splash_blindness",
-    "redstone_enchants:splash_glowing",
-    "redstone_enchants:splash_poison",
-    "redstone_enchants:splash_wither",
-    "redstone_enchants:splash_slow_falling",
-    "redstone_enchants:splash_wind_charged",
-    "redstone_enchants:splash_infested",
-    "redstone_enchants:splash_oozing",
-    "redstone_enchants:splash_weaving",
-    "redstone_enchants:ice_arrows",
-    "redstone_enchants:fire_arrows",
-    "redstone_enchants:eternal_frost",
+    {
+      "id": "redstone_enchants:splash_speed",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_slowness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_regeneration",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_hunger",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_blindness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_glowing",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_poison",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_wither",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_slow_falling",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_wind_charged",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_infested",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_oozing",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:splash_weaving",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:ice_arrows",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:fire_arrows",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:eternal_frost",
+      "required": false
+    },
     {
       "id": "redstone_enchants:splash_delayed_explosion",
       "required": false

@@ -22,6 +22,13 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class BerserkEventHandler {
     private static final ResourceLocation BERSERK_ID = RedstoneEnchants.id("berserk");
 
+    /** 生命值损失的百分比档位数 */
+    private static final int HEALTH_PERCENT_STEPS = 10;
+    /** 1 级时每损失一档生命值增加的伤害比例 */
+    private static final double DAMAGE_BONUS_BASE = 0.03D;
+    /** 每级额外增加的伤害比例 */
+    private static final double DAMAGE_BONUS_PER_LEVEL = 0.03D;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         if (!(event.getSource().getDirectEntity() instanceof LivingEntity attacker)) return;
@@ -43,10 +50,11 @@ public class BerserkEventHandler {
         float healthLostPercent = healthLost / maxHealth;
 
         // 每损失10%生命，伤害+3%
-        int lostTenPercent = (int) (healthLostPercent * 10);
+        int lostTenPercent = (int) (healthLostPercent * HEALTH_PERCENT_STEPS);
         if (lostTenPercent <= 0) return;
 
-        double damageBonus = lostTenPercent * 0.03 * enchantLevel;
+        double damageBonusPerStep = DAMAGE_BONUS_BASE + DAMAGE_BONUS_PER_LEVEL * (enchantLevel - 1);
+        double damageBonus = lostTenPercent * damageBonusPerStep;
 
         // 应用伤害加成
         event.setNewDamage((float) (event.getNewDamage() * (1 + damageBonus)));

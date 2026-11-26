@@ -14,18 +14,19 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class CurseOfDeathEventHandler {
 
+    /** 附魔 ID。 */
     private static final String ID = "curse_of_death";
-
     /** 触发死亡的概率。 */
     private static final float CHANCE = 0.05F;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
-        if (!(attacker.level() instanceof ServerLevel level)) return;
-        if (EnchantContext.level(attacker, ID) <= 0) return;
-        if (level.getRandom().nextFloat() >= CHANCE) return;
+        if (!(attacker.level() instanceof ServerLevel serverLevel)) return;
+        int level = EnchantContext.level(attacker, ID);
+        if (level <= 0) return;
+        if (serverLevel.getRandom().nextFloat() >= CHANCE) return;
 
-        new EnchantContext(level, attacker, attacker.position()).kill(attacker);
+        new EnchantContext(serverLevel, attacker, attacker.position()).kill(attacker);
     }
 }

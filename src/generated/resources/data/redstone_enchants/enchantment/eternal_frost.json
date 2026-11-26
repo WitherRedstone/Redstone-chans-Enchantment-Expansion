@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "eternal_frost"
+    }
+  ],
   "anvil_cost": 12,
   "description": {
     "color": "#FFAA00",

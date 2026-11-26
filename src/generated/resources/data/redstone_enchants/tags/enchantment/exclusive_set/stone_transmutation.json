@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:geology",
-    "redstone_enchants:goldfinger"
+    {
+      "id": "redstone_enchants:geology",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:goldfinger",
+      "required": false
+    }
   ]
 }

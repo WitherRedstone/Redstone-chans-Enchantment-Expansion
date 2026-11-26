@@ -26,8 +26,14 @@ import java.util.List;
 public class AntiCamouflageEventHandler {
     private static final ResourceLocation ANTI_CAMOUFLAGE_ID = RedstoneEnchants.id("anti_camouflage");
 
-    /** 检测范围 */
-    private static final double DETECTION_RANGE = 16.0;
+    /** 检测范围（格） */
+    private static final double DETECTION_RANGE = 16.0D;
+    /** 发光效果基础持续时间（tick） */
+    private static final int GLOW_DURATION_BASE_TICKS = 20;
+    /** 每级增加的发光持续时间（tick） */
+    private static final int GLOW_DURATION_PER_LEVEL_TICKS = 10;
+    /** 发光效果等级（0 = I 级） */
+    private static final int GLOW_AMPLIFIER = 0;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -51,9 +57,9 @@ public class AntiCamouflageEventHandler {
         );
 
         // 给每个敌对生物施加发光效果
-        int duration = 20 + (enchantLevel * 10);
+        int duration = GLOW_DURATION_BASE_TICKS + (enchantLevel * GLOW_DURATION_PER_LEVEL_TICKS);
         for (Monster monster : nearbyMonsters) {
-            monster.addEffect(new MobEffectInstance(MobEffects.GLOWING, duration, 0, false, false));
+            monster.addEffect(new MobEffectInstance(MobEffects.GLOWING, duration, GLOW_AMPLIFIER, false, false));
         }
     }
 }

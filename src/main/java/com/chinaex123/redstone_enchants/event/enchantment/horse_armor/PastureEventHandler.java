@@ -23,6 +23,11 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class PastureEventHandler {
     private static final ResourceLocation PASTURE_ID = RedstoneEnchants.id("pasture");
 
+    /** 治疗间隔（tick） */
+    private static final int HEAL_INTERVAL_TICKS = 20;
+    /** 每级恢复的生命值 */
+    private static final float HEAL_PER_LEVEL = 0.5F;
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof AbstractHorse horse)) return;
@@ -44,9 +49,9 @@ public class PastureEventHandler {
         BlockPos belowPos = pos.below();
 
         if (horse.level().getBlockState(belowPos).is(Blocks.GRASS_BLOCK)) {
-            if (horse.tickCount % 20 == 0) {
-                // 每级恢复0.5点生命值
-                horse.heal(enchantLevel * 0.5f);
+            if (horse.tickCount % HEAL_INTERVAL_TICKS == 0) {
+                // 每级恢复 0.5 点生命值
+                horse.heal(enchantLevel * HEAL_PER_LEVEL);
             }
         }
     }

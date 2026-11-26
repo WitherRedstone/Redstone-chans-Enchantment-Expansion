@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "water_bottle_projection"
+    }
+  ],
   "anvil_cost": 4,
   "description": {
     "color": "#FFFF55",

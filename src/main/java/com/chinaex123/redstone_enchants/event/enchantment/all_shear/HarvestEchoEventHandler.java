@@ -23,6 +23,11 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class HarvestEchoEventHandler {
     private static final ResourceLocation HARVEST_ECHO_ID = RedstoneEnchants.id("harvest_echo");
 
+    /** 生命恢复持续时间（tick） */
+    private static final int DURATION_TICKS = 60;
+    /** 生命恢复药水等级 */
+    private static final int AMPLIFIER = 0;
+
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Player player = event.getEntity();
@@ -36,6 +41,6 @@ public class HarvestEchoEventHandler {
         int enchantLevel = EnchantContext.level(stack, harvestEchoEnchant);
         if (enchantLevel <= 0) return;
 
-        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 0, false, true));
+        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, DURATION_TICKS, AMPLIFIER, false, true));
     }
 }

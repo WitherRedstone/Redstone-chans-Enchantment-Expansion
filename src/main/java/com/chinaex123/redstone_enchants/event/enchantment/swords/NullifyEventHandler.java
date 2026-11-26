@@ -25,6 +25,12 @@ import java.util.Random;
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class NullifyEventHandler {
     private static final ResourceLocation NULLIFY_ID = RedstoneEnchants.id("nullify");
+
+    /** 1 级时的触发概率 */
+    private static final double CHANCE_BASE = 0.05D;
+    /** 每级额外增加的触发概率 */
+    private static final double CHANCE_PER_LEVEL = 0.05D;
+
     private static final Random RANDOM = new Random();
 
     @SubscribeEvent
@@ -41,8 +47,8 @@ public class NullifyEventHandler {
         int level = EnchantContext.level(weapon, nullifyEnchant);
         if (level <= 0) return;
 
-        // 每级5%概率触发
-        float chance = level * 0.05F;
+        // 1 级 5% 概率触发，每级额外 +5%
+        double chance = Math.min(1.0D, CHANCE_BASE + CHANCE_PER_LEVEL * (level - 1));
         if (RANDOM.nextFloat() < chance) {
             // 获取目标身上所有正面效果
             List<MobEffectInstance> positiveEffects = new ArrayList<>();

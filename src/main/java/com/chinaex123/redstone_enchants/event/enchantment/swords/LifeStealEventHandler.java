@@ -21,6 +21,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class LifeStealEventHandler {
     private static final ResourceLocation LIFE_STEAL_ID = RedstoneEnchants.id("life_steal");
 
+    /** 生命偷取比例（造成伤害的 10%） */
+    private static final double HEAL_RATIO = 0.10D;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity living ? living : null;
@@ -32,7 +35,7 @@ public class LifeStealEventHandler {
         int level = EnchantContext.level(attacker, lifeStealEnchant);
         if (level > 0) {
             float damageDealt = event.getOriginalDamage();
-            float healAmount = damageDealt * 0.10f;
+            float healAmount = (float) (damageDealt * HEAL_RATIO);
             attacker.heal(healAmount);
         }
     }

@@ -33,6 +33,37 @@ import java.util.List;
 public class ReviveWardEventHandler {
     private static final ResourceKey<Enchantment> REVIVE_WARD = EnchantContext.key("revive_ward");
 
+    /** 触发后保留的生命值，避免直接死亡 */
+    private static final float REMAINING_HEALTH = 0.5F;
+    /** 不死图腾粒子的生成次数 */
+    private static final int PARTICLE_COUNT = 30;
+    /** 粒子的随机扩散幅度 */
+    private static final double PARTICLE_SPREAD = 0.02D;
+    /** 粒子生成位置相对生物高度的比例 */
+    private static final double PARTICLE_HEIGHT_FACTOR = 0.5D;
+    /** 每次生成的粒子数量 */
+    private static final int PARTICLE_COUNT_PER_EMISSION = 1;
+    /** 粒子运动速度 */
+    private static final double PARTICLE_SPEED = 1.0D;
+    /** 药水效果持续时间（tick） */
+    private static final int EFFECT_DURATION_TICKS = 20 * 40;
+    /** 抗火效果等级 */
+    private static final int FIRE_RESISTANCE_AMPLIFIER = 0;
+    /** 生命恢复效果等级 */
+    private static final int REGENERATION_AMPLIFIER = 1;
+    /** 抗性提升效果等级 */
+    private static final int DAMAGE_RESISTANCE_AMPLIFIER = 2;
+    /** 等级记录的初始值（视为未附魔） */
+    private static final int NO_LEVEL = 0;
+    /** 触发降级的等级阈值（高于该值时降级） */
+    private static final int LEVEL_REDUCTION_THRESHOLD = 1;
+    /** 每次触发降低的等级数 */
+    private static final int LEVEL_REDUCTION_AMOUNT = 1;
+    /** 不死图腾音效音量 */
+    private static final float SOUND_VOLUME = 1.0F;
+    /** 不死图腾音效音调 */
+    private static final float SOUND_PITCH = 1.0F;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         LivingEntity entity = event.getEntity();
@@ -46,7 +77,7 @@ public class ReviveWardEventHandler {
 
         // 检查所有装备槽位是否有重生护盾附魔
         List<EquipmentSlot> slotsWithEnchant = new ArrayList<>();
-        int maxLevel = 0;
+        int maxLevel = NO_LEVEL;
         EquipmentSlot maxLevelSlot = null;
 
         EquipmentSlot[] armorSlots = {
@@ -75,33 +106,33 @@ public class ReviveWardEventHandler {
         if (slotsWithEnchant.isEmpty()) return;
 
         // 阻止死亡：将伤害设置为当前生命值-0.5（保留一点血）
-        event.setNewDamage(entity.getHealth() - 0.5f);
+        event.setNewDamage(entity.getHealth() - REMAINING_HEALTH);
 
         entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
-                SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
+                SoundEvents.TOTEM_USE, SoundSource.PLAYERS, SOUND_VOLUME, SOUND_PITCH);
 
         if (entity.level() instanceof ServerLevel serverLevel) {
-            for (int i = 0; i < 30; ++i) {
-                double d0 = serverLevel.random.nextGaussian() * 0.02D;
-                double d1 = serverLevel.random.nextGaussian() * 0.02D;
-                double d2 = serverLevel.random.nextGaussian() * 0.02D;
+            for (int i = 0; i < PARTICLE_COUNT; ++i) {
+                double d0 = serverLevel.random.nextGaussian() * PARTICLE_SPREAD;
+                double d1 = serverLevel.random.nextGaussian() * PARTICLE_SPREAD;
+                double d2 = serverLevel.random.nextGaussian() * PARTICLE_SPREAD;
                 serverLevel.sendParticles(ParticleTypes.TOTEM_OF_UNDYING,
-                        entity.getX(), entity.getY() + entity.getBbHeight() * 0.5D, entity.getZ(),
-                        1, d0, d1, d2, 1.0D);
+                        entity.getX(), entity.getY() + entity.getBbHeight() * PARTICLE_HEIGHT_FACTOR, entity.getZ(),
+                        PARTICLE_COUNT_PER_EMISSION, d0, d1, d2, PARTICLE_SPEED);
             }
         }
 
         // 抗火
         entity.addEffect(new MobEffectInstance(
-                MobEffects.FIRE_RESISTANCE, 20 * 40, 0, false, true
+                MobEffects.FIRE_RESISTANCE, EFFECT_DURATION_TICKS, FIRE_RESISTANCE_AMPLIFIER, false, true
         ));
         // 生命恢复
         entity.addEffect(new MobEffectInstance(
-                MobEffects.REGENERATION, 20 * 40, 1, false, true
+                MobEffects.REGENERATION, EFFECT_DURATION_TICKS, REGENERATION_AMPLIFIER, false, true
         ));
         // 抗性提升
         entity.addEffect(new MobEffectInstance(
-                MobEffects.DAMAGE_RESISTANCE, 20 * 40, 2, false, true
+                MobEffects.DAMAGE_RESISTANCE, EFFECT_DURATION_TICKS, DAMAGE_RESISTANCE_AMPLIFIER, false, true
         ));
 
         ItemStack armor = entity.getItemBySlot(maxLevelSlot);
@@ -122,9 +153,9 @@ public class ReviveWardEventHandler {
             int currentLevel = currentEnchants.getLevel(reviveWard);
             ItemEnchantments.Mutable mutableEnchants = new ItemEnchantments.Mutable(currentEnchants);
 
-            if (currentLevel > 1) {
+            if (currentLevel > LEVEL_REDUCTION_THRESHOLD) {
                 // 如果等级大于1，减少1级
-                mutableEnchants.set(reviveWard, currentLevel - 1);
+                mutableEnchants.set(reviveWard, currentLevel - LEVEL_REDUCTION_AMOUNT);
             } else {
                 // 如果等级是1，移除附魔
                 Holder<Enchantment> target = reviveWard;

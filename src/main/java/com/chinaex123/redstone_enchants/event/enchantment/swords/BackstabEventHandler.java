@@ -21,6 +21,19 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class BackstabEventHandler {
     private static final ResourceLocation BACKSTAB_ID = RedstoneEnchants.id("backstab");
 
+    /** 背刺伤害倍率 1 级基础值 */
+    private static final double BACK_DAMAGE_BASE = 1.3D;
+    /** 背刺每级额外增加的伤害倍率 */
+    private static final double BACK_DAMAGE_PER_LEVEL = 0.3D;
+    /** 正面攻击伤害倍率 1 级基础值 */
+    private static final double FRONT_DAMAGE_BASE = 0.85D;
+    /** 正面攻击每级减少的伤害倍率 */
+    private static final double FRONT_DAMAGE_PER_LEVEL = 0.15D;
+    /** 角度制换算为弧度制的除数 */
+    private static final float DEGREES_TO_RADIANS_DIVISOR = 180.0F;
+    /** 伤害倍率的初始值 */
+    private static final float DAMAGE_MULTIPLIER_DEFAULT = 1.0F;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
@@ -44,22 +57,22 @@ public class BackstabEventHandler {
         double dz = target.getZ() - attacker.getZ();
 
         // 计算目标朝向的单位向量
-        float targetYawRad = target.getYRot() * (float) Math.PI / 180.0f;
+        float targetYawRad = target.getYRot() * (float) Math.PI / DEGREES_TO_RADIANS_DIVISOR;
         float targetLookX = -Mth.sin(targetYawRad);
         float targetLookZ = Mth.cos(targetYawRad);
 
         // 计算点积：>0 表示攻击者在目标背后，<0 表示在正面
         double dotProduct = dx * targetLookX + dz * targetLookZ;
 
-        float damageMultiplier = 1.0f;
+        float damageMultiplier = DAMAGE_MULTIPLIER_DEFAULT;
 
-        // 背后攻击（点积 > 0）：每级+30%
+        // 背后攻击（点积 > 0）：1 级 +30%，每级额外 +30%
         if (dotProduct > 0) {
-            damageMultiplier = 1.0f + (0.3f * level);
+            damageMultiplier = (float) (BACK_DAMAGE_BASE + BACK_DAMAGE_PER_LEVEL * (level - 1));
         }
-        // 正面攻击（点积 < 0）：每级-15%
+        // 正面攻击（点积 < 0）：1 级 -15%，每级额外 -15%
         else {
-            damageMultiplier = 1.0f - (0.15f * level);
+            damageMultiplier = (float) (FRONT_DAMAGE_BASE - FRONT_DAMAGE_PER_LEVEL * (level - 1));
         }
         return damageMultiplier;
     }

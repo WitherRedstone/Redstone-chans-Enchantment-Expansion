@@ -34,7 +34,8 @@ public class ThunderingEventHandler {
         if (!level.canSeeSky(blockHit.getBlockPos())) return;
 
         ItemStack weapon = trident.getWeaponItem();
-        if (EnchantContext.level(level, ID, weapon) <= 0) return;
+        int enchantLevel = EnchantContext.level(level, ID, weapon);
+        if (enchantLevel <= 0) return;
 
         new EnchantContext(level, trident, trident.position()).thunder();
     }

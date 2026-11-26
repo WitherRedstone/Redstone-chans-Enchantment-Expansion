@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:lucky_boost",
-    "redstone_enchants:lucky_light"
+    {
+      "id": "redstone_enchants:lucky_boost",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:lucky_light",
+      "required": false
+    }
   ]
 }

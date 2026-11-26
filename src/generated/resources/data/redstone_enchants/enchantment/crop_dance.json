@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "crop_dance"
+    }
+  ],
   "anvil_cost": 16,
   "description": {
     "color": "#FF00BB",

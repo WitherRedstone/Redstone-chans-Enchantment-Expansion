@@ -1,7 +1,16 @@
 {
   "values": [
-    "redstone_enchants:absorbent_shield",
-    "redstone_enchants:stable_shield",
-    "redstone_enchants:strength_shield"
+    {
+      "id": "redstone_enchants:absorbent_shield",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:stable_shield",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:strength_shield",
+      "required": false
+    }
   ]
 }

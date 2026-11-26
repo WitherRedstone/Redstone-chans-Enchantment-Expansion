@@ -20,6 +20,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class ExecutionEventHandler {
     private static final ResourceLocation EXECUTION_ID = RedstoneEnchants.id("execution");
 
+    /** 处决的生命值百分比阈值 */
+    private static final float HEALTH_THRESHOLD = 0.25F;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
@@ -34,7 +37,7 @@ public class ExecutionEventHandler {
 
         // 检查目标生命值是否低于25%
         float healthPercent = target.getHealth() / target.getMaxHealth();
-        if (healthPercent < 0.25f) {
+        if (healthPercent < HEALTH_THRESHOLD) {
             // 直接设置为0，秒杀
             event.setNewDamage(target.getHealth());
         }

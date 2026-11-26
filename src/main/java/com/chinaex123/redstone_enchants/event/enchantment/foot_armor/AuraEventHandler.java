@@ -29,9 +29,11 @@ public class AuraEventHandler {
     /** 燃烧光环半径（格）。 */
     private static final double BURNING_RADIUS = 2.0D;
     /** 光环效果持续时间（tick）。 */
-    private static final int DURATION = 100;
+    private static final int DURATION_TICKS = 100;
     /** 光环效果等级（0 = I 级）。 */
     private static final int AMPLIFIER = 0;
+    /** tick 换算为秒的系数。 */
+    private static final float TICKS_PER_SECOND = 20.0F;
 
     private static final Map<String, Holder<MobEffect>> AURAS = new LinkedHashMap<>();
 
@@ -59,15 +61,16 @@ public class AuraEventHandler {
         EnchantContext context = new EnchantContext(level, player, player.position());
 
         for (Map.Entry<String, Holder<MobEffect>> entry : AURAS.entrySet()) {
-            if (EnchantContext.level(player, entry.getKey()) <= 0) continue;
+            int enchantLevel = EnchantContext.level(player, entry.getKey());
+            if (enchantLevel <= 0) continue;
             for (Entity target : context.entities(RADIUS, Integer.MAX_VALUE, true, AuraEventHandler::isLiving)) {
-                context.applyEffect(target, entry.getValue(), DURATION, AMPLIFIER);
+                context.applyEffect(target, entry.getValue(), DURATION_TICKS, AMPLIFIER);
             }
         }
 
         if (EnchantContext.level(player, "aura_burning") > 0) {
             igniteGround(player, level);
-            context.effect(MobEffects.FIRE_RESISTANCE, DURATION / 20.0F, AMPLIFIER);
+            context.effect(MobEffects.FIRE_RESISTANCE, DURATION_TICKS / TICKS_PER_SECOND, AMPLIFIER);
         }
     }
 

@@ -1,12 +1,33 @@
 {
   "values": [
     "#minecraft:exclusive_set/armor",
-    "redstone_enchants:protection_day",
-    "redstone_enchants:protection_night",
-    "redstone_enchants:protection_end",
-    "redstone_enchants:protection_nether",
-    "redstone_enchants:dangerous_edge",
-    "redstone_enchants:fury",
-    "redstone_enchants:weak_armor"
+    {
+      "id": "redstone_enchants:protection_day",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_night",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_end",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_nether",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:dangerous_edge",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:fury",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:weak_armor",
+      "required": false
+    }
   ]
 }

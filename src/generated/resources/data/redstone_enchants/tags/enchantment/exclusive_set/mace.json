@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:boltbringer",
-    "redstone_enchants:dive_bomb"
+    {
+      "id": "redstone_enchants:boltbringer",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:dive_bomb",
+      "required": false
+    }
   ]
 }

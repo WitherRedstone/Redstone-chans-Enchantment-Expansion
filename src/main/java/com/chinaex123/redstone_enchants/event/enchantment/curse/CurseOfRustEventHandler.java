@@ -26,6 +26,13 @@ public class CurseOfRustEventHandler {
     private static final ResourceLocation CURSE_OF_RUST_ID = RedstoneEnchants.id("curse_of_rust");
     private static final Map<UUID, Long> LAST_DAMAGE_TIME = new HashMap<>();
 
+    /** 每秒执行的间隔（tick）。 */
+    private static final long INTERVAL_TICKS = 20L;
+    /** 1 级时每秒消耗的耐久。 */
+    private static final int DURABILITY_DAMAGE_BASE = 1;
+    /** 每级额外增加的每秒耐久消耗。 */
+    private static final int DURABILITY_DAMAGE_PER_LEVEL = 1;
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         LivingEntity player = event.getEntity();
@@ -41,7 +48,7 @@ public class CurseOfRustEventHandler {
         Long lastTime = LAST_DAMAGE_TIME.get(entityId);
 
         // 每秒执行一次
-        if (lastTime != null && currentTime - lastTime < 20) return;
+        if (lastTime != null && currentTime - lastTime < INTERVAL_TICKS) return;
 
         LAST_DAMAGE_TIME.put(entityId, currentTime);
 
@@ -57,7 +64,8 @@ public class CurseOfRustEventHandler {
             if (level <= 0) continue;
 
             // 每级每秒消耗1点耐久
-            stack.setDamageValue(stack.getDamageValue() + level);
+            int damage = DURABILITY_DAMAGE_BASE + DURABILITY_DAMAGE_PER_LEVEL * (level - 1);
+            stack.setDamageValue(stack.getDamageValue() + damage);
             if (stack.getDamageValue() >= stack.getMaxDamage()) {
                 player.onEquippedItemBroken(stack.getItem(), slot);
                 player.setItemSlot(slot, ItemStack.EMPTY);

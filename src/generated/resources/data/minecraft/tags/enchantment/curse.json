@@ -1,21 +1,72 @@
 {
   "values": [
-    "redstone_enchants:curse_of_rust",
-    "redstone_enchants:curse_of_blast",
-    "redstone_enchants:curse_of_stillness",
-    "redstone_enchants:curse_of_hunger",
-    "redstone_enchants:curse_of_breaking",
-    "redstone_enchants:curse_of_blindness",
-    "redstone_enchants:curse_of_acrophobia",
-    "redstone_enchants:curse_of_basiphobia",
-    "redstone_enchants:curse_of_death",
-    "redstone_enchants:curse_of_gravity",
-    "redstone_enchants:curse_of_hiding",
-    "redstone_enchants:curse_of_unlucky",
-    "redstone_enchants:curse_of_reach",
-    "redstone_enchants:curse_of_clumsiness",
-    "redstone_enchants:curse_of_double_edge",
-    "redstone_enchants:curse_of_water_source",
-    "redstone_enchants:curse_of_vulnerability"
+    {
+      "id": "redstone_enchants:curse_of_rust",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_blast",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_stillness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_hunger",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_breaking",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_blindness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_acrophobia",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_basiphobia",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_death",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_gravity",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_hiding",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_unlucky",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_reach",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_clumsiness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_double_edge",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_water_source",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_vulnerability",
+      "required": false
+    }
   ]
 }

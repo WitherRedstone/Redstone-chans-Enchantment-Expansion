@@ -23,6 +23,11 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class FlameWalkerEventHandler {
     private static final ResourceLocation FLAME_WALKER_ID = RedstoneEnchants.id("flame_walker");
 
+    /** 脚底向下检测岩浆的深度（格） */
+    private static final double LAVA_CHECK_DEPTH = 0.4D;
+    /** 流体表面高度偏移（格） */
+    private static final double SURFACE_HEIGHT_OFFSET = 1.0D;
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
@@ -41,11 +46,11 @@ public class FlameWalkerEventHandler {
         // 检查玩家是否不在岩浆中
         if (player.isInLava()) return;
 
-        // 检测脚底下方0.4格的位置是否有岩浆
+        // 检测脚底下方 0.4 格的位置是否有岩浆
         BlockPos entityPos = player.blockPosition();
         BlockPos lavaCheckPos = new BlockPos(
                 entityPos.getX(),
-                (int) Math.floor(player.getBoundingBox().minY - 0.4),
+                (int) Math.floor(player.getBoundingBox().minY - LAVA_CHECK_DEPTH),
                 entityPos.getZ()
         );
 
@@ -53,7 +58,7 @@ public class FlameWalkerEventHandler {
 
         if (hasLavaBelow) {
             // 获取岩浆表面高度
-            double lavaHeight = lavaCheckPos.getY() + 1.0;
+            double lavaHeight = lavaCheckPos.getY() + SURFACE_HEIGHT_OFFSET;
 
             // 如果玩家在岩浆面上方，调整到岩浆表面高度
             if (player.getY() > lavaHeight) {

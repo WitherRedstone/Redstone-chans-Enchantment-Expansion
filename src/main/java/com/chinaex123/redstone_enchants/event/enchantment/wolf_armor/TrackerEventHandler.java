@@ -25,6 +25,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class TrackerEventHandler {
     private static final ResourceLocation TRACKER_ID = RedstoneEnchants.id("tracker");
 
+    /** 发光效果持续时间（tick）：基础 80 加每级 20 */
+    private static final int DURATION_TICKS = 80 + 20;
+    /** 发光效果等级 */
+    private static final int GLOWING_AMPLIFIER = 0;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         Entity directEntity = event.getSource().getDirectEntity();
@@ -43,9 +48,8 @@ public class TrackerEventHandler {
         if (enchantLevel <= 0) return;
 
         // 给目标施加发光效果
-        int duration = 80 + (enchantLevel * 20);
         target.addEffect(new MobEffectInstance(
-                MobEffects.GLOWING, duration, 0, false, false
+                MobEffects.GLOWING, DURATION_TICKS, GLOWING_AMPLIFIER, false, false
         ));
     }
 }

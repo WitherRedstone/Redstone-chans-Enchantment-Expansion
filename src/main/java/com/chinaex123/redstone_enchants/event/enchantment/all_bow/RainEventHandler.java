@@ -18,6 +18,7 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class RainEventHandler {
 
+    /** 铁砧雨的坠落物水平偏移表（半径 1 格与半径 2 格各一圈，末尾为中心点） */
     private static final double[][] RAIN_FORGE_OFFSETS = {
             {01.0D, 00.0D},
             {00.7D, 00.7D},
@@ -48,6 +49,7 @@ public class RainEventHandler {
 
     private static final String RAIN_FORGE_NBT = "{id:\"minecraft:falling_block\",BlockState:{Name:\"minecraft:anvil\"},Time:1,DropItem:0b,CancelDrop:1b,HurtEntities:1b,FallHurtMax:40,FallDistance:5f,FallHurtAmount:1.6f}";
 
+    /** 石锥雨的坠落物水平偏移表（半径 1 格与半径 2 格各一圈，末尾为中心点） */
     private static final double[][] RAIN_DRIPSTONE_OFFSETS = {
             {01.0D, 00.0D},
             {00.7D, 00.7D},
@@ -78,15 +80,18 @@ public class RainEventHandler {
 
     private static final String RAIN_DRIPSTONE_NBT = "{id:\"minecraft:falling_block\",BlockState:{Name:\"minecraft:pointed_dripstone\"},Time:1,DropItem:0b,CancelDrop:1b,HurtEntities:1b,FallHurtMax:40,FallDistance:5f,FallHurtAmount:2.3f}";
 
+    /** 坠落物召唤高度（格） */
+    private static final double SUMMON_HEIGHT = 5.0D;
+
     private static void rainForge(EnchantContext context) {
         for (double[] offset : RAIN_FORGE_OFFSETS) {
-            context.summon(RAIN_FORGE_NBT, offset[0], 5.0D, offset[1]);
+            context.summon(RAIN_FORGE_NBT, offset[0], SUMMON_HEIGHT, offset[1]);
         }
     }
 
     private static void rainDripstone(EnchantContext context) {
         for (double[] offset : RAIN_DRIPSTONE_OFFSETS) {
-            context.summon(RAIN_DRIPSTONE_NBT, offset[0], 5.0D, offset[1]);
+            context.summon(RAIN_DRIPSTONE_NBT, offset[0], SUMMON_HEIGHT, offset[1]);
         }
     }
 
@@ -109,7 +114,8 @@ public class RainEventHandler {
         EnchantContext context = new EnchantContext(level, arrow, hit.getLocation());
         boolean hitSomething = false;
         for (Map.Entry<String, Consumer<EnchantContext>> entry : RAINS.entrySet()) {
-            if (EnchantContext.level(level, entry.getKey(), arrow.getWeaponItem()) <= 0) continue;
+            int enchantLevel = EnchantContext.level(level, entry.getKey(), arrow.getWeaponItem());
+            if (enchantLevel <= 0) continue;
             entry.getValue().accept(context);
             hitSomething = true;
         }

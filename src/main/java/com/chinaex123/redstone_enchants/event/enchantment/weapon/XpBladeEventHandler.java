@@ -16,14 +16,15 @@ public class XpBladeEventHandler {
 
     private static final String ID = "xp_blade";
 
-    /** 小号的经验值 */
+    /** 消耗的经验值（负数表示扣除） */
     private static final int XP_COST = -15;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
-        if (EnchantContext.level(attacker, ID) <= 0) return;
+        int enchantLevel = EnchantContext.level(attacker, ID);
+        if (enchantLevel <= 0) return;
 
         new EnchantContext(level, attacker, attacker.position()).giveExperience(XP_COST);
     }

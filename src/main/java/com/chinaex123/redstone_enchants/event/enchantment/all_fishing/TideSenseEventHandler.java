@@ -27,6 +27,11 @@ import java.util.List;
 public class TideSenseEventHandler {
     private static final ResourceLocation TIDE_SENSE_ID = RedstoneEnchants.id("tide_sense");
 
+    /** 1 级时的鱼类掉落概率 */
+    private static final double FISH_CHANCE_BASE = 0.8D;
+    /** 每级额外增加的概率 */
+    private static final double FISH_CHANCE_PER_LEVEL = 0.1D;
+
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
         Player player = event.getEntity();
@@ -41,8 +46,8 @@ public class TideSenseEventHandler {
         int level = EnchantContext.level(rod, tideSenseEnchant);
         if (level <= 0) return;
 
-        // 雷雨天时大幅提高鱼的几率（替换垃圾和宝藏）
-        float fishChance = 0.7F + (level * 0.1F);
+        // 雷雨天时大幅提高鱼的几率（替换垃圾和宝藏），概率随附魔等级提高
+        double fishChance = Math.min(1.0D, FISH_CHANCE_BASE + FISH_CHANCE_PER_LEVEL * (level - 1));
 
         if (RedstoneEnchants.RANDOM.nextFloat() < fishChance) {
             // 强制设为鱼类掉落

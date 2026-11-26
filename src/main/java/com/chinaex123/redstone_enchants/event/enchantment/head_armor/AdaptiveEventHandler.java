@@ -23,8 +23,12 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class AdaptiveEventHandler {
     private static final ResourceLocation ADAPTIVE_ID = RedstoneEnchants.id("adaptive");
 
-    /** 夜视持续时间 */
-    private static final int NIGHT_VISION_DURATION = 20 * 12;
+    /** 夜视持续时间（tick） */
+    private static final int NIGHT_VISION_DURATION_TICKS = 20 * 12;
+    /** 夜视效果等级（0 = I 级） */
+    private static final int NIGHT_VISION_AMPLIFIER = 0;
+    /** 触发夜视的高度上限（Y） */
+    private static final double TRIGGER_Y = 0.0D;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -37,8 +41,8 @@ public class AdaptiveEventHandler {
         int enchantLevel = helmet.isEmpty() ? 0 : EnchantContext.level(helmet, adaptiveEnchant);
 
         // 检查是否在Y0以下
-        if (enchantLevel > 0 && player.getY() < 0) {
-            EnchantEffectTracker.apply(player, MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0);
+        if (enchantLevel > 0 && player.getY() < TRIGGER_Y) {
+            EnchantEffectTracker.apply(player, MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION_TICKS, NIGHT_VISION_AMPLIFIER);
         } else {
             EnchantEffectTracker.removeIfTracked(player, MobEffects.NIGHT_VISION);
         }

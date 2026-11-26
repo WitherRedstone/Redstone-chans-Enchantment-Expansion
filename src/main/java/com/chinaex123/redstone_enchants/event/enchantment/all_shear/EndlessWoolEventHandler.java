@@ -29,6 +29,21 @@ import java.util.Objects;
 public class EndlessWoolEventHandler {
     private static final ResourceLocation ENDLESS_WOOL_ID = RedstoneEnchants.id("endless_wool");
 
+    /** 1 级时让羊重新长出羊毛的概率 */
+    private static final double REGROW_CHANCE_BASE = 0.10D;
+    /** 每级额外增加的概率 */
+    private static final double REGROW_CHANCE_PER_LEVEL = 0.10D;
+    /** 概率上限 */
+    private static final double REGROW_CHANCE_MAX = 1.0D;
+    /** 粒子数量 */
+    private static final int PARTICLE_COUNT = 10;
+    /** 粒子生成位置相对羊身的高度偏移 */
+    private static final double PARTICLE_Y_OFFSET = 1.0D;
+    /** 粒子散布范围 */
+    private static final double PARTICLE_SPREAD = 0.5D;
+    /** 粒子速度 */
+    private static final double PARTICLE_SPEED = 0.1D;
+
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Player player = event.getEntity();
@@ -52,11 +67,12 @@ public class EndlessWoolEventHandler {
         int enchantLevel = EnchantContext.level(stack, endlessWoolEnchant);
         if (enchantLevel <= 0) return;
 
-        // 每级10%概率让羊重新长出羊毛
+        // 1 级 10% 概率让羊重新长出羊毛，每级再增加 10%
         RandomSource random = level.getRandom();
-        double probability = enchantLevel * 0.10;
+        double probability = Math.min(REGROW_CHANCE_MAX,
+                REGROW_CHANCE_BASE + REGROW_CHANCE_PER_LEVEL * (enchantLevel - 1));
 
-        if (probability >= 1.0 || random.nextDouble() < probability) {
+        if (probability >= REGROW_CHANCE_MAX || random.nextDouble() < probability) {
             // 延迟执行，确保剪切完成后再生长的
             Objects.requireNonNull(level.getServer()).execute(() -> {
                 sheep.setSheared(false);
@@ -64,8 +80,8 @@ public class EndlessWoolEventHandler {
                 // 发送数据包让客户端显示粒子
                 ((ServerLevel) level).sendParticles(
                         ParticleTypes.HAPPY_VILLAGER,
-                        sheep.getX(), sheep.getY() + 1, sheep.getZ(),
-                        10, 0.5, 0.5, 0.5, 0.1
+                        sheep.getX(), sheep.getY() + PARTICLE_Y_OFFSET, sheep.getZ(),
+                        PARTICLE_COUNT, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPEED
                 );
             });
         }

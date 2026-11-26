@@ -31,6 +31,11 @@ import java.util.List;
 public class AutoSmeltEventHandler {
     private static final ResourceLocation AUTO_SMELT_ID = RedstoneEnchants.id("auto_smelt");
 
+    /** 每破坏一个方块消耗的耐久 */
+    private static final int DURABILITY_COST = 1;
+    /** 掉落物生成位置相对方块中心的偏移量 */
+    private static final double SPAWN_OFFSET = 0.5D;
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -62,16 +67,16 @@ public class AutoSmeltEventHandler {
 
             ItemEntity itemEntity = new ItemEntity(
                     serverLevel,
-                    pos.getX() + 0.5,
-                    pos.getY() + 0.5,
-                    pos.getZ() + 0.5,
+                    pos.getX() + SPAWN_OFFSET,
+                    pos.getY() + SPAWN_OFFSET,
+                    pos.getZ() + SPAWN_OFFSET,
                     smeltedResult.copy()
             );
             serverLevel.addFreshEntity(itemEntity);
         }
 
         // 消耗耐久
-        tool.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+        tool.hurtAndBreak(DURABILITY_COST, player, EquipmentSlot.MAINHAND);
     }
 
     private static ItemStack smeltItem(ItemStack input, ServerLevel level) {

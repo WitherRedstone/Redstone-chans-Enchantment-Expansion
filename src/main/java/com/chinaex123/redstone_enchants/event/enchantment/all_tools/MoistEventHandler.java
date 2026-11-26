@@ -23,6 +23,11 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 public class MoistEventHandler {
     private static final ResourceLocation MOISTURE_ID = RedstoneEnchants.id("moist");
 
+    /** 耕地的最大湿润度 */
+    private static final int MAX_MOISTURE = 7;
+    /** 设置方块时使用的更新标志 */
+    private static final int BLOCK_UPDATE_FLAG = 2;
+
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
@@ -38,7 +43,7 @@ public class MoistEventHandler {
         // 检查是否变成了耕地
         if (state.getBlock() == Blocks.FARMLAND) {
             // 设置为最大湿润度
-            event.getLevel().setBlock(event.getPos(), state.setValue(FarmBlock.MOISTURE, 7), 2);
+            event.getLevel().setBlock(event.getPos(), state.setValue(FarmBlock.MOISTURE, MAX_MOISTURE), BLOCK_UPDATE_FLAG);
         }
     }
 }

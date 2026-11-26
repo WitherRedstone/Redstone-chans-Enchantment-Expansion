@@ -22,7 +22,8 @@ public class FirstImpressionEventHandler {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
         LivingEntity victim = event.getEntity();
-        if (EnchantContext.level(attacker, ID) <= 0) return;
+        int enchantLevel = EnchantContext.level(attacker, ID);
+        if (enchantLevel <= 0) return;
 
         EnchantContext context = new EnchantContext(level, victim, victim.position());
         context.tagAdd(victim, MARK_TAG);

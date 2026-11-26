@@ -31,6 +31,21 @@ public class GoldfingerEventHandler {
     private static final Random RANDOM = new Random();
     private static final ResourceLocation GOLDFINGER_ID = RedstoneEnchants.id("goldfinger");
 
+    /** 1 级时的掉落概率 */
+    private static final double DROP_CHANCE_BASE = 0.025D;
+    /** 每级额外增加的掉落概率 */
+    private static final double DROP_CHANCE_PER_LEVEL = 0.025D;
+    /** 掉落概率上限 */
+    private static final double DROP_CHANCE_MAX = 1.0D;
+    /** 金粒掉落数量下限 */
+    private static final int NUGGET_COUNT_MIN = 1;
+    /** 金粒掉落数量随机上限（不含） */
+    private static final int NUGGET_COUNT_BOUND = 3;
+    /** 时运加成的最低倍率 */
+    private static final int FORTUNE_BONUS_MIN = 1;
+    /** 掉落物生成位置相对方块中心的偏移量 */
+    private static final double SPAWN_OFFSET = 0.5D;
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -47,12 +62,12 @@ public class GoldfingerEventHandler {
         Block block = event.getState().getBlock();
         if (!block.defaultBlockState().is(Tags.Blocks.STONES)) return;
 
-        // 计算掉落概率：每级2.5%
-        float dropChance = level * 0.025f;
+        // 计算掉落概率：1 级 2.5%，每级再增加 2.5%
+        double dropChance = Math.min(DROP_CHANCE_MAX, DROP_CHANCE_BASE + DROP_CHANCE_PER_LEVEL * (level - 1));
 
         if (RANDOM.nextFloat() < dropChance) {
             // 掉落1-3个金粒
-            int goldNuggetCount = RANDOM.nextInt(3) + 1;
+            int goldNuggetCount = RANDOM.nextInt(NUGGET_COUNT_BOUND) + NUGGET_COUNT_MIN;
 
             // 应用时运效果
             ResourceKey<Enchantment> fortuneEnchant = EnchantContext.key(Enchantments.FORTUNE);
@@ -66,7 +81,7 @@ public class GoldfingerEventHandler {
             // 时运增加掉落数量
             if (fortuneLevel > 0) {
                 int bonus = RANDOM.nextInt(fortuneLevel + 2) - 1;
-                if (bonus < 1) bonus = 1;
+                if (bonus < FORTUNE_BONUS_MIN) bonus = FORTUNE_BONUS_MIN;
                 goldNuggetCount *= bonus;
             }
 
@@ -75,9 +90,9 @@ public class GoldfingerEventHandler {
             ServerLevel serverLevel = (ServerLevel) player.level();
             ItemEntity itemEntity = new ItemEntity(
                     serverLevel,
-                    event.getPos().getX() + 0.5,
-                    event.getPos().getY() + 0.5,
-                    event.getPos().getZ() + 0.5,
+                    event.getPos().getX() + SPAWN_OFFSET,
+                    event.getPos().getY() + SPAWN_OFFSET,
+                    event.getPos().getZ() + SPAWN_OFFSET,
                     goldNuggets
             );
             serverLevel.addFreshEntity(itemEntity);

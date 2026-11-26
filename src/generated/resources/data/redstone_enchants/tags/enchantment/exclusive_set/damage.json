@@ -2,13 +2,34 @@
   "values": [
     "#minecraft:exclusive_set/damage",
     "minecraft:power",
-    "redstone_enchants:shadow_assault",
-    "redstone_enchants:xp_blade",
-    "redstone_enchants:committed",
-    "redstone_enchants:swift_shadowcutter",
-    "redstone_enchants:under_pressure",
-    "redstone_enchants:unleash_potential",
-    "redstone_enchants:last_hope",
+    {
+      "id": "redstone_enchants:shadow_assault",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:xp_blade",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:committed",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:swift_shadowcutter",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:under_pressure",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:unleash_potential",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:last_hope",
+      "required": false
+    },
     {
       "id": "redstone_enchants:undercurrent",
       "required": false

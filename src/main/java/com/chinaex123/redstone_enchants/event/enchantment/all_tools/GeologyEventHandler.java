@@ -32,6 +32,17 @@ import java.util.List;
 public class GeologyEventHandler {
     private static final ResourceLocation GEOLOGY_ID = RedstoneEnchants.id("geology");
 
+    /** 1 级时的掉落概率 */
+    private static final double DROP_CHANCE_BASE = 0.05D;
+    /** 每级额外增加的掉落概率 */
+    private static final double DROP_CHANCE_PER_LEVEL = 0.05D;
+    /** 掉落概率上限 */
+    private static final double DROP_CHANCE_MAX = 1.0D;
+    /** 时运加成的最低倍率 */
+    private static final int FORTUNE_BONUS_MIN = 1;
+    /** 掉落物生成位置相对方块中心的偏移量 */
+    private static final double SPAWN_OFFSET = 0.5D;
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -52,8 +63,8 @@ public class GeologyEventHandler {
         List<ItemStack> ores = getAllOres();
         if (ores.isEmpty()) return;
 
-        // 计算掉落概率：每级5%
-        float dropChance = level * 0.05f;
+        // 计算掉落概率：1 级 5%，每级再增加 5%
+        double dropChance = Math.min(DROP_CHANCE_MAX, DROP_CHANCE_BASE + DROP_CHANCE_PER_LEVEL * (level - 1));
 
         if (RedstoneEnchants.RANDOM.nextFloat() < dropChance) {
             ItemStack oreDrop = ores.get(RedstoneEnchants.RANDOM.nextInt(ores.size()));
@@ -70,16 +81,16 @@ public class GeologyEventHandler {
             // 时运增加掉落数量
             if (fortuneLevel > 0) {
                 int bonus = RedstoneEnchants.RANDOM.nextInt(fortuneLevel + 2) - 1;
-                if (bonus < 1) bonus = 1;
+                if (bonus < FORTUNE_BONUS_MIN) bonus = FORTUNE_BONUS_MIN;
                 oreDrop.setCount(oreDrop.getCount() * bonus);
             }
 
             ServerLevel serverLevel = (ServerLevel) player.level();
             ItemEntity itemEntity = new ItemEntity(
                     serverLevel,
-                    event.getPos().getX() + 0.5,
-                    event.getPos().getY() + 0.5,
-                    event.getPos().getZ() + 0.5,
+                    event.getPos().getX() + SPAWN_OFFSET,
+                    event.getPos().getY() + SPAWN_OFFSET,
+                    event.getPos().getZ() + SPAWN_OFFSET,
                     oreDrop
             );
             serverLevel.addFreshEntity(itemEntity);

@@ -1,6 +1,10 @@
 {
   "neoforge:conditions": [
     {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "spell_magic_resist"
+    },
+    {
       "type": "neoforge:mod_loaded",
       "modid": "irons_spellbooks"
     }

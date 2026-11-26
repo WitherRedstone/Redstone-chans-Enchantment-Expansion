@@ -30,6 +30,33 @@ import java.util.List;
 public class ExcavatorEventHandler {
     private static final ResourceLocation EXCAVATOR_ID = RedstoneEnchants.id("excavator");
 
+    /** 1 级时的挖掘半径（3x3 区域） */
+    private static final int RADIUS_BASE = 1;
+    /** 每级额外增加的挖掘半径 */
+    private static final int RADIUS_PER_LEVEL = 1;
+    /** 挖掘半径上限（7x7 区域） */
+    private static final int RADIUS_MAX = 3;
+    /** 每破坏一个方块消耗的耐久 */
+    private static final int DURABILITY_COST = 1;
+    /** 掉落物生成位置相对方块中心的偏移量 */
+    private static final double SPAWN_OFFSET = 0.5D;
+    /** 俯仰角向下挖掘的阈值 */
+    private static final float PITCH_DOWN_THRESHOLD = 45.0F;
+    /** 俯仰角向上挖掘的阈值 */
+    private static final float PITCH_UP_THRESHOLD = -45.0F;
+    /** 不可破坏方块的挖掘速度阈值 */
+    private static final float UNBREAKABLE_DESTROY_SPEED = 0.0F;
+    /** 完整圆周的角度值 */
+    private static final float FULL_CIRCLE = 360.0F;
+    /** 半圆的角度值 */
+    private static final float HALF_CIRCLE = 180.0F;
+    /** 朝向扇区的基础边界角度 */
+    private static final float YAW_SECTOR = 45.0F;
+    /** 朝向扇区的对角边界角度 */
+    private static final float YAW_SECTOR_DIAGONAL = 135.0F;
+    /** 坐标轴上不产生偏移的量 */
+    private static final int NO_OFFSET = 0;
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -42,8 +69,10 @@ public class ExcavatorEventHandler {
         ItemStack tool = player.getMainHandItem();
         ResourceKey<Enchantment> excavatorEnchant = EnchantContext.key(EXCAVATOR_ID);
 
-        int radius = EnchantContext.level(tool, excavatorEnchant);
-        if (radius <= 0) return;
+        int level = EnchantContext.level(tool, excavatorEnchant);
+        if (level <= 0) return;
+
+        int radius = Math.min(RADIUS_BASE + RADIUS_PER_LEVEL * (level - 1), RADIUS_MAX);
 
         // 只在主方块被破坏时触发（避免重复执行）
         if (!event.isCanceled()) {
@@ -64,7 +93,7 @@ public class ExcavatorEventHandler {
                 BlockState targetState = serverLevel.getBlockState(pos);
 
                 // 检查是否可以挖掘
-                if (targetState.getDestroySpeed(serverLevel, pos) < 0) continue;
+                if (targetState.getDestroySpeed(serverLevel, pos) < UNBREAKABLE_DESTROY_SPEED) continue;
                 if (!tool.isCorrectToolForDrops(targetState)) continue;
 
                 // 获取掉落物
@@ -77,16 +106,16 @@ public class ExcavatorEventHandler {
                 for (ItemStack drop : drops) {
                     var itemEntity = new ItemEntity(
                             serverLevel,
-                            pos.getX() + 0.5,
-                            pos.getY() + 0.5,
-                            pos.getZ() + 0.5,
+                            pos.getX() + SPAWN_OFFSET,
+                            pos.getY() + SPAWN_OFFSET,
+                            pos.getZ() + SPAWN_OFFSET,
                             drop
                     );
                     serverLevel.addFreshEntity(itemEntity);
                 }
 
                 // 消耗耐久
-                tool.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                tool.hurtAndBreak(DURABILITY_COST, player, EquipmentSlot.MAINHAND);
             }
         }
     }
@@ -95,17 +124,17 @@ public class ExcavatorEventHandler {
         float pitch = player.getXRot();
 
         // 垂直方向
-        if (pitch > 45) return Direction.DOWN;
-        if (pitch < -45) return Direction.UP;
+        if (pitch > PITCH_DOWN_THRESHOLD) return Direction.DOWN;
+        if (pitch < PITCH_UP_THRESHOLD) return Direction.UP;
 
         // 水平方向
-        float yaw = player.getYRot() % 360;
-        if (yaw > 180) yaw -= 360;
-        if (yaw < -180) yaw += 360;
+        float yaw = player.getYRot() % FULL_CIRCLE;
+        if (yaw > HALF_CIRCLE) yaw -= FULL_CIRCLE;
+        if (yaw < -HALF_CIRCLE) yaw += FULL_CIRCLE;
 
-        if (yaw > -45 && yaw <= 45) return Direction.SOUTH;
-        if (yaw > 45 && yaw <= 135) return Direction.WEST;
-        if (yaw > 135 || yaw <= -135) return Direction.NORTH;
+        if (yaw > -YAW_SECTOR && yaw <= YAW_SECTOR) return Direction.SOUTH;
+        if (yaw > YAW_SECTOR && yaw <= YAW_SECTOR_DIAGONAL) return Direction.WEST;
+        if (yaw > YAW_SECTOR_DIAGONAL || yaw <= -YAW_SECTOR_DIAGONAL) return Direction.NORTH;
         return Direction.EAST;
     }
 
@@ -126,13 +155,13 @@ public class ExcavatorEventHandler {
             for (int j = -radius; j <= radius; j++) {
                 BlockPos offset = center;
 
-                if (axis1 == Direction.Axis.X) offset = offset.offset(i, 0, 0);
-                else if (axis1 == Direction.Axis.Y) offset = offset.offset(0, i, 0);
-                else if (axis1 == Direction.Axis.Z) offset = offset.offset(0, 0, i);
+                if (axis1 == Direction.Axis.X) offset = offset.offset(i, NO_OFFSET, NO_OFFSET);
+                else if (axis1 == Direction.Axis.Y) offset = offset.offset(NO_OFFSET, i, NO_OFFSET);
+                else if (axis1 == Direction.Axis.Z) offset = offset.offset(NO_OFFSET, NO_OFFSET, i);
 
-                if (axis2 == Direction.Axis.X) offset = offset.offset(j, 0, 0);
-                else if (axis2 == Direction.Axis.Y) offset = offset.offset(0, j, 0);
-                else if (axis2 == Direction.Axis.Z) offset = offset.offset(0, 0, j);
+                if (axis2 == Direction.Axis.X) offset = offset.offset(j, NO_OFFSET, NO_OFFSET);
+                else if (axis2 == Direction.Axis.Y) offset = offset.offset(NO_OFFSET, j, NO_OFFSET);
+                else if (axis2 == Direction.Axis.Z) offset = offset.offset(NO_OFFSET, NO_OFFSET, j);
 
                 positions.add(offset);
             }

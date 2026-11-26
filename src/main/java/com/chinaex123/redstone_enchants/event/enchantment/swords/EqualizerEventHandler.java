@@ -21,6 +21,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class EqualizerEventHandler {
     private static final ResourceLocation EQUALIZER_ID = RedstoneEnchants.id("equalizer");
 
+    /** 1 级时的伤害加成系数 */
+    private static final double DAMAGE_BONUS_BASE = 0.2D;
+    /** 每级额外增加的伤害加成系数 */
+    private static final double DAMAGE_BONUS_PER_LEVEL = 0.2D;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         if (!(event.getSource().getDirectEntity() instanceof Player attacker)) return;
@@ -40,8 +45,9 @@ public class EqualizerEventHandler {
         float currentHealth = target.getHealth();
         float healthPercentage = currentHealth / maxHealth;
 
-        // 根据血量百分比和附魔等级计算伤害加成
-        float bonusMultiplier = healthPercentage * level * 0.2F;
+        // 根据血量百分比和附魔等级计算伤害加成（1 级 0.2，每级额外 +0.2）
+        double bonusPerLevel = DAMAGE_BONUS_BASE + DAMAGE_BONUS_PER_LEVEL * (level - 1);
+        float bonusMultiplier = (float) (healthPercentage * bonusPerLevel);
 
         float originalDamage = event.getOriginalDamage();
         float newDamage = originalDamage * (1 + bonusMultiplier);

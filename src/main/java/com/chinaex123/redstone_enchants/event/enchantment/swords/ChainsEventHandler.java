@@ -32,6 +32,30 @@ public class ChainsEventHandler {
     private static final int CHAIN_TARGETS = 3;
     /** 锁链传递半径。 */
     private static final double CHAIN_RADIUS = 8.0D;
+    /** 1 级时的触发概率。 */
+    private static final double CHANCE_BASE = 0.2D;
+    /** 每级额外增加的触发概率。 */
+    private static final double CHANCE_PER_LEVEL = 0.2D;
+    /** 锁链粒子相对目标的高度偏移。 */
+    private static final double PARTICLE_HEIGHT_OFFSET = 1.0D;
+    /** 锁链粒子相对目标的水平偏移（格，不做水平偏移）。 */
+    private static final double PARTICLE_HORIZONTAL_OFFSET = 0.0D;
+    /** 锁链粒子数量。 */
+    private static final int PARTICLE_COUNT = 8;
+    /** 锁链粒子水平扩散范围。 */
+    private static final double PARTICLE_SPREAD = 0.2D;
+    /** 锁链粒子上抛速度。 */
+    private static final double PARTICLE_Y_SPEED = 0.5D;
+    /** 锁链粒子垂直扩散范围。 */
+    private static final double PARTICLE_Y_SPREAD = 0.2D;
+    /** 锁链粒子基础速度。 */
+    private static final double PARTICLE_SPEED = 0.0D;
+    /** 锁链音效音量。 */
+    private static final float SOUND_VOLUME = 1.0F;
+    /** 锁链音效音高。 */
+    private static final float SOUND_PITCH = 1.0F;
+    /** 缓慢与虚弱的效果等级（9 即 X 级）。 */
+    private static final int EFFECT_AMPLIFIER = 9;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
@@ -44,8 +68,9 @@ public class ChainsEventHandler {
 
         // 只对直接攻击生效
         if (event.getSource().getDirectEntity() != attacker) return;
-        // 每级 20% 的触发几率
-        if (level.getRandom().nextFloat() >= enchantLevel * 0.2F) return;
+        // 1 级 20% 触发几率，每级额外 +20%
+        double chance = Math.min(1.0D, CHANCE_BASE + CHANCE_PER_LEVEL * (enchantLevel - 1));
+        if (level.getRandom().nextFloat() >= chance) return;
         // 已经被锁住的生物不会再次触发
         if (victim.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) || victim.hasEffect(MobEffects.WEAKNESS)) return;
 
@@ -59,11 +84,11 @@ public class ChainsEventHandler {
     }
 
     private static void chainsEffect(EnchantContext context, float seconds) {
-        context.particleAt(context.pos().add(0.0D, 1.0D, 0.0D),
+        context.particleAt(context.pos().add(PARTICLE_HORIZONTAL_OFFSET, PARTICLE_HEIGHT_OFFSET, PARTICLE_HORIZONTAL_OFFSET),
                 new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.CHAIN)),
-                8, 0.2D, 0.5D, 0.2D, 0.0D);
-        context.soundHostile(SoundEvents.CHAIN_PLACE, 1.0F, 1.0F);
-        context.effect(MobEffects.MOVEMENT_SLOWDOWN, seconds, 9);
-        context.effect(MobEffects.WEAKNESS, seconds, 9);
+                PARTICLE_COUNT, PARTICLE_SPREAD, PARTICLE_Y_SPEED, PARTICLE_Y_SPREAD, PARTICLE_SPEED);
+        context.soundHostile(SoundEvents.CHAIN_PLACE, SOUND_VOLUME, SOUND_PITCH);
+        context.effect(MobEffects.MOVEMENT_SLOWDOWN, seconds, EFFECT_AMPLIFIER);
+        context.effect(MobEffects.WEAKNESS, seconds, EFFECT_AMPLIFIER);
     }
 }

@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:minify",
-    "redstone_enchants:maximization"
+    {
+      "id": "redstone_enchants:minify",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:maximization",
+      "required": false
+    }
   ]
 }

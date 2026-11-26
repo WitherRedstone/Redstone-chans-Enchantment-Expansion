@@ -1,8 +1,17 @@
 {
   "values": [
     "#redstone_enchants:exclusive_set/unbreaking",
-    "redstone_enchants:sturdy",
-    "redstone_enchants:preservation",
-    "redstone_enchants:indestructible"
+    {
+      "id": "redstone_enchants:sturdy",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:preservation",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:indestructible",
+      "required": false
+    }
   ]
 }

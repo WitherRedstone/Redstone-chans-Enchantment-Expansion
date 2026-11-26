@@ -21,6 +21,13 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class GamblerEventHandler {
     private static final ResourceLocation GAMBLER_ID = RedstoneEnchants.id("gambler");
 
+    /** 触发增益的概率 */
+    private static final double GOOD_CHANCE = 0.5D;
+    /** 增益时的伤害倍率 */
+    private static final double DAMAGE_BONUS_MULTIPLIER = 1.4D;
+    /** 减益时的伤害倍率 */
+    private static final double DAMAGE_PENALTY_MULTIPLIER = 0.8D;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
         LivingEntity attacker = event.getContainer().getSource().getEntity() instanceof LivingEntity livingEntity
@@ -56,12 +63,12 @@ public class GamblerEventHandler {
         float originalDamage = event.getOriginalDamage();
         float newDamage;
 
-        if (RedstoneEnchants.RANDOM.nextFloat() < 0.5f) {
+        if (RedstoneEnchants.RANDOM.nextFloat() < GOOD_CHANCE) {
             // 50%概率：伤害+40%
-            newDamage = originalDamage * 1.4f;
+            newDamage = (float) (originalDamage * DAMAGE_BONUS_MULTIPLIER);
         } else {
             // 50%概率：伤害-20%
-            newDamage = originalDamage * 0.8f;
+            newDamage = (float) (originalDamage * DAMAGE_PENALTY_MULTIPLIER);
         }
 
         event.setNewDamage(newDamage);

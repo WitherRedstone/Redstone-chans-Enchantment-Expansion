@@ -33,6 +33,8 @@ public class BoltbringerEventHandler {
     private static final float MIN_FALL_DISTANCE = 8.0f;
     /** 冷却时间 */
     private static final long COOLDOWN_TICKS = 10;
+    /** 冷却记录表的清理阈值，超过后清空避免无限增长 */
+    private static final int CACHE_CLEAR_THRESHOLD = 100;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -71,7 +73,7 @@ public class BoltbringerEventHandler {
         }
 
         // 清理旧记录
-        if (lastStrikeTime.size() > 100) {
+        if (lastStrikeTime.size() > CACHE_CLEAR_THRESHOLD) {
             lastStrikeTime.clear();
         }
     }

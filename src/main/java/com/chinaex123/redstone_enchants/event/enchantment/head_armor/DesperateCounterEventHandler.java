@@ -25,6 +25,11 @@ public class DesperateCounterEventHandler {
     private static final ResourceLocation DESPERATE_COUNTER_ID = RedstoneEnchants.id("desperate_counter");
     private static final ResourceLocation DESPERATE_COUNTER_MODIFIER_ID = RedstoneEnchants.id("desperate_counter_damage");
 
+    /** 1 级时的伤害加成 */
+    private static final double DAMAGE_BONUS_BASE = 0.25D;
+    /** 每级额外增加的伤害加成 */
+    private static final double DAMAGE_BONUS_PER_LEVEL = 0.25D;
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
@@ -51,7 +56,7 @@ public class DesperateCounterEventHandler {
 
         // 如果有失明或黑暗，添加伤害加成
         if (hasBlindness || hasDarkness) {
-            double damageBonus = 0.25 * enchantLevel;
+            double damageBonus = DAMAGE_BONUS_BASE + DAMAGE_BONUS_PER_LEVEL * (enchantLevel - 1);
             AttributeModifier modifier = new AttributeModifier(
                     DESPERATE_COUNTER_MODIFIER_ID,
                     damageBonus,

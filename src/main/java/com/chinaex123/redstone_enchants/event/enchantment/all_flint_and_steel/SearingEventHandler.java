@@ -25,6 +25,17 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class SearingEventHandler {
     private static final ResourceLocation SEARING_ID = RedstoneEnchants.id("searing");
 
+    /** 1 级时的燃烧时长（tick）。 */
+    private static final int FIRE_TICKS_BASE = 40;
+    /** 每级额外增加的燃烧时长（tick）。 */
+    private static final int FIRE_TICKS_PER_LEVEL = 40;
+    /** 1 级时的火焰伤害。 */
+    private static final float DAMAGE_BASE = 1.0F;
+    /** 每级额外增加的火焰伤害。 */
+    private static final float DAMAGE_PER_LEVEL = 1.0F;
+    /** 每次使用消耗的耐久。 */
+    private static final int DURABILITY_COST = 1;
+
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
         if (!(event.getTarget() instanceof LivingEntity target)) return;
@@ -39,9 +50,10 @@ public class SearingEventHandler {
         int level = EnchantContext.level(tool, searingEnchant);
         if (level <= 0) return;
 
-        target.setRemainingFireTicks(20 * 2 * level);
+        int fireTicks = FIRE_TICKS_BASE + FIRE_TICKS_PER_LEVEL * (level - 1);
+        target.setRemainingFireTicks(fireTicks);
 
-        float damage = 1.0F * level;
+        float damage = DAMAGE_BASE + DAMAGE_PER_LEVEL * (level - 1);
         target.hurt(player.level().damageSources().onFire(), damage);
 
         // 播放使用动画
@@ -50,6 +62,6 @@ public class SearingEventHandler {
         // 消耗1点耐久
         event.setCancellationResult(InteractionResult.SUCCESS);
         event.setCanceled(true);
-        tool.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+        tool.hurtAndBreak(DURABILITY_COST, player, EquipmentSlot.MAINHAND);
     }
 }

@@ -1,6 +1,10 @@
 {
   "neoforge:conditions": [
     {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "splash_delayed_explosion"
+    },
+    {
       "type": "neoforge:mod_loaded",
       "modid": "ars_nouveau"
     }

@@ -19,6 +19,13 @@ public class LastHopeEventHandler {
 
     private static final String ID = "last_hope";
 
+    /** 音爆粒子数量 */
+    private static final int PARTICLE_COUNT = 50;
+    /** 音爆粒子扩散范围 */
+    private static final double PARTICLE_SPREAD = 1.0D;
+    /** 音爆粒子速度 */
+    private static final double PARTICLE_SPEED = 0.5D;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof Player attacker)) return;
@@ -35,6 +42,7 @@ public class LastHopeEventHandler {
         new EnchantContext(level, attacker, attacker.position()).clearMainHand();
 
         new EnchantContext(level, victim, victim.position())
-                .particle(ParticleTypes.SONIC_BOOM, 50, 1.0D, 1.0D, 1.0D, 0.5D);
+                .particle(ParticleTypes.SONIC_BOOM, PARTICLE_COUNT, PARTICLE_SPREAD, PARTICLE_SPREAD,
+                        PARTICLE_SPREAD, PARTICLE_SPEED);
     }
 }

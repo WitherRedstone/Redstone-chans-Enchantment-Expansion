@@ -23,8 +23,12 @@ import java.util.List;
 public class PackLeaderEventHandler {
     private static final ResourceLocation PACK_LEADER_ID = RedstoneEnchants.id("pack_leader");
 
-    /** 每级每只狼增加的伤害 */
-    private static final double DAMAGE_BONUS_PER_WOLF_PER_LEVEL = 0.5;
+    /** 1 级时每只狼增加的伤害 */
+    private static final double DAMAGE_BONUS_BASE = 0.5D;
+    /** 每级每只狼额外增加的伤害 */
+    private static final double DAMAGE_BONUS_PER_LEVEL = 0.5D;
+    /** 搜寻附近狼的半径 */
+    private static final double RANGE = 16.0D;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -46,15 +50,15 @@ public class PackLeaderEventHandler {
         if (enchantLevel <= 0) return;
 
         // 计算附近的狼数量（16格范围内）
-        double range = 16.0;
-        List<Wolf> nearbyWolves = wolf.level().getEntitiesOfClass(Wolf.class, wolf.getBoundingBox().inflate(range));
+        List<Wolf> nearbyWolves = wolf.level().getEntitiesOfClass(Wolf.class, wolf.getBoundingBox().inflate(RANGE));
 
         // 排除自己，计算其他狼的数量
         int wolfCount = nearbyWolves.size() - 1;
         if (wolfCount <= 0) return;
 
-        // 计算伤害加成：每级每只狼+5%
-        double damageBonus = wolfCount * enchantLevel * DAMAGE_BONUS_PER_WOLF_PER_LEVEL;
+        // 计算伤害加成：每只狼每级提供固定比例加成
+        double damageBonusPerWolf = DAMAGE_BONUS_BASE + DAMAGE_BONUS_PER_LEVEL * (enchantLevel - 1);
+        double damageBonus = wolfCount * damageBonusPerWolf;
 
         // 应用伤害加成
         event.setNewDamage((float) (event.getNewDamage() * (1 + damageBonus)));

@@ -22,6 +22,12 @@ public class TrailEventHandler {
     private static final int PARTICLE_COUNT = 3;
     /** 粒子扩散范围。 */
     private static final double SPREAD = 0.3D;
+    /** 粒子速度。 */
+    private static final double SPEED = 0.0D;
+    /** 粒子生成位置的垂直偏移（格）。 */
+    private static final double Y_OFFSET = 1.0D;
+    /** 粒子生成位置的水平偏移（格，不做水平偏移）。 */
+    private static final double HORIZONTAL_OFFSET = 0.0D;
 
     private static final Map<String, ParticleOptions> TRAILS = new LinkedHashMap<>();
 
@@ -43,10 +49,12 @@ public class TrailEventHandler {
         if (!(player.level() instanceof ServerLevel level)) return;
         if (!EnchantContext.moved(player)) return;
 
-        EnchantContext context = new EnchantContext(level, player, player.position().add(0.0D, 1.0D, 0.0D));
+        EnchantContext context = new EnchantContext(level, player,
+                player.position().add(HORIZONTAL_OFFSET, Y_OFFSET, HORIZONTAL_OFFSET));
         for (Map.Entry<String, ParticleOptions> entry : TRAILS.entrySet()) {
-            if (EnchantContext.level(player, entry.getKey()) <= 0) continue;
-            context.particle(entry.getValue(), PARTICLE_COUNT, SPREAD, SPREAD, SPREAD, 0.0D);
+            int enchantLevel = EnchantContext.level(player, entry.getKey());
+            if (enchantLevel <= 0) continue;
+            context.particle(entry.getValue(), PARTICLE_COUNT, SPREAD, SPREAD, SPREAD, SPEED);
         }
     }
 }

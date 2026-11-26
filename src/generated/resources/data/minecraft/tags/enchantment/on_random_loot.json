@@ -1,42 +1,156 @@
 {
   "values": [
-    "redstone_enchants:curse_of_blast",
-    "redstone_enchants:curse_of_death",
-    "redstone_enchants:curse_of_gravity",
-    "redstone_enchants:curse_of_reach",
-    "redstone_enchants:curse_of_vulnerability",
-    "redstone_enchants:committed",
-    "redstone_enchants:swift_shadowcutter",
-    "redstone_enchants:under_pressure",
-    "redstone_enchants:resilience_shield",
-    "redstone_enchants:water_bottle_projection",
-    "redstone_enchants:glass_breaker",
-    "redstone_enchants:fatal_arrow",
-    "redstone_enchants:sea_breeze",
-    "redstone_enchants:underwater_blasting",
-    "redstone_enchants:throwing_enhancement",
-    "redstone_enchants:ender_heart",
-    "redstone_enchants:moonwalk",
-    "redstone_enchants:safe_landing",
-    "redstone_enchants:protection_day",
-    "redstone_enchants:protection_night",
-    "redstone_enchants:protection_end",
-    "redstone_enchants:protection_nether",
-    "redstone_enchants:dangerous_edge",
-    "redstone_enchants:fury",
-    "redstone_enchants:exoskeleton",
-    "redstone_enchants:fire_protection",
-    "redstone_enchants:frost_thorn",
-    "redstone_enchants:minify",
-    "redstone_enchants:maximization",
-    "redstone_enchants:vitality",
-    "redstone_enchants:fast_swim",
-    "redstone_enchants:safe_fall",
-    "redstone_enchants:gallop",
-    "redstone_enchants:frost_hooves",
-    "redstone_enchants:searing",
-    "redstone_enchants:angler",
-    "redstone_enchants:tide_sense",
-    "redstone_enchants:revive_ward"
+    {
+      "id": "redstone_enchants:curse_of_blast",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_death",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_gravity",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_reach",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:curse_of_vulnerability",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:committed",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:swift_shadowcutter",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:under_pressure",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:resilience_shield",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:water_bottle_projection",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:glass_breaker",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:fatal_arrow",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:sea_breeze",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:underwater_blasting",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:throwing_enhancement",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:ender_heart",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:moonwalk",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:safe_landing",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_day",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_night",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_end",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_nether",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:dangerous_edge",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:fury",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:exoskeleton",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:fire_protection",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:frost_thorn",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:minify",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:maximization",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:vitality",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:fast_swim",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:safe_fall",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:gallop",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:frost_hooves",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:searing",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:angler",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:tide_sense",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:revive_ward",
+      "required": false
+    }
   ]
 }

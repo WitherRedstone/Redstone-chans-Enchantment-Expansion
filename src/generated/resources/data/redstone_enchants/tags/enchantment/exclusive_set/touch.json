@@ -1,7 +1,13 @@
 {
   "values": [
-    "redstone_enchants:touch_poison",
-    "redstone_enchants:touch_wither",
+    {
+      "id": "redstone_enchants:touch_poison",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:touch_wither",
+      "required": false
+    },
     {
       "id": "redstone_enchants:touch_bleeding",
       "required": false

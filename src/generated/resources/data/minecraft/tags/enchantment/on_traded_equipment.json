@@ -1,9 +1,24 @@
 {
   "values": [
-    "redstone_enchants:curse_of_double_edge",
-    "redstone_enchants:extend",
-    "redstone_enchants:eternal_frost",
-    "redstone_enchants:protection_day",
-    "redstone_enchants:protection_night"
+    {
+      "id": "redstone_enchants:curse_of_double_edge",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:extend",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:eternal_frost",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_day",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:protection_night",
+      "required": false
+    }
   ]
 }

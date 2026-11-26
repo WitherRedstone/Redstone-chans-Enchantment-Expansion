@@ -17,6 +17,13 @@ public class AirTossEventHandler {
 
     private static final String ID = "air_toss";
 
+    /** 抛掷初速度 1 级基础值 */
+    private static final double MOTION_BASE = 0.85D;
+    /** 每级额外增加的抛掷初速度 */
+    private static final double MOTION_PER_LEVEL = 0.35D;
+    /** 抛掷生效延迟（tick） */
+    private static final int TOSS_DELAY_TICKS = 1;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
@@ -27,9 +34,9 @@ public class AirTossEventHandler {
         int enchantLevel = EnchantContext.level(attacker, ID);
         if (enchantLevel <= 0) return;
 
-        double motion = 0.5D + enchantLevel * 0.35D;
+        double motion = MOTION_BASE + MOTION_PER_LEVEL * (enchantLevel - 1);
         EnchantContext context = new EnchantContext(level, victim, victim.position());
-        context.schedule(1, () -> {
+        context.schedule(TOSS_DELAY_TICKS, () -> {
             if (victim.isAlive()) {
                 Vec3 d = victim.getDeltaMovement();
                 context.motion(victim, new Vec3(d.x, motion, d.z));

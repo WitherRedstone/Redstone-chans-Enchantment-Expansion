@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "indestructible"
+    }
+  ],
   "anvil_cost": 50,
   "description": {
     "color": "#FF00BB",

@@ -20,6 +20,13 @@ public class RetrievalEventHandler {
 
     private static final String ID = "retrieval";
 
+    /** 1 级时的回收触发概率 */
+    private static final double CHANCE_BASE = 0.2D;
+    /** 每级额外增加的概率 */
+    private static final double CHANCE_PER_LEVEL = 0.2D;
+    /** 回收的箭矢数量 */
+    private static final int ARROW_COUNT = 1;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         LivingEntity victim = event.getEntity();
@@ -31,11 +38,12 @@ public class RetrievalEventHandler {
         // 只有被箭矢射中才生效
         if (!(event.getSource().getDirectEntity() instanceof Projectile projectile)) return;
         // 每级 20% 的触发几率
-        if (level.getRandom().nextFloat() >= enchantLevel * 0.2F) return;
+        double chance = Math.min(1.0D, CHANCE_BASE + CHANCE_PER_LEVEL * (enchantLevel - 1));
+        if (level.getRandom().nextFloat() >= chance) return;
 
         ItemStack loot = projectile instanceof SpectralArrow
-                ? new ItemStack(Items.SPECTRAL_ARROW, 1)
-                : new ItemStack(Items.ARROW, 1);
+                ? new ItemStack(Items.SPECTRAL_ARROW, ARROW_COUNT)
+                : new ItemStack(Items.ARROW, ARROW_COUNT);
         new EnchantContext(level, victim, victim.position()).give(loot);
     }
 }

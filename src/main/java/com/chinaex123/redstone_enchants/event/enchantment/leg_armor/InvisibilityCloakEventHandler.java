@@ -23,8 +23,10 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class InvisibilityCloakEventHandler {
     private static final ResourceLocation INVISIBILITY_CLOAK_ID = RedstoneEnchants.id("invisibility_cloak");
 
-    /** 基础时间 */
-    private static final int BASE_INVISIBILITY_DURATION = 80;
+    /** 隐身持续时间（tick） */
+    private static final int INVISIBILITY_DURATION_TICKS = 80;
+    /** 隐身效果等级（0 = I 级） */
+    private static final int AMPLIFIER = 0;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -36,7 +38,7 @@ public class InvisibilityCloakEventHandler {
         int level = leggings.isEmpty() ? 0 : EnchantContext.level(leggings, invisibilityCloakEnchant);
 
         if (level > 0 && player.isShiftKeyDown()) {
-            EnchantEffectTracker.apply(player, MobEffects.INVISIBILITY, BASE_INVISIBILITY_DURATION, 0);
+            EnchantEffectTracker.apply(player, MobEffects.INVISIBILITY, INVISIBILITY_DURATION_TICKS, AMPLIFIER);
         } else {
             EnchantEffectTracker.removeIfTracked(player, MobEffects.INVISIBILITY);
         }

@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:bedrock_breaker",
-    "redstone_enchants:rock_illusion"
+    {
+      "id": "redstone_enchants:bedrock_breaker",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:rock_illusion",
+      "required": false
+    }
   ]
 }

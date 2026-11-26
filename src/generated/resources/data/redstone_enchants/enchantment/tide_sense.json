@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "tide_sense"
+    }
+  ],
   "anvil_cost": 8,
   "description": {
     "color": "#FF55FF",

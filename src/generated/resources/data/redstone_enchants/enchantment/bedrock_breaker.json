@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "bedrock_breaker"
+    }
+  ],
   "anvil_cost": 200,
   "description": {
     "color": "#FF00BB",

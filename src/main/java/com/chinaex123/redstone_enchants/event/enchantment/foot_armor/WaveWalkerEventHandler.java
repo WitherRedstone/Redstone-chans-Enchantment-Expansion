@@ -23,6 +23,11 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class WaveWalkerEventHandler {
     private static final ResourceLocation WAVE_WALKER_ID = RedstoneEnchants.id("wave_walker");
 
+    /** 脚底向下检测水的深度（格） */
+    private static final double WATER_CHECK_DEPTH = 0.4D;
+    /** 流体表面高度偏移（格） */
+    private static final double SURFACE_HEIGHT_OFFSET = 1.0D;
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Player player)) return;
@@ -42,11 +47,11 @@ public class WaveWalkerEventHandler {
         // 检查玩家是否不在水中
         if (player.isInWater()) return;
 
-        // 检测脚底下方0.4格的位置是否有水
+        // 检测脚底下方 0.4 格的位置是否有水
         BlockPos entityPos = player.blockPosition();
         BlockPos waterCheckPos = new BlockPos(
                 entityPos.getX(),
-                (int) Math.floor(player.getBoundingBox().minY - 0.4),
+                (int) Math.floor(player.getBoundingBox().minY - WATER_CHECK_DEPTH),
                 entityPos.getZ()
         );
 
@@ -54,7 +59,7 @@ public class WaveWalkerEventHandler {
 
         if (hasWaterBelow) {
             // 获取水面高度
-            double waterHeight = waterCheckPos.getY() + 1.0;
+            double waterHeight = waterCheckPos.getY() + SURFACE_HEIGHT_OFFSET;
 
             // 如果玩家在水面上方，调整到水面高度
             if (player.getY() > waterHeight) {

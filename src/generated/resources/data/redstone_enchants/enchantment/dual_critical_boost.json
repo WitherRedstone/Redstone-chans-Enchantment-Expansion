@@ -1,6 +1,10 @@
 {
   "neoforge:conditions": [
     {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "dual_critical_boost"
+    },
+    {
       "type": "neoforge:mod_loaded",
       "modid": "apothic_attributes"
     }

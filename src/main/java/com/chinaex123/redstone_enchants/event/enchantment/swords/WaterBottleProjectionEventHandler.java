@@ -16,6 +16,13 @@ public class WaterBottleProjectionEventHandler {
 
     private static final String ID = "water_bottle_projection";
 
+    /** 1 级时投掷的水瓶数量 */
+    private static final int COUNT_BASE = 1;
+    /** 每级额外增加的投掷数量 */
+    private static final int COUNT_PER_LEVEL = 1;
+    /** 投掷数量上限 */
+    private static final int MAX_COUNT = 2;
+
     private static final String SPLASH_WATER = "{id:\"minecraft:potion\",Item:{id:\"minecraft:splash_potion\","
             + "count:1,components:{\"minecraft:potion_contents\":{potion:\"minecraft:water\"}}}}";
 
@@ -28,7 +35,7 @@ public class WaterBottleProjectionEventHandler {
         int enchantLevel = EnchantContext.level(attacker, ID);
         if (enchantLevel <= 0) return;
 
-        int count = Math.min(enchantLevel, 2);
+        int count = (int) Math.min(MAX_COUNT, COUNT_BASE + COUNT_PER_LEVEL * (enchantLevel - 1));
         EnchantContext context = new EnchantContext(level, event.getEntity(), event.getEntity().position());
         for (int index = 0; index < count; index++) {
             context.summon(SPLASH_WATER);

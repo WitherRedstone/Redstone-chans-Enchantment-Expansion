@@ -25,6 +25,17 @@ public class SpiritEventHandler {
     private static final ResourceLocation SPIRIT_ID = RedstoneEnchants.id("spirit");
     private static final ResourceLocation SPIRIT_SPEED_ID = RedstoneEnchants.id("spirit_speed");
 
+    /** 1 级时夜晚提供的速度加成 */
+    private static final double SPEED_BONUS_BASE = 0.15D;
+    /** 每级额外增加的速度加成 */
+    private static final double SPEED_BONUS_PER_LEVEL = 0.15D;
+    /** 一天的总时长（tick） */
+    private static final long DAY_TICKS = 24000L;
+    /** 夜晚开始时间（tick） */
+    private static final long NIGHT_START = 13000L;
+    /** 夜晚结束时间（tick） */
+    private static final long NIGHT_END = 23000L;
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof AbstractHorse horse)) return;
@@ -42,8 +53,8 @@ public class SpiritEventHandler {
         if (enchantLevel <= 0) return;
 
         // 检查是否是夜晚
-        long dayTime = horse.level().getDayTime() % 24000;
-        boolean isNight = dayTime >= 13000 && dayTime < 23000;
+        long dayTime = horse.level().getDayTime() % DAY_TICKS;
+        boolean isNight = dayTime >= NIGHT_START && dayTime < NIGHT_END;
 
         // 获取移动速度属性
         var speedAttribute = horse.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -54,7 +65,7 @@ public class SpiritEventHandler {
 
         // 如果是夜晚，添加速度加成
         if (isNight) {
-            double speedBonus = 0.15 * enchantLevel;
+            double speedBonus = SPEED_BONUS_BASE + SPEED_BONUS_PER_LEVEL * (enchantLevel - 1);
             AttributeModifier modifier = new AttributeModifier(
                     SPIRIT_SPEED_ID,
                     speedBonus,

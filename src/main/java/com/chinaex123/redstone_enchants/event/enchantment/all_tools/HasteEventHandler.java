@@ -23,8 +23,12 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 public class HasteEventHandler {
     private static final ResourceLocation HASTE_ID = RedstoneEnchants.id("haste");
 
-    /** 持续时间 */
+    /** 持续时间（tick） */
     private static final int HASTE_DURATION = 120;
+    /** 1 级时的药水等级 */
+    private static final int AMPLIFIER_BASE = 0;
+    /** 每级额外增加的药水等级 */
+    private static final int AMPLIFIER_PER_LEVEL = 1;
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -36,7 +40,7 @@ public class HasteEventHandler {
         int level = EnchantContext.level(mainHand, hasteEnchant);
 
         if (level > 0) {
-            int amplifier = level - 1;
+            int amplifier = AMPLIFIER_BASE + AMPLIFIER_PER_LEVEL * (level - 1);
 
             if (EnchantEffectTracker.isTracked(player, MobEffects.DIG_SPEED)) {
                 EnchantEffectTracker.apply(player, MobEffects.DIG_SPEED, HASTE_DURATION, amplifier);

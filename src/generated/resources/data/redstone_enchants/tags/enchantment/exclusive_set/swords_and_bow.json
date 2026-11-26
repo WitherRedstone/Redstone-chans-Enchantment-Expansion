@@ -1,5 +1,8 @@
 {
   "values": [
-    "redstone_enchants:air_toss"
+    {
+      "id": "redstone_enchants:air_toss",
+      "required": false
+    }
   ]
 }

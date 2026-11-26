@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:focus",
-    "redstone_enchants:scatter"
+    {
+      "id": "redstone_enchants:focus",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:scatter",
+      "required": false
+    }
   ]
 }

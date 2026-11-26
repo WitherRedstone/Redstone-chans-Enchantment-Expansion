@@ -23,6 +23,27 @@ import java.util.List;
 public class MagnetEventHandler {
     private static final ResourceLocation MAGNET_ID = RedstoneEnchants.id("magnet");
 
+    /** 1 级时的吸引范围（格） */
+    private static final double RANGE_BASE = 4.0D;
+    /** 每级额外增加的吸引范围（格） */
+    private static final double RANGE_PER_LEVEL = 4.0D;
+    /** 吸引范围上限（格） */
+    private static final double RANGE_MAX = 16.0D;
+    /** 1 级时的基础吸引速度 */
+    private static final double SPEED_BASE = 0.08D;
+    /** 每级额外增加的吸引速度 */
+    private static final double SPEED_PER_LEVEL = 0.08D;
+    /** 最小吸附距离，小于该距离不再吸引 */
+    private static final double MIN_DISTANCE = 0.5D;
+    /** 保留原有运动的比例（阻尼） */
+    private static final double DAMPING = 0.3D;
+    /** 新吸引力在合成运动中所占的比重 */
+    private static final double ATTRACTION_WEIGHT = 0.7D;
+    /** 吸引力附带的向上初速度，避免掉落物贴地 */
+    private static final double LIFT = 0.02D;
+    /** 吸引目标点相对玩家脚部的抬高量（约等于玩家视线高度） */
+    private static final double EYE_HEIGHT_OFFSET = 1.0D;
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
@@ -33,20 +54,17 @@ public class MagnetEventHandler {
 
         ResourceKey<Enchantment> magnetEnchant = EnchantContext.key(MAGNET_ID);
 
-        int mainLevel = 0;
-        int offLevel = 0;
-
-        int ml = EnchantContext.level(mainHand, magnetEnchant);
-        mainLevel = ml;
-
-        int ol = EnchantContext.level(offHand, magnetEnchant);
-        offLevel = ol;
+        int mainLevel = EnchantContext.level(mainHand, magnetEnchant);
+        int offLevel = EnchantContext.level(offHand, magnetEnchant);
 
         int maxLevel = Math.max(mainLevel, offLevel);
         if (maxLevel <= 0) return;
 
-        // 吸引范围：每级增加2格，最大10格
-        double range = Math.min(maxLevel * 4.0, 16.0);
+        // 吸引范围：1 级 4 格，每级再增加 4 格，最大 16 格
+        double range = Math.min(RANGE_BASE + RANGE_PER_LEVEL * (maxLevel - 1), RANGE_MAX);
+
+        // 吸引速度同样随等级提升
+        double speedScale = SPEED_BASE + SPEED_PER_LEVEL * (maxLevel - 1);
 
         // 获取附近的掉落物
         List<ItemEntity> items = player.level().getEntitiesOfClass(ItemEntity.class,
@@ -57,14 +75,14 @@ public class MagnetEventHandler {
 
             // 计算方向向量
             double dx = player.getX() - item.getX();
-            double dy = (player.getY() + 1.0) - item.getY();
+            double dy = (player.getY() + EYE_HEIGHT_OFFSET) - item.getY();
             double dz = player.getZ() - item.getZ();
             double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-            if (distance < 0.5 || distance > range) continue;
+            if (distance < MIN_DISTANCE || distance > range) continue;
 
             // 平滑吸引：距离越近速度越慢
-            double speed = 0.08 * maxLevel * (distance / range);
+            double speed = speedScale * (distance / range);
 
             // 使用阻尼效果，避免抽搐
             double currentMotionX = item.getDeltaMovement().x;
@@ -73,9 +91,9 @@ public class MagnetEventHandler {
 
             // 混合当前运动和新吸引力（70%新 + 30%旧）
             item.setDeltaMovement(
-                    currentMotionX * 0.3 + (dx / distance) * speed * 0.7,
-                    currentMotionY * 0.3 + (dy / distance) * speed * 0.7 + 0.02,
-                    currentMotionZ * 0.3 + (dz / distance) * speed * 0.7
+                    currentMotionX * DAMPING + (dx / distance) * speed * ATTRACTION_WEIGHT,
+                    currentMotionY * DAMPING + (dy / distance) * speed * ATTRACTION_WEIGHT + LIFT,
+                    currentMotionZ * DAMPING + (dz / distance) * speed * ATTRACTION_WEIGHT
             );
             item.hurtMarked = true;
         }

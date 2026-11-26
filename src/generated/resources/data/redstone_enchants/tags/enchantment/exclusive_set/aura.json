@@ -1,17 +1,56 @@
 {
   "values": [
-    "redstone_enchants:aura_speed",
-    "redstone_enchants:aura_slowness",
-    "redstone_enchants:aura_haste",
-    "redstone_enchants:aura_strength",
-    "redstone_enchants:aura_jump_boost",
-    "redstone_enchants:aura_regeneration",
-    "redstone_enchants:aura_resistance",
-    "redstone_enchants:aura_weakness",
-    "redstone_enchants:aura_poison",
-    "redstone_enchants:aura_wither",
-    "redstone_enchants:aura_glowing",
-    "redstone_enchants:aura_burning",
-    "redstone_enchants:aura_infested"
+    {
+      "id": "redstone_enchants:aura_speed",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_slowness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_haste",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_strength",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_jump_boost",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_regeneration",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_resistance",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_weakness",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_poison",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_wither",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_glowing",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_burning",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:aura_infested",
+      "required": false
+    }
   ]
 }

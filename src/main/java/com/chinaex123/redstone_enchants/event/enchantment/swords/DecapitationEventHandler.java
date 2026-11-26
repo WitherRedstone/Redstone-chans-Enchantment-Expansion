@@ -26,6 +26,11 @@ public class DecapitationEventHandler {
     private static final Random RANDOM = new Random();
     private static final ResourceLocation DECAPITATION_ID = RedstoneEnchants.id("decapitation");
 
+    /** 1 级时的头颅掉落概率 */
+    private static final double DROP_CHANCE_BASE = 0.2D;
+    /** 每级额外增加的头颅掉落概率 */
+    private static final double DROP_CHANCE_PER_LEVEL = 0.2D;
+
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
         LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity living ? living : null;
@@ -44,8 +49,8 @@ public class DecapitationEventHandler {
         ItemStack skullStack = findSkullForEntity(entityType);
         if (skullStack.isEmpty()) return;
 
-        // 计算掉落概率
-        float dropChance = level * 0.2f;
+        // 计算掉落概率（1 级 20%，每级额外 +20%）
+        float dropChance = (float) Math.min(1.0D, DROP_CHANCE_BASE + DROP_CHANCE_PER_LEVEL * (level - 1));
 
         if (RANDOM.nextFloat() < dropChance) {
             event.getDrops().add(new ItemEntity(

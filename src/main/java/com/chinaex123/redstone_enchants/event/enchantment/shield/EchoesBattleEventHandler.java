@@ -25,6 +25,11 @@ public class EchoesBattleEventHandler {
     private static final ResourceLocation ECHOES_BATTLE_ID = RedstoneEnchants.id("echoes_battle");
     private static final ResourceLocation ECHOES_BATTLE_MODIFIER_ID = RedstoneEnchants.id("echoes_battle_bonus");
 
+    /** 1 级时提供的攻击伤害加成（总伤害倍率）。 */
+    private static final double BONUS_BASE = 0.2D;
+    /** 每级额外增加的攻击伤害加成。 */
+    private static final double BONUS_PER_LEVEL = 0.2D;
+
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
         LivingEntity target = event.getEntity();
@@ -56,7 +61,7 @@ public class EchoesBattleEventHandler {
         attribute.removeModifier(ECHOES_BATTLE_MODIFIER_ID);
 
         // 每级+20%
-        double bonus = level * 0.2;
+        double bonus = BONUS_BASE + BONUS_PER_LEVEL * (level - 1);
         AttributeModifier modifier = new AttributeModifier(
                 ECHOES_BATTLE_MODIFIER_ID,
                 bonus,

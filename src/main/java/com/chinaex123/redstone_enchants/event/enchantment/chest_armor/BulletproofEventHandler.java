@@ -25,9 +25,9 @@ public class BulletproofEventHandler {
     private static final ResourceLocation BULLETPROOF_ID = RedstoneEnchants.id("bulletproof");
 
     /** 基础免疫概率 */
-    private static final float BASE_IMMUNITY_CHANCE = 0.25f;
+    private static final double BASE_IMMUNITY_CHANCE = 0.25D;
     /** 每级附魔增加的免疫概率 */
-    private static final float CHANCE_PER_LEVEL = 0.25f;
+    private static final double CHANCE_PER_LEVEL = 0.25D;
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
@@ -47,7 +47,7 @@ public class BulletproofEventHandler {
         Entity directEntity = event.getSource().getDirectEntity();
         if (!(directEntity instanceof ShulkerBullet)) return;
 
-        float immunityChance = BASE_IMMUNITY_CHANCE + (level - 1) * CHANCE_PER_LEVEL;
+        double immunityChance = Math.min(1.0D, BASE_IMMUNITY_CHANCE + (level - 1) * CHANCE_PER_LEVEL);
 
         if (RedstoneEnchants.RANDOM.nextFloat() < immunityChance) {
             event.setCanceled(true);

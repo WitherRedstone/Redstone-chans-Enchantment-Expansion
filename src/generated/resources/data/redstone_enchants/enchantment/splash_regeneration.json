@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "splash_regeneration"
+    }
+  ],
   "anvil_cost": 8,
   "description": {
     "color": "#FF55FF",

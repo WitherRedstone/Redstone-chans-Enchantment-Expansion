@@ -23,6 +23,11 @@ public class EternalFrostEventHandler {
 
     private static final String ID = "eternal_frost";
 
+    /** 冰霜特效相对命中点的抬高距离。 */
+    private static final double FREEZE_OFFSET_Y = 0.25D;
+    /** 冰霜特效相对命中点的水平偏移（格，不做水平偏移）。 */
+    private static final double FREEZE_OFFSET_HORIZONTAL = 0.0D;
+
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         HitResult hit = event.getRayTraceResult();
@@ -35,7 +40,8 @@ public class EternalFrostEventHandler {
         ItemStack weapon = arrow.getWeaponItem();
         if (EnchantContext.level(level, ID, weapon) <= 0) return;
 
-        EnchantContext context = new EnchantContext(level, projectile, hit.getLocation()).at(0.0D, 0.25D, 0.0D);
+        EnchantContext context = new EnchantContext(level, projectile, hit.getLocation())
+                .at(FREEZE_OFFSET_HORIZONTAL, FREEZE_OFFSET_Y, FREEZE_OFFSET_HORIZONTAL);
         FreezePicAnimation.play(context);
         if (!(projectile instanceof ThrownTrident)) {
             context.discard(projectile);
@@ -49,7 +55,7 @@ public class EternalFrostEventHandler {
         if (EnchantContext.level(attacker, ID) <= 0) return;
 
         EnchantContext context = new EnchantContext(level, event.getEntity(), event.getEntity().position())
-                .at(0.0D, 0.25D, 0.0D);
+                .at(FREEZE_OFFSET_HORIZONTAL, FREEZE_OFFSET_Y, FREEZE_OFFSET_HORIZONTAL);
         FreezePicAnimation.play(context);
     }
 }

@@ -32,18 +32,29 @@ public class IceArrowsEventHandler {
 
     /** 冻缓持续时间（tick）。 */
     private static final int FREEZE_TICKS = 100;
+    /** 冻结范围半径（格，按方块计） */
+    private static final int FREEZE_RADIUS = 1;
+    /** 雪花粒子数量 */
+    private static final int PARTICLE_COUNT = 50;
+    /** 粒子扩散范围（格） */
+    private static final double PARTICLE_SPREAD = 1.0D;
+    /** 粒子速度 */
+    private static final double PARTICLE_SPEED = 0.5D;
+    /** 冻结时属性修饰符的数值 */
+    private static final double FREEZE_ATTRIBUTE_AMOUNT = -20.0D;
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
         if (!(event.getRayTraceResult() instanceof BlockHitResult hit)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
-        if (EnchantContext.level(level, ID, arrow.getWeaponItem()) <= 0) return;
+        int enchantLevel = EnchantContext.level(level, ID, arrow.getWeaponItem());
+        if (enchantLevel <= 0) return;
 
         Vec3 hitPos = hit.getLocation();
         freezeWater(level, hitPos);
         level.sendParticles(ParticleTypes.SNOWFLAKE, hitPos.x, hitPos.y, hitPos.z,
-                50, 1.0D, 1.0D, 1.0D, 0.5D);
+                PARTICLE_COUNT, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPEED);
         arrow.discard();
     }
 
@@ -51,13 +62,14 @@ public class IceArrowsEventHandler {
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
-        if (EnchantContext.level(level, ID, arrow.getWeaponItem()) <= 0) return;
+        int enchantLevel = EnchantContext.level(level, ID, arrow.getWeaponItem());
+        if (enchantLevel <= 0) return;
         LivingEntity victim = event.getEntity();
 
         freezeWater(level, victim.position());
         applyFreeze(level, victim);
         level.sendParticles(ParticleTypes.SNOWFLAKE, victim.getX(), victim.getY(), victim.getZ(),
-                50, 1.0D, 1.0D, 1.0D, 0.5D);
+                PARTICLE_COUNT, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPEED);
         arrow.discard();
     }
 
@@ -78,7 +90,7 @@ public class IceArrowsEventHandler {
         AttributeInstance instance = living.getAttribute(attribute);
         if (instance == null) return;
         instance.removeModifier(FREEZE_ID);
-        instance.addTransientModifier(new AttributeModifier(FREEZE_ID, -20.0D, AttributeModifier.Operation.ADD_VALUE));
+        instance.addTransientModifier(new AttributeModifier(FREEZE_ID, FREEZE_ATTRIBUTE_AMOUNT, AttributeModifier.Operation.ADD_VALUE));
     }
 
     private static void removeModifier(LivingEntity living, Holder<Attribute> attribute) {
@@ -90,9 +102,9 @@ public class IceArrowsEventHandler {
 
     private static void freezeWater(ServerLevel level, Vec3 center) {
         BlockPos origin = BlockPos.containing(center);
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dz = -1; dz <= 1; dz++) {
+        for (int dx = -FREEZE_RADIUS; dx <= FREEZE_RADIUS; dx++) {
+            for (int dy = -FREEZE_RADIUS; dy <= FREEZE_RADIUS; dy++) {
+                for (int dz = -FREEZE_RADIUS; dz <= FREEZE_RADIUS; dz++) {
                     BlockPos pos = origin.offset(dx, dy, dz);
                     if (level.getBlockState(pos).is(Blocks.WATER)) {
                         level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());

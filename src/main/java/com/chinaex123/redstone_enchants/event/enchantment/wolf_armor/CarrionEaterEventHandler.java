@@ -20,6 +20,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 public class CarrionEaterEventHandler {
     private static final ResourceLocation CARRION_EATER_ID = RedstoneEnchants.id("carrion_eater");
 
+    /** 1 级时回复的最大生命值比例 */
+    private static final float HEAL_RATIO_BASE = 0.25F;
+    /** 每级额外增加的比例 */
+    private static final float HEAL_RATIO_PER_LEVEL = 0.25F;
+
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         if (!(event.getSource().getDirectEntity() instanceof Wolf wolf)) return;
@@ -36,9 +41,10 @@ public class CarrionEaterEventHandler {
         int enchantLevel = EnchantContext.level(armor, carrionEaterEnchant);
         if (enchantLevel <= 0) return;
 
-        // 计算治疗量：每级25%最大生命值
+        // 计算治疗量：每级回复一定比例的最大生命值
         float maxHealth = wolf.getMaxHealth();
-        float healAmount = maxHealth * (enchantLevel * 0.25f);
+        float healRatio = HEAL_RATIO_BASE + HEAL_RATIO_PER_LEVEL * (enchantLevel - 1);
+        float healAmount = maxHealth * healRatio;
 
         // 应用治疗
         wolf.heal(healAmount);

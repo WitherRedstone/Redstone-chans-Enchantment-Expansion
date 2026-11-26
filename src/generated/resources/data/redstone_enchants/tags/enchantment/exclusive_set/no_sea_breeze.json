@@ -1,6 +1,12 @@
 {
   "values": [
-    "redstone_enchants:sea_breeze",
-    "redstone_enchants:underwater_blasting"
+    {
+      "id": "redstone_enchants:sea_breeze",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:underwater_blasting",
+      "required": false
+    }
   ]
 }

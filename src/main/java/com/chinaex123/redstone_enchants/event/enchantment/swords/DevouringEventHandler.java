@@ -20,9 +20,14 @@ public class DevouringEventHandler {
 
     /** 每次命中恢复的饥饿值（2 点 = 1 个鸡腿） */
     private static final int HUNGER_PER_HIT = 2;
-
     /** 饥饿值已满时给予的生命恢复持续时间（秒） */
     private static final float REGENERATION_SECONDS = 1.0F;
+    /** 饥饿值上限 */
+    private static final int MAX_FOOD_LEVEL = 20;
+    /** 药水效果等级（0 为 I 级） */
+    private static final int AMPLIFIER = 0;
+    /** 恢复饥饿值时的饱和度系数 */
+    private static final float SATURATION_MODIFIER = 1.0F;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
@@ -33,13 +38,13 @@ public class DevouringEventHandler {
         if (EnchantContext.level(attacker, ID) <= 0) return;
 
         FoodData food = attacker.getFoodData();
-        if (food.getFoodLevel() >= 20) {
+        if (food.getFoodLevel() >= MAX_FOOD_LEVEL) {
             // 饥饿值已满：不再回复饥饿值，改为生命恢复
             new EnchantContext(level, attacker, attacker.position())
-                    .effect(MobEffects.REGENERATION, REGENERATION_SECONDS, 0);
+                    .effect(MobEffects.REGENERATION, REGENERATION_SECONDS, AMPLIFIER);
         } else {
             // 直接回复饥饿值，而不是给饱和效果
-            food.eat(HUNGER_PER_HIT, 1.0F);
+            food.eat(HUNGER_PER_HIT, SATURATION_MODIFIER);
         }
     }
 }

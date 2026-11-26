@@ -25,6 +25,12 @@ import java.util.UUID;
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class AmbushEventHandler {
     private static final ResourceLocation AMBUSH_ID = RedstoneEnchants.id("ambush");
+
+    /** 1 级时的伤害加成 */
+    private static final double BONUS_BASE = 0.2D;
+    /** 每级额外增加的伤害加成 */
+    private static final double BONUS_PER_LEVEL = 0.2D;
+
     private static final Map<UUID, Boolean> hasAttackedMap = new HashMap<>();
 
     @SubscribeEvent
@@ -56,9 +62,9 @@ public class AmbushEventHandler {
             return;
         }
        
-        // 潜行时的首次攻击，增加伤害（每级+20%）
-        float bonus = level * 0.2F;
-        float newDamage = event.getOriginalDamage() * (1 + bonus);
+        // 潜行时的首次攻击，增加伤害（1 级 +20%，每级额外 +20%）
+        double bonus = BONUS_BASE + BONUS_PER_LEVEL * (level - 1);
+        float newDamage = (float) (event.getOriginalDamage() * (1 + bonus));
         event.setNewDamage(newDamage);
 
         // 标记为已攻击

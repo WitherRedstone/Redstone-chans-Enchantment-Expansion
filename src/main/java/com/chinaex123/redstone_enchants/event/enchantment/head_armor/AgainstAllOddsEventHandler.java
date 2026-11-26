@@ -29,8 +29,12 @@ public class AgainstAllOddsEventHandler {
     private static final ResourceLocation DAMAGE_MODIFIER_ID = RedstoneEnchants.id("against_all_odds_damage");
     private static final ResourceLocation ARMOR_MODIFIER_ID = RedstoneEnchants.id("against_all_odds_armor");
 
-    /** 探测半径 */
-    private static final double DETECTION_RANGE = 8.0;
+    /** 探测半径（格） */
+    private static final double DETECTION_RANGE = 8.0D;
+    /** 1 级时每个敌人提供的伤害/护甲加成 */
+    private static final double BONUS_PER_ENEMY_BASE = 0.02D;
+    /** 每级额外增加的每敌人加成 */
+    private static final double BONUS_PER_ENEMY_PER_LEVEL = 0.02D;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -62,8 +66,9 @@ public class AgainstAllOddsEventHandler {
             armorAttribute.removeModifier(ARMOR_MODIFIER_ID);
 
             if (enemyCount > 0) {
-                // 每多一个敌人，伤害/护甲+2%
-                double bonus = enemyCount * 0.02 * enchantLevel;
+                // 每多一个敌人，伤害/护甲按等级提供加成
+                double bonusPerEnemy = BONUS_PER_ENEMY_BASE + BONUS_PER_ENEMY_PER_LEVEL * (enchantLevel - 1);
+                double bonus = enemyCount * bonusPerEnemy;
 
                 AttributeModifier damageModifier = new AttributeModifier(
                         DAMAGE_MODIFIER_ID,

@@ -36,6 +36,16 @@ public class CropDanceEventHandler {
     private static final double BASE_GROWTH_CHANCE = 0.1;
     /** 每级增加 */
     private static final double GROWTH_INCREMENT = 0.1;
+    /** 生长概率上限 */
+    private static final double MAX_GROWTH_CHANCE = 0.99;
+    /** 催熟粒子数量 */
+    private static final int PARTICLE_COUNT = 5;
+    /** 催熟粒子扩散范围 */
+    private static final double PARTICLE_SPREAD = 0.3;
+    /** 催熟粒子速度 */
+    private static final double PARTICLE_SPEED = 0.02;
+    /** 方块中心偏移 */
+    private static final double BLOCK_CENTER_OFFSET = 0.5;
 
     // 记录每个玩家上一次的潜行状态
     private static final Map<Player, Boolean> lastSneakingMap = new ConcurrentHashMap<>();
@@ -72,7 +82,7 @@ public class CropDanceEventHandler {
         AABB area = new AABB(playerPos).inflate(actualRange);
 
         // 计算实际生长概率
-        double growthChance = Math.min(0.99, BASE_GROWTH_CHANCE + enchantLevel * GROWTH_INCREMENT);
+        double growthChance = Math.min(MAX_GROWTH_CHANCE, BASE_GROWTH_CHANCE + enchantLevel * GROWTH_INCREMENT);
 
         BlockPos.betweenClosedStream(area).forEach(pos -> {
             BlockState state = serverLevel.getBlockState(pos);
@@ -83,15 +93,15 @@ public class CropDanceEventHandler {
                     if (bonemealable.isValidBonemealTarget(serverLevel, pos, state)) {
                         bonemealable.performBonemeal(serverLevel, serverLevel.random, pos, state);
 
-                        double particleX = pos.getX() + 0.5;
-                        double particleY = pos.getY() + 0.5;
-                        double particleZ = pos.getZ() + 0.5;
+                        double particleX = pos.getX() + BLOCK_CENTER_OFFSET;
+                        double particleY = pos.getY() + BLOCK_CENTER_OFFSET;
+                        double particleZ = pos.getZ() + BLOCK_CENTER_OFFSET;
                         serverLevel.sendParticles(
                                 ParticleTypes.HAPPY_VILLAGER,
                                 particleX, particleY, particleZ,
-                                5,
-                                0.3, 0.3, 0.3,
-                                0.02
+                                PARTICLE_COUNT,
+                                PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPREAD,
+                                PARTICLE_SPEED
                         );
                     }
                 }

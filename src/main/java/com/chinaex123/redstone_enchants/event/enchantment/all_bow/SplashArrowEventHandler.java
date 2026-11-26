@@ -20,6 +20,20 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class SplashArrowEventHandler {
 
+    /** 药水云生成后的灵魂粒子数量 */
+    private static final int PARTICLE_COUNT = 25;
+    /** 粒子生成点相对药水云的垂直偏移（格） */
+    private static final double PARTICLE_OFFSET_Y = 0.7D;
+    /** 粒子生成点相对药水云的水平偏移（格，不做水平偏移） */
+    private static final double PARTICLE_OFFSET_HORIZONTAL = 0.0D;
+    /** 粒子水平扩散范围（格） */
+    private static final double PARTICLE_SPREAD_HORIZONTAL = 1.0D;
+    /** 粒子垂直扩散范围（格） */
+    private static final double PARTICLE_SPREAD_VERTICAL = 0.0D;
+    /** 粒子速度 */
+    private static final double PARTICLE_SPEED = 0.01D;
+
+    /** 各药水箭附魔对应的滞留药水云 SNBT 表（键为附魔 ID） */
     private static final Map<String, String> CLOUDS = new LinkedHashMap<>();
 
     static {
@@ -62,7 +76,8 @@ public class SplashArrowEventHandler {
 
         EnchantContext context = new EnchantContext(level, arrow, hit.getLocation());
         for (Map.Entry<String, String> entry : CLOUDS.entrySet()) {
-            if (EnchantContext.level(level, entry.getKey(), arrow.getWeaponItem()) <= 0) continue;
+            int enchantLevel = EnchantContext.level(level, entry.getKey(), arrow.getWeaponItem());
+            if (enchantLevel <= 0) continue;
             spawnCloud(context, entry.getValue());
         }
     }
@@ -74,7 +89,8 @@ public class SplashArrowEventHandler {
 
         EnchantContext context = new EnchantContext(level, event.getEntity(), event.getEntity().position());
         for (Map.Entry<String, String> entry : CLOUDS.entrySet()) {
-            if (EnchantContext.level(level, entry.getKey(), arrow.getWeaponItem()) <= 0) continue;
+            int enchantLevel = EnchantContext.level(level, entry.getKey(), arrow.getWeaponItem());
+            if (enchantLevel <= 0) continue;
             spawnCloud(context, entry.getValue());
         }
     }
@@ -84,6 +100,8 @@ public class SplashArrowEventHandler {
         if (cloud != null) {
             cloud.setDeltaMovement(Vec3.ZERO);
         }
-        context.particleAt(context.pos().add(0.0D, 0.7D, 0.0D), ParticleTypes.SCULK_SOUL, 25, 1.0D, 0.0D, 1.0D, 0.01D);
+        context.particleAt(context.pos().add(PARTICLE_OFFSET_HORIZONTAL, PARTICLE_OFFSET_Y, PARTICLE_OFFSET_HORIZONTAL),
+                ParticleTypes.SCULK_SOUL, PARTICLE_COUNT,
+                PARTICLE_SPREAD_HORIZONTAL, PARTICLE_SPREAD_VERTICAL, PARTICLE_SPREAD_HORIZONTAL, PARTICLE_SPEED);
     }
 }

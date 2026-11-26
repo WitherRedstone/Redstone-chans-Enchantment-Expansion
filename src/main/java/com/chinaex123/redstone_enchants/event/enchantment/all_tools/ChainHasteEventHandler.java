@@ -31,6 +31,18 @@ public class ChainHasteEventHandler {
 
     /** 防止连锁掉落触发的后续事件再次进入本方法 */
     private static final ThreadLocal<Boolean> CHAINING = ThreadLocal.withInitial(() -> Boolean.FALSE);
+    /** 1 级时的连锁半径 */
+    private static final int RADIUS_BASE = 2;
+    /** 每级额外增加的连锁半径 */
+    private static final int RADIUS_PER_LEVEL = 1;
+    /** 连锁半径上限 */
+    private static final int RADIUS_MAX = 4;
+    /** 1 级时最多连锁的方块数 */
+    private static final int MAX_BLOCKS_BASE = 8;
+    /** 每级额外增加的连锁方块数 */
+    private static final int MAX_BLOCKS_PER_LEVEL = 8;
+    /** 不可破坏方块的挖掘速度阈值 */
+    private static final float UNBREAKABLE_DESTROY_SPEED = 0.0F;
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -53,12 +65,12 @@ public class ChainHasteEventHandler {
             return;
         }
         // 基岩这类不可破坏的方块不参与连锁
-        if (originState.getDestroySpeed(level, origin) < 0.0F) {
+        if (originState.getDestroySpeed(level, origin) < UNBREAKABLE_DESTROY_SPEED) {
             return;
         }
 
-        int radius = Math.min(1 + enchantLevel, 4);
-        int maxBlocks = enchantLevel * 8;
+        int radius = Math.min(RADIUS_BASE + RADIUS_PER_LEVEL * (enchantLevel - 1), RADIUS_MAX);
+        int maxBlocks = MAX_BLOCKS_BASE + MAX_BLOCKS_PER_LEVEL * (enchantLevel - 1);
         List<BlockPos> targets = collect(level, origin, originState, radius, maxBlocks);
         if (targets.isEmpty()) {
             return;
@@ -111,7 +123,7 @@ public class ChainHasteEventHandler {
                         if (!state.is(originState.getBlock())) {
                             continue;
                         }
-                        if (state.getDestroySpeed(level, next) < 0.0F) {
+                        if (state.getDestroySpeed(level, next) < UNBREAKABLE_DESTROY_SPEED) {
                             continue;
                         }
                         result.add(next);

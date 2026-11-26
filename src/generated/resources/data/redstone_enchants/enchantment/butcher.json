@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "butcher"
+    }
+  ],
   "anvil_cost": 6,
   "description": {
     "color": "#55FFFF",

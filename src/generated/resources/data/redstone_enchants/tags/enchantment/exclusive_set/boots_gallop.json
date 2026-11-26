@@ -1,8 +1,17 @@
 {
   "values": [
     "minecraft:depth_strider",
-    "redstone_enchants:gallop",
-    "redstone_enchants:gallop_end",
-    "redstone_enchants:gallop_sand"
+    {
+      "id": "redstone_enchants:gallop",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:gallop_end",
+      "required": false
+    },
+    {
+      "id": "redstone_enchants:gallop_sand",
+      "required": false
+    }
   ]
 }

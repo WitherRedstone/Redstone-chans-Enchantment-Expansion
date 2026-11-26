@@ -28,8 +28,12 @@ public class CurseOfWaterSourceEventHandler {
     private static final ResourceLocation CURSE_OF_WATER_SOURCE_ID = RedstoneEnchants.id("curse_of_water_source");
     private static final Map<UUID, Long> LAST_EFFECT_TIME = new HashMap<>();
 
-    /** 中毒持续时间 */
+    /** 每秒执行的间隔（tick）。 */
+    private static final long INTERVAL_TICKS = 20L;
+    /** 中毒持续时间（tick）。 */
     private static final int POISON_DURATION = 40;
+    /** 中毒效果等级（0 为 I 级）。 */
+    private static final int POISON_AMPLIFIER = 0;
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -49,7 +53,7 @@ public class CurseOfWaterSourceEventHandler {
         Long lastTime = LAST_EFFECT_TIME.get(entityId);
 
         // 每秒执行一次（20 tick）
-        if (lastTime != null && currentTime - lastTime < 20) return;
+        if (lastTime != null && currentTime - lastTime < INTERVAL_TICKS) return;
 
         LAST_EFFECT_TIME.put(entityId, currentTime);
 
@@ -65,7 +69,7 @@ public class CurseOfWaterSourceEventHandler {
             if (level <= 0) continue;
 
             // 施加中毒效果
-            EnchantEffectTracker.apply(player, MobEffects.POISON, POISON_DURATION, 0);
+            EnchantEffectTracker.apply(player, MobEffects.POISON, POISON_DURATION, POISON_AMPLIFIER);
             break;
         }
     }

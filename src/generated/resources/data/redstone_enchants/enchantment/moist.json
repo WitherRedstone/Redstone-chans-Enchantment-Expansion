@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "redstone_enchants:config_enabled",
+      "enchantment": "moist"
+    }
+  ],
   "anvil_cost": 6,
   "description": {
     "color": "#FF55FF",

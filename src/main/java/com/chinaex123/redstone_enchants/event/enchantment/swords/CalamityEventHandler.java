@@ -27,6 +27,20 @@ import java.util.Random;
 @EventBusSubscriber(modid = RedstoneEnchants.MODID)
 public class CalamityEventHandler {
     private static final ResourceLocation CALAMITY_ID = RedstoneEnchants.id("calamity");
+
+    /** 1 级时的触发概率 */
+    private static final double CHANCE_BASE = 0.05D;
+    /** 每级额外增加的触发概率 */
+    private static final double CHANCE_PER_LEVEL = 0.05D;
+    /** 效果最短持续时间（秒） */
+    private static final int MIN_DURATION_SECONDS = 4;
+    /** 效果持续时间的随机秒数范围 */
+    private static final int DURATION_RANGE_SECONDS = 7;
+    /** 每秒对应的 tick 数 */
+    private static final int TICKS_PER_SECOND = 20;
+    /** 药水效果等级（0 为 I 级） */
+    private static final int AMPLIFIER = 0;
+
     private static final Random RANDOM = new Random();
 
     @SubscribeEvent
@@ -43,8 +57,8 @@ public class CalamityEventHandler {
         int level = EnchantContext.level(weapon, calamityEnchant);
         if (level <= 0) return;
 
-        // 每级5%概率触发
-        float chance = level * 0.05F;
+        // 1 级 5% 概率触发，每级额外 +5%
+        double chance = Math.min(1.0D, CHANCE_BASE + CHANCE_PER_LEVEL * (level - 1));
         if (RANDOM.nextFloat() < chance) {
             // 获取所有负面效果
             List<Holder.Reference<MobEffect>> negativeEffects = new ArrayList<>();
@@ -66,8 +80,8 @@ public class CalamityEventHandler {
                 Holder.Reference<MobEffect> effect = negativeEffects.get(RANDOM.nextInt(negativeEffects.size()));
 
                 // 持续时间：4-10秒
-                int duration = (4 + RANDOM.nextInt(7)) * 20;
-                int amplifier = 0; // 1级效果
+                int duration = (MIN_DURATION_SECONDS + RANDOM.nextInt(DURATION_RANGE_SECONDS)) * TICKS_PER_SECOND;
+                int amplifier = AMPLIFIER;
 
                 target.addEffect(new MobEffectInstance(effect, duration, amplifier));
             }

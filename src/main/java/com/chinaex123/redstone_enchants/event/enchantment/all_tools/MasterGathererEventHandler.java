@@ -26,6 +26,17 @@ import java.util.List;
 public class MasterGathererEventHandler {
     private static final ResourceLocation MASTER_GATHERER_ID = RedstoneEnchants.id("master_gatherer");
 
+    /** 1 级时的触发概率 */
+    private static final double TRIGGER_CHANCE_BASE = 0.20D;
+    /** 每级额外增加的触发概率 */
+    private static final double TRIGGER_CHANCE_PER_LEVEL = 0.20D;
+    /** 触发概率上限 */
+    private static final double TRIGGER_CHANCE_MAX = 1.0D;
+    /** 掉落物生成位置相对方块中心的偏移量 */
+    private static final double SPAWN_OFFSET = 0.5D;
+    /** 额外掉落物的拾取延迟（tick），0 表示立即可以拾取 */
+    private static final int PICKUP_DELAY_TICKS = 0;
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -44,8 +55,9 @@ public class MasterGathererEventHandler {
         // 检查是否是矿石
         if (!event.getState().is(Tags.Blocks.ORES)) return;
 
-        // 根据附魔等级计算触发概率：每级20%
-        float triggerChance = Math.min(enchantLevel * 0.20f, 1.0f);
+        // 触发概率：1 级 20%，每级再增加 20%
+        double triggerChance = Math.min(TRIGGER_CHANCE_MAX,
+                TRIGGER_CHANCE_BASE + TRIGGER_CHANCE_PER_LEVEL * (enchantLevel - 1));
 
         // 随机判定是否触发双倍掉落
         if (RedstoneEnchants.RANDOM.nextFloat() < triggerChance) {
@@ -60,12 +72,12 @@ public class MasterGathererEventHandler {
                     ItemStack extraDrop = drop.copy();
                     ItemEntity itemEntity = new ItemEntity(
                             serverLevel,
-                            event.getPos().getX() + 0.5,
-                            event.getPos().getY() + 0.5,
-                            event.getPos().getZ() + 0.5,
+                            event.getPos().getX() + SPAWN_OFFSET,
+                            event.getPos().getY() + SPAWN_OFFSET,
+                            event.getPos().getZ() + SPAWN_OFFSET,
                             extraDrop
                     );
-                    itemEntity.setPickUpDelay(0);
+                    itemEntity.setPickUpDelay(PICKUP_DELAY_TICKS);
                     serverLevel.addFreshEntity(itemEntity);
                 }
             }

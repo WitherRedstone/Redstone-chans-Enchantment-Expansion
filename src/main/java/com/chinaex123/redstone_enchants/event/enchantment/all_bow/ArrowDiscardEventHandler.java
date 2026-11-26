@@ -21,6 +21,9 @@ public class ArrowDiscardEventHandler {
             "splash_delayed_explosion"
     };
 
+    /** 命中后延迟丢弃的时长（tick） */
+    private static final int DISCARD_DELAY_TICKS = 1;
+
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
@@ -28,8 +31,9 @@ public class ArrowDiscardEventHandler {
         if (!(arrow.level() instanceof ServerLevel level)) return;
 
         for (String id : DISCARD_ON_HIT) {
-            if (EnchantContext.level(level, id, arrow.getWeaponItem()) > 0) {
-                new EnchantContext(level, arrow, arrow.position()).schedule(1, arrow::discard);
+            int enchantLevel = EnchantContext.level(level, id, arrow.getWeaponItem());
+            if (enchantLevel > 0) {
+                new EnchantContext(level, arrow, arrow.position()).schedule(DISCARD_DELAY_TICKS, arrow::discard);
                 return;
             }
         }

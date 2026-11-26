@@ -1,5 +1,7 @@
 package com.chinaex123.redstone_enchants.data.enchantment;
 
+import com.chinaex123.redstone_enchants.config.ConfigEnabledCondition;
+import com.chinaex123.redstone_enchants.config.RECommonConfig;
 import com.chinaex123.redstone_enchants.data.ModDamageTypes;
 import com.chinaex123.redstone_enchants.data.enchantment.type.*;
 import net.minecraft.core.registries.Registries;
@@ -10,6 +12,7 @@ import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.minecraft.core.RegistrySetBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +58,28 @@ public final class ModEnchantments {
 
     private static Map<ResourceKey<?>, List<ICondition>> createConditions() {
         Map<ResourceKey<?>, List<ICondition>> conditions = new HashMap<>();
-        conditions.put(EnchantmentConstructorHelper.key("dual_critical_boost"), List.of(new ModLoadedCondition("apothic_attributes")));
-        conditions.put(EnchantmentConstructorHelper.key("rapid"), List.of(new ModLoadedCondition("apothic_attributes")));
-        conditions.put(EnchantmentConstructorHelper.key("spell_magic_resist"), List.of(new ModLoadedCondition("irons_spellbooks")));
-        conditions.put(EnchantmentConstructorHelper.key("spell_power"), List.of(new ModLoadedCondition("irons_spellbooks")));
-        conditions.put(EnchantmentConstructorHelper.key("splash_delayed_explosion"), List.of(new ModLoadedCondition("ars_nouveau")));
-        conditions.put(EnchantmentConstructorHelper.key("touch_bleeding"), List.of(new ModLoadedCondition("apothic_attributes")));
-        conditions.put(EnchantmentConstructorHelper.key("undercurrent"), List.of(new ModLoadedCondition("apothic_attributes"), new ModLoadedCondition("twilightforest")));
+
+        for (String id : RECommonConfig.enchantmentIds()) {
+            conditions.put(EnchantmentConstructorHelper.key(id), new ArrayList<>(List.of(new ConfigEnabledCondition(id))));
+        }
+
+        // 依赖其它模组的附魔，再叠加「模组已加载」条件
+        requireMod(conditions, "dual_critical_boost", "apothic_attributes");
+        requireMod(conditions, "rapid", "apothic_attributes");
+        requireMod(conditions, "spell_magic_resist", "irons_spellbooks");
+        requireMod(conditions, "spell_power", "irons_spellbooks");
+        requireMod(conditions, "splash_delayed_explosion", "ars_nouveau");
+        requireMod(conditions, "touch_bleeding", "apothic_attributes");
+        requireMod(conditions, "undercurrent", "apothic_attributes", "twilightforest");
+
         return conditions;
+    }
+
+    private static void requireMod(Map<ResourceKey<?>, List<ICondition>> conditions, String id, String... modIds) {
+        List<ICondition> list = conditions.computeIfAbsent(EnchantmentConstructorHelper.key(id),
+                key -> new ArrayList<>());
+        for (String modId : modIds) {
+            list.add(new ModLoadedCondition(modId));
+        }
     }
 }

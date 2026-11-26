@@ -21,6 +21,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class SacrificeEventHandler {
     private static final ResourceLocation SACRIFICE_ID = RedstoneEnchants.id("sacrifice");
 
+    /** 1 级时每次修复的耐久。 */
+    private static final double REPAIR_BASE = 1.0D;
+    /** 每级额外增加的修复耐久。 */
+    private static final double REPAIR_PER_LEVEL = 0.5D;
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         LivingEntity entity = event.getEntity();
@@ -36,7 +41,7 @@ public class SacrificeEventHandler {
             if (level <= 0) continue;
 
             // 计算修复量：基础-1.0，每级额外-0.5
-            int repairAmount = (int) Math.floor(1.0 + (level - 1) * 0.5);
+            int repairAmount = (int) Math.floor(REPAIR_BASE + REPAIR_PER_LEVEL * (level - 1));
 
             // 修复物品（减少耐久值）
             int currentDamage = stack.getDamageValue();

@@ -27,8 +27,10 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class PegasusEventHandler {
     private static final ResourceLocation PEGASUS_ID = RedstoneEnchants.id("pegasus");
 
-    /** 持续时间 */
-    private static final int EFFECT_DURATION = 80;
+    /** 缓降持续时间（tick） */
+    private static final int EFFECT_DURATION_TICKS = 80;
+    /** 缓降效果等级（0 = I 级） */
+    private static final int AMPLIFIER = 0;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -43,11 +45,11 @@ public class PegasusEventHandler {
 
         if (level > 0 && vehicle != null) {
             // 给玩家添加缓降
-            EnchantEffectTracker.apply(player, MobEffects.SLOW_FALLING, EFFECT_DURATION, 0);
+            EnchantEffectTracker.apply(player, MobEffects.SLOW_FALLING, EFFECT_DURATION_TICKS, AMPLIFIER);
 
             // 给骑乘的生物添加缓降
             if (vehicle instanceof LivingEntity livingVehicle) {
-                EnchantEffectTracker.apply(livingVehicle, MobEffects.SLOW_FALLING, EFFECT_DURATION, 0);
+                EnchantEffectTracker.apply(livingVehicle, MobEffects.SLOW_FALLING, EFFECT_DURATION_TICKS, AMPLIFIER);
             }
         } else {
             // 移除玩家自己给的缓降

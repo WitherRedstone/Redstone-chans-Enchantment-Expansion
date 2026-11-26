@@ -22,12 +22,22 @@ public class FireArrowsEventHandler {
 
     private static final String ID = "fire_arrows";
 
+    /** 点火范围半径（格，按方块计） */
+    private static final int IGNITE_RADIUS = 1;
+    /** 火焰粒子数量 */
+    private static final int PARTICLE_COUNT = 50;
+    /** 粒子扩散范围（格） */
+    private static final double PARTICLE_SPREAD = 1.0D;
+    /** 粒子速度 */
+    private static final double PARTICLE_SPEED = 0.5D;
+
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
         if (!(event.getRayTraceResult() instanceof BlockHitResult hit)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
-        if (EnchantContext.level(level, ID, arrow.getWeaponItem()) <= 0) return;
+        int enchantLevel = EnchantContext.level(level, ID, arrow.getWeaponItem());
+        if (enchantLevel <= 0) return;
 
         ignite(level, hit.getLocation());
         arrow.discard();
@@ -37,7 +47,8 @@ public class FireArrowsEventHandler {
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
-        if (EnchantContext.level(level, ID, arrow.getWeaponItem()) <= 0) return;
+        int enchantLevel = EnchantContext.level(level, ID, arrow.getWeaponItem());
+        if (enchantLevel <= 0) return;
 
         ignite(level, event.getEntity().position());
         arrow.discard();
@@ -45,9 +56,9 @@ public class FireArrowsEventHandler {
 
     private static void ignite(ServerLevel level, Vec3 center) {
         BlockPos origin = BlockPos.containing(center);
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dz = -1; dz <= 1; dz++) {
+        for (int dx = -IGNITE_RADIUS; dx <= IGNITE_RADIUS; dx++) {
+            for (int dy = -IGNITE_RADIUS; dy <= IGNITE_RADIUS; dy++) {
+                for (int dz = -IGNITE_RADIUS; dz <= IGNITE_RADIUS; dz++) {
                     BlockPos pos = origin.offset(dx, dy, dz);
                     if (level.getBlockState(pos).isAir()) {
                         level.setBlockAndUpdate(pos, Blocks.FIRE.defaultBlockState());
@@ -55,6 +66,7 @@ public class FireArrowsEventHandler {
                 }
             }
         }
-        level.sendParticles(ParticleTypes.FLAME, center.x, center.y, center.z, 50, 1.0D, 1.0D, 1.0D, 0.5D);
+        level.sendParticles(ParticleTypes.FLAME, center.x, center.y, center.z, PARTICLE_COUNT,
+                PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPREAD, PARTICLE_SPEED);
     }
 }
