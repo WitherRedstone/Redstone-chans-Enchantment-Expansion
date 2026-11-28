@@ -1,11 +1,9 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_shear;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

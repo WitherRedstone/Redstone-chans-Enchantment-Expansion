@@ -28,6 +28,7 @@ public class SturdyEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity entity = event.getEntity();
 
         // 检查所有装备栏
@@ -60,6 +61,7 @@ public class SturdyEventHandler {
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof ItemEntity itemEntity)) return;
 
         ItemStack stack = itemEntity.getItem();
@@ -80,6 +82,7 @@ public class SturdyEventHandler {
 
     @SubscribeEvent
     public static void onExplosion(ExplosionEvent.Detonate event) {
+        if (event.getLevel().isClientSide()) return;
         event.getAffectedEntities().removeIf(entity -> {
             if (entity instanceof ItemEntity itemEntity) {
                 return hasSturdyEnchant(itemEntity.getItem());
@@ -90,6 +93,7 @@ public class SturdyEventHandler {
 
     @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (event.getEntity() instanceof ItemEntity itemEntity) {
             if (hasSturdyEnchant(itemEntity.getItem())) {
                 event.setCanceled(true);

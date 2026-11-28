@@ -1,7 +1,7 @@
 package com.chinaex123.redstone_enchants.event.enchantment.unbreaking;
 
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.util.PreservationFeedback;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -28,6 +28,7 @@ public class PreservationEventHandler {
 
     @SubscribeEvent
     public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        if (event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
 
         if (isExhausted(player.getMainHandItem(), PRESERVATION)) {

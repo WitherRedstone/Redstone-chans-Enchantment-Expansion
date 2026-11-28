@@ -28,6 +28,7 @@ public class LastHopeEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getEntity() instanceof Player attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
 

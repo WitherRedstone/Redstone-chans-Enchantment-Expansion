@@ -1,11 +1,9 @@
 package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.event.EnchantEffectTracker;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -34,6 +32,7 @@ public class PegasusEventHandler {
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
         ResourceKey<Enchantment> pegasusEnchant = EnchantContext.key(PEGASUS_ID);

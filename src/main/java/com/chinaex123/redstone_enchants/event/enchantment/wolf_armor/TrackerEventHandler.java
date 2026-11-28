@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.wolf_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -32,6 +30,7 @@ public class TrackerEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getEntity().level().isClientSide()) return;
         Entity directEntity = event.getSource().getDirectEntity();
 
         if (!(directEntity instanceof Wolf wolf)) return;

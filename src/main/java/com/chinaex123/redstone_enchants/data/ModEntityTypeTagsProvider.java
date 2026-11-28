@@ -1,7 +1,5 @@
 package com.chinaex123.redstone_enchants.data;
 
-import java.util.concurrent.CompletableFuture;
-
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.init.REEntityTypeTags;
 import net.minecraft.core.HolderLookup;
@@ -13,6 +11,8 @@ import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ModEntityTypeTagsProvider extends IntrinsicHolderTagsProvider<EntityType<?>> {
     public ModEntityTypeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,

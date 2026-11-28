@@ -37,6 +37,7 @@ public class CurseOfClumsinessEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel serverLevel)) return;
         int level = EnchantContext.level(attacker, ID);

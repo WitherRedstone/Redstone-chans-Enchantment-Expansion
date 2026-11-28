@@ -1,11 +1,9 @@
 package com.chinaex123.redstone_enchants.event.enchantment.horse_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -30,6 +28,7 @@ public class PastureEventHandler {
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof AbstractHorse horse)) return;
 
         // 检查马是否有鞍（被骑乘）

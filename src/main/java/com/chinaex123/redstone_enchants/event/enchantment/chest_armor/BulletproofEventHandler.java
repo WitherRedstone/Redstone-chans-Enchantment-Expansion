@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.chest_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -31,6 +29,7 @@ public class BulletproofEventHandler {
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity target = event.getEntity();
 
         if (!(target instanceof Player player)) return;

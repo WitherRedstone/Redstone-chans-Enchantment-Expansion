@@ -2,8 +2,6 @@ package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -17,6 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent.Post;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 光环系列附魔。
@@ -54,6 +55,7 @@ public class AuraEventHandler {
 
     @SubscribeEvent
     public static void onPlayerTick(Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
         if (!(player.level() instanceof ServerLevel level)) return;
         if (!EnchantContext.moved(player)) return;

@@ -4,13 +4,13 @@ import com.chinaex123.redstone_enchants.config.ConfigEnabledCondition;
 import com.chinaex123.redstone_enchants.config.RECommonConfig;
 import com.chinaex123.redstone_enchants.data.ModDamageTypes;
 import com.chinaex123.redstone_enchants.data.enchantment.type.*;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
-import net.minecraft.core.RegistrySetBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

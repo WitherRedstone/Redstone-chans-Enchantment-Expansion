@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.leg_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +21,7 @@ public class TacticalKneeEventHandler {
 
     @SubscribeEvent
     public static void onLivingFall(LivingFallEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
         // 检查护腿是否有战术护膝附魔

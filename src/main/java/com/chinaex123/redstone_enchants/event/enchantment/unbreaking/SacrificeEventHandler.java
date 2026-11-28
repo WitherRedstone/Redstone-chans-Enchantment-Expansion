@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.unbreaking;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,6 +26,7 @@ public class SacrificeEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity entity = event.getEntity();
 
         // 检查所有装备槽位

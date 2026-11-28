@@ -1,11 +1,9 @@
 package com.chinaex123.redstone_enchants.event.enchantment.foot_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +28,7 @@ public class WaveWalkerEventHandler {
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
         // 检查靴子是否有踏浪者附魔

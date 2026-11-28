@@ -2,8 +2,6 @@ package com.chinaex123.redstone_enchants.event.enchantment.all_bow;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -13,6 +11,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 药水箭附魔：箭矢命中方块或生物后，在原地留下一团对应的滞留药水云。
@@ -70,6 +71,7 @@ public class SplashArrowEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
         if (!(event.getRayTraceResult() instanceof net.minecraft.world.phys.BlockHitResult hit)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
@@ -84,6 +86,7 @@ public class SplashArrowEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
 

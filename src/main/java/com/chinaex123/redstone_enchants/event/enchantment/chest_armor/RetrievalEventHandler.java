@@ -29,6 +29,7 @@ public class RetrievalEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity victim = event.getEntity();
         if (!(victim.level() instanceof ServerLevel level)) return;
 

@@ -1,17 +1,14 @@
 package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
@@ -33,6 +30,7 @@ public class DecapitationEventHandler {
 
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity living ? living : null;
         if (attacker == null) return;
 

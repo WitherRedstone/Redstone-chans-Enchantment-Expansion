@@ -44,6 +44,7 @@ public class BoonsEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getDirectEntity() instanceof Player attacker)) return;
 
         LivingEntity target = event.getEntity();

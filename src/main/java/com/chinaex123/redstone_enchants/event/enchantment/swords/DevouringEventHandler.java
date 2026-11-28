@@ -31,7 +31,7 @@ public class DevouringEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
-        // 只有玩家攻击生物才生效
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getEntity() instanceof Player attacker)) return;
         if (event.getEntity() == attacker) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;

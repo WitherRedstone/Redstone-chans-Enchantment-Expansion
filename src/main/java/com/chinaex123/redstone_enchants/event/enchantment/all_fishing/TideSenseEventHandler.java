@@ -1,10 +1,9 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_fishing;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -34,6 +33,7 @@ public class TideSenseEventHandler {
 
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
 
         if (!player.level().isThundering()) return;

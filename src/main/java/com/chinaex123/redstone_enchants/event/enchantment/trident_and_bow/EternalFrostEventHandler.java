@@ -30,6 +30,7 @@ public class EternalFrostEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         HitResult hit = event.getRayTraceResult();
         if (hit.getType() != HitResult.Type.BLOCK) return;
 
@@ -50,6 +51,7 @@ public class EternalFrostEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         if (!(attacker.level() instanceof ServerLevel level)) return;
         if (EnchantContext.level(attacker, ID) <= 0) return;

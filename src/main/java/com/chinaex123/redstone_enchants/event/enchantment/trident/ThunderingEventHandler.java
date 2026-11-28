@@ -22,6 +22,7 @@ public class ThunderingEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         HitResult hit = event.getRayTraceResult();
         if (!(hit instanceof BlockHitResult blockHit)) return;
         if (!(event.getProjectile() instanceof ThrownTrident trident)) return;

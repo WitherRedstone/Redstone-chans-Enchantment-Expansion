@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.curse;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,6 +33,7 @@ public class CurseOfRustEventHandler {
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity player = event.getEntity();
 
         // 检查是否在水中或雨中

@@ -1,12 +1,12 @@
 package com.chinaex123.redstone_enchants.data.enchantment.type;
 
 import com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper;
+import com.chinaex123.redstone_enchants.init.REItemTags;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 
-import com.chinaex123.redstone_enchants.init.REItemTags;
 import static com.chinaex123.redstone_enchants.data.enchantment.EnchantmentConstructorHelper.*;
 
 /**

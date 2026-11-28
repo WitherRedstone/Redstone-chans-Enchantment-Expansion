@@ -32,6 +32,7 @@ public class CurseOfBlastEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (exploding) return;
 
         LivingEntity victim = event.getEntity();

@@ -33,6 +33,7 @@ public class FireArrowsEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
         if (!(event.getRayTraceResult() instanceof BlockHitResult hit)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
@@ -45,6 +46,7 @@ public class FireArrowsEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
         int enchantLevel = EnchantContext.level(level, ID, arrow.getWeaponItem());

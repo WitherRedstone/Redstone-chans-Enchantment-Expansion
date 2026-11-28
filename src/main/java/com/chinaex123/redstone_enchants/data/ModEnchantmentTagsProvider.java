@@ -1,33 +1,8 @@
 package com.chinaex123.redstone_enchants.data;
 
-import java.util.concurrent.CompletableFuture;
-
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.data.enchantment.type.*;
 import com.chinaex123.redstone_enchants.init.REEnchantmentTags;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllBowEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllFishingEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllFlintAndSteelEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllShearEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllToolsEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AllWeaponAndToolsEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.AnimalArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.ChestArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.CurseEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.ElytraEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.FootArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.HeadArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.HorseArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.LegArmorEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.MaceEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.ShieldEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.SwordsAndBowEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.SwordsEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.TridentAndBowEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.TridentEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.UnbreakingEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.WeaponEnchantments;
-import com.chinaex123.redstone_enchants.data.enchantment.type.WolfArmorEnchantments;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -38,6 +13,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ModEnchantmentTagsProvider extends TagsProvider<Enchantment> {
     public ModEnchantmentTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,

@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,11 +39,12 @@ public class MagnetEventHandler {
     private static final double ATTRACTION_WEIGHT = 0.7D;
     /** 吸引力附带的向上初速度，避免掉落物贴地 */
     private static final double LIFT = 0.02D;
-    /** 吸引目标点相对玩家脚部的抬高量（约等于玩家视线高度） */
+    /** 吸引目标点相对玩家脚部的抬高量 */
     private static final double EYE_HEIGHT_OFFSET = 1.0D;
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
 
         // 检查主手和副手是否有磁力附魔

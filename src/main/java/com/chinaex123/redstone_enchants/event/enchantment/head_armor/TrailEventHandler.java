@@ -2,8 +2,6 @@ package com.chinaex123.redstone_enchants.event.enchantment.head_armor;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -11,6 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent.Post;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 移动轨迹系列附魔。
@@ -45,6 +46,7 @@ public class TrailEventHandler {
 
     @SubscribeEvent
     public static void onPlayerTick(Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
         if (!(player.level() instanceof ServerLevel level)) return;
         if (!EnchantContext.moved(player)) return;

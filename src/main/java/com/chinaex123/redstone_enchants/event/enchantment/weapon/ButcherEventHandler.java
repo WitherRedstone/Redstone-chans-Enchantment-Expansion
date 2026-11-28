@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.weapon;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,6 +33,7 @@ public class ButcherEventHandler {
 
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
 
         LivingEntity entity = event.getEntity();

@@ -1,13 +1,11 @@
 package com.chinaex123.redstone_enchants.event.enchantment.trident;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -16,12 +14,12 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import java.util.List;
@@ -66,6 +64,7 @@ public class SeaBreezeEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         Entity directEntity = event.getSource().getDirectEntity();
         if (!(directEntity instanceof AbstractArrow arrow)) return;
 
@@ -73,7 +72,7 @@ public class SeaBreezeEventHandler {
         if (!(owner instanceof LivingEntity attacker)) return;
 
         ItemStack weapon = arrow.getWeaponItem();
-        if (weapon.isEmpty()) return;
+        if (weapon == null || weapon.isEmpty()) return;
 
         ResourceKey<Enchantment> seaBreezeEnchant = EnchantContext.key(SEA_BREEZE_ID);
 
@@ -139,13 +138,14 @@ public class SeaBreezeEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
 
         Entity owner = arrow.getOwner();
         if (!(owner instanceof LivingEntity attacker)) return;
 
         ItemStack weapon = arrow.getWeaponItem();
-        if (weapon.isEmpty()) return;
+        if (weapon == null || weapon.isEmpty()) return;
 
         ResourceKey<Enchantment> seaBreezeEnchant = EnchantContext.key(SEA_BREEZE_ID);
 

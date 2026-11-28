@@ -1,12 +1,8 @@
 package com.chinaex123.redstone_enchants.data;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
+import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.JsonOps;
-
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.data.CachedOutput;
@@ -20,7 +16,9 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 
-import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ModPredicates implements DataProvider {
 

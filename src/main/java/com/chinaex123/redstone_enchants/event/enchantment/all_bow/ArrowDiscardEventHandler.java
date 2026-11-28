@@ -26,6 +26,7 @@ public class ArrowDiscardEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
         if (!(event.getRayTraceResult() instanceof BlockHitResult)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;

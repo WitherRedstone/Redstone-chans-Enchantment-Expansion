@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_tools;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +28,7 @@ public class MoistEventHandler {
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
+        if (event.getEntity() != null && event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
         ItemStack tool = player.getMainHandItem();

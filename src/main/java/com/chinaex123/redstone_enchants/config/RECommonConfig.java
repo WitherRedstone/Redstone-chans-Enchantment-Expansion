@@ -1,13 +1,13 @@
 package com.chinaex123.redstone_enchants.config;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class RECommonConfig {
     public static final ModConfigSpec SPEC;

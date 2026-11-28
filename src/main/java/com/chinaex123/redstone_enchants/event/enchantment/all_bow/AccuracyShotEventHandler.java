@@ -2,7 +2,6 @@ package com.chinaex123.redstone_enchants.event.enchantment.all_bow;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
-import java.util.List;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +9,8 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+
+import java.util.List;
 
 /**
  * 精准射击：箭矢无视重力直飞目标，未命中会消失。
@@ -31,6 +32,7 @@ public class AccuracyShotEventHandler {
 
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof AbstractArrow arrow)) return;
         if (event.loadedFromDisk()) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;

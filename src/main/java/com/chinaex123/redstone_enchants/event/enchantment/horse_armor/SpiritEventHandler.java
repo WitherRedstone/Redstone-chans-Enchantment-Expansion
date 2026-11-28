@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.horse_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -38,6 +36,7 @@ public class SpiritEventHandler {
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof AbstractHorse horse)) return;
 
         // 检查马是否有鞍（被骑乘）
@@ -77,6 +76,7 @@ public class SpiritEventHandler {
 
     @SubscribeEvent
     public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof AbstractHorse horse)) return;
 
         // 只处理BODY槽位的变化

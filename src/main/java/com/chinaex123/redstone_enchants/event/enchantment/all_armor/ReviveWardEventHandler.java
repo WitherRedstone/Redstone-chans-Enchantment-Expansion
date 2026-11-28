@@ -1,14 +1,12 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_armor;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -66,6 +64,7 @@ public class ReviveWardEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getEntity().level().isClientSide()) return;
         LivingEntity entity = event.getEntity();
 
         // 检查是否是玩家（或其他生物）

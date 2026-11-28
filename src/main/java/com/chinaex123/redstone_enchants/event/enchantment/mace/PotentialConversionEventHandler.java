@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.mace;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +28,7 @@ public class PotentialConversionEventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getSource().getDirectEntity() instanceof Player attacker)) return;
 
         LivingEntity target = event.getEntity();

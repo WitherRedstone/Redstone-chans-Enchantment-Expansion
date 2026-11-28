@@ -2,15 +2,16 @@ package com.chinaex123.redstone_enchants.event.enchantment.all_bow;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * 铁砧雨与石锥雨：箭矢命中方块或实体时，在命中点上方召唤一圈坠落物。
@@ -104,6 +105,7 @@ public class RainEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile().level().isClientSide()) return;
         if (!(event.getProjectile() instanceof AbstractArrow arrow)) return;
         if (!(arrow.level() instanceof ServerLevel level)) return;
 

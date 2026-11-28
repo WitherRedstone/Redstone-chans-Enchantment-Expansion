@@ -26,6 +26,7 @@ public class UnleashPotentialEventHandler {
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
         if (!(player.level() instanceof ServerLevel level)) return;
         if (EnchantContext.level(player, ID) <= 0) return;

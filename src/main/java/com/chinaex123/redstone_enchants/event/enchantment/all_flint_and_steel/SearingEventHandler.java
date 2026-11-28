@@ -1,10 +1,8 @@
 package com.chinaex123.redstone_enchants.event.enchantment.all_flint_and_steel;
 
-import net.minecraft.resources.ResourceKey;
-import com.chinaex123.redstone_enchants.event.EnchantContext;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -38,6 +36,7 @@ public class SearingEventHandler {
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getEntity().level().isClientSide()) return;
         if (!(event.getTarget() instanceof LivingEntity target)) return;
 
         Player player = event.getEntity();
