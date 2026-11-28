@@ -2,8 +2,14 @@ package com.chinaex123.redstone_enchants.event.enchantment.swords;
 
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -23,9 +29,6 @@ public class WaterBottleProjectionEventHandler {
     /** 投掷数量上限 */
     private static final int MAX_COUNT = 2;
 
-    private static final String SPLASH_WATER = "{id:\"minecraft:potion\",Item:{id:\"minecraft:splash_potion\","
-            + "count:1,components:{\"minecraft:potion_contents\":{potion:\"minecraft:water\"}}}}";
-
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (event.getEntity().level().isClientSide()) return;
@@ -39,7 +42,11 @@ public class WaterBottleProjectionEventHandler {
         int count = (int) Math.min(MAX_COUNT, COUNT_BASE + COUNT_PER_LEVEL * (enchantLevel - 1));
         EnchantContext context = new EnchantContext(level, event.getEntity(), event.getEntity().position());
         for (int index = 0; index < count; index++) {
-            context.summon(SPLASH_WATER);
+            ThrownPotion potion = new ThrownPotion(level, context.pos().x, context.pos().y, context.pos().z);
+            ItemStack stack = new ItemStack(Items.SPLASH_POTION);
+            stack.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER));
+            potion.setItem(stack);
+            context.spawn(potion);
         }
     }
 }

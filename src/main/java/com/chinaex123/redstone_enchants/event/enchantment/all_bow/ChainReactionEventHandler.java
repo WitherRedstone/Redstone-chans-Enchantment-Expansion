@@ -3,9 +3,10 @@ package com.chinaex123.redstone_enchants.event.enchantment.all_bow;
 import com.chinaex123.redstone_enchants.RedstoneEnchants;
 import com.chinaex123.redstone_enchants.event.EnchantContext;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.SpectralArrow;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,8 +19,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class ChainReactionEventHandler {
 
     private static final String ID = "chain_reaction";
-    private static final String ARROW_ID = "minecraft:arrow";
-    private static final String SPECTRAL_ARROW_ID = "minecraft:spectral_arrow";
 
     /** 箭矢发射方向表（单位圆上的六个水平方向：东、西及四个斜向） */
     private static final double[][] MOTIONS = {
@@ -51,16 +50,18 @@ public class ChainReactionEventHandler {
         if (enchantLevel <= 0) return;
 
         EnchantContext context = new EnchantContext(level, event.getEntity(), event.getEntity().position());
-        String entityId = arrow instanceof SpectralArrow ? SPECTRAL_ARROW_ID : ARROW_ID;
-        String snbt = "{id:\"" + entityId + "\",pickup:2b}";
+        boolean spectral = arrow instanceof SpectralArrow;
+        Vec3 spawn = context.pos().add(SUMMON_OFFSET_HORIZONTAL, SUMMON_OFFSET_Y, SUMMON_OFFSET_HORIZONTAL);
 
         int arrowCount = ARROW_COUNT_BASE + ARROW_COUNT_PER_LEVEL * (enchantLevel - 1);
         for (int i = 0; i < arrowCount; i++) {
             double[] motion = MOTIONS[i % MOTIONS.length];
-            Entity spawned = context.summon(snbt, SUMMON_OFFSET_HORIZONTAL, SUMMON_OFFSET_Y, SUMMON_OFFSET_HORIZONTAL);
-            if (spawned != null) {
-                context.motion(spawned, new Vec3(motion[0], MOTION_Y, motion[1]));
-            }
+            AbstractArrow projectile = spectral
+                    ? new SpectralArrow(level, spawn.x, spawn.y, spawn.z, ItemStack.EMPTY, null)
+                    : new Arrow(level, spawn.x, spawn.y, spawn.z, ItemStack.EMPTY, null);
+            projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+            context.spawn(projectile);
+            context.motion(projectile, new Vec3(motion[0], MOTION_Y, motion[1]));
         }
     }
 }

@@ -196,13 +196,27 @@ public final class EnchantContext {
         return this.summon(snbt, 0.0D, 0.0D, 0.0D);
     }
 
-    public void mergeNbt(Entity target, String snbt) {
-        if (target == null) {
+    public <T extends Entity> T spawn(T entity, double dx, double dy, double dz) {
+        entity.setPos(this.pos.x + dx, this.pos.y + dy, this.pos.z + dz);
+        this.level.addFreshEntity(entity);
+        return entity;
+    }
+
+    public <T extends Entity> T spawn(T entity) {
+        return this.spawn(entity, 0.0D, 0.0D, 0.0D);
+    }
+
+    public void mergeTag(Entity target, CompoundTag tag) {
+        if (target == null || tag == null) {
             return;
         }
         CompoundTag merged = target.saveWithoutId(new CompoundTag());
-        merged.merge(parse(snbt));
+        merged.merge(tag);
         target.load(merged);
+    }
+
+    public void mergeNbt(Entity target, String snbt) {
+        this.mergeTag(target, parse(snbt));
     }
 
     public static List<Entity> allWithTag(ServerLevel level, String tag) {

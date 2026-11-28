@@ -7,6 +7,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -19,9 +22,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class SnowballEventHandler {
 
     private static final String ID = "snowball";
-
-    private static final String SNOWBALL = "{id:\"minecraft:snowball\",Item:{id:\"minecraft:snowball\",count:1},"
-            + "pickup:2b,player:1b,life:600,damage:1.0d,crit:1b}";
 
     /** 1 级时的触发概率 */
     private static final double CHANCE_BASE = 0.3D;
@@ -62,10 +62,10 @@ public class SnowballEventHandler {
                 candidate -> !(candidate instanceof Player) && !context.isNonLiving(candidate));
 
         Vec3 spawn = victim.position().add(HORIZONTAL_OFFSET, SPAWN_Y_OFFSET, HORIZONTAL_OFFSET);
-        Entity snowball = context.summon(SNOWBALL);
-        if (snowball == null) return;
+        Snowball snowball = new Snowball(level, spawn.x, spawn.y, spawn.z);
+        snowball.setItem(new ItemStack(Items.SNOWBALL));
+        context.spawn(snowball);
 
-        snowball.setPos(spawn.x, spawn.y, spawn.z);
         if (target != null) {
             Vec3 direction = target.position().add(HORIZONTAL_OFFSET, TARGET_Y_OFFSET, HORIZONTAL_OFFSET).subtract(spawn);
             if (direction.lengthSqr() > MIN_DIRECTION_LENGTH_SQR) {

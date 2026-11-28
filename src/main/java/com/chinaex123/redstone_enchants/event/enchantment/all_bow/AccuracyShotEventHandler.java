@@ -40,7 +40,7 @@ public class AccuracyShotEventHandler {
         if (enchantLevel <= 0) return;
 
         EnchantContext context = new EnchantContext(level, arrow, arrow.position());
-        context.mergeNbt(arrow, "{NoGravity:1b}");
+        arrow.setNoGravity(true);
         context.tagAdd(arrow, ACCURACY_TAG);
         context.schedule(INITIAL_CHECK_DELAY_TICKS, () -> accuracyCheck(level));
     }
